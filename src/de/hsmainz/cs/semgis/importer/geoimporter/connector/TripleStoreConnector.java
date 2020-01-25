@@ -63,6 +63,13 @@ public class TripleStoreConnector {
 		}
     }
     
+	public void addOntModelToTripleStore(OntModel model,String triplestore) {
+    	RDFConnectionFactory fac=new RDFConnectionFactory();
+    	RDFConnection connection=fac.connect(triplestore);
+    	connection.load(model);
+    	connection.close();
+    }
+	
     //TODO refactoring: move control logic part to "import heuristics"
     public class GeographicalResult
     {
