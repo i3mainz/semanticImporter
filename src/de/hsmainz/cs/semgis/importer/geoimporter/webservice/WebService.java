@@ -31,7 +31,7 @@ import com.sun.jersey.multipart.FormDataParam;
 import de.hsmainz.cs.semgis.importer.geoimporter.importer.GMLImporter;
 import de.hsmainz.cs.semgis.importer.geoimporter.parser.GeoJSONParser;
 
-@Path("/")
+@Path("/service")
 public class WebService {
 
 	@POST
