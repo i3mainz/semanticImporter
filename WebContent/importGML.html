@@ -65,7 +65,7 @@ function convert() {
     data.append('namespace',document.getElementById('namespace').value);
     $('#loading').show();
     $.ajax({
-       url: 'rest/service/convert', // Wohin soll die Datei geschickt werden?
+       url: 'rest/service/convertGML', // Wohin soll die Datei geschickt werden?
        data: data,          // Das ist unser Datenobjekt.
        type: 'POST',         // HTTP-Methode, hier: POST
        processData: false,
