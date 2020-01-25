@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<data>
+<file class="http://www.adv-online.de/namespaces/adv/gid/6.0#AX_Gebaeude" indid="gml_id" namespace="http://www.geomer.de/geodata/" epsg="1111">
+
+	<column name="function" prop="obj" propiri="http://www.adv-online.de/namespaces/adv/gid/6.0#gebaeudefunktion"
+	concept="http://www.adv-online.de/namespaces/adv/gid/6.0#AX_Gebaeudefunktion" 
+	indname="http://www.adv-online.de/namespaces/adv/gid/6.0#AX_Gebaeudefunktion_%%function%%"
+	/>
+
+	<column name="zmin" prop="obj" propiri="http://www.geomer.de/geodata/hasMinHeightAboveSeaLevel" 
+	concept="https://www.wikidata.org/entity/Q6452016" indname="%%gml_id%%_zmin" 
+	valueprop="http://qudt.org/schema/qudt#numericValue" range="http://www.w3.org/2001/XMLSchema#double"
+	unitprop="http://qudt.org/schema/qudt#unit" unit="http://www.qudt.org/qudt/owl/1.0.0/unit/Meter"
+	/>
+
+	<column name="zmax" prop="obj" propiri="http://www.geomer.de/geodata/hasMaxHeightAboveSeaLevel" 
+	concept="https://www.wikidata.org/entity/Q6452016" indname="%%gml_id%%_zmax"  
+	valueprop="http://qudt.org/schema/qudt#numericValue" range="http://www.w3.org/2001/XMLSchema#double"
+	unitprop="http://qudt.org/schema/qudt#unit" unit="http://www.qudt.org/qudt/owl/1.0.0/unit/Meter"
+	/>
+
+	<column name="gebhoehe" prop="obj" propiri="https://www.wikidata.org/entity/P2048" 
+	concept="https://www.wikidata.org/entity/Q24192182" indname="%%gml_id%%_height"  
+	valueprop="http://qudt.org/schema/qudt#numericValue" range="http://www.w3.org/2001/XMLSchema#double"
+	unitprop="http://qudt.org/schema/qudt#unit" unit="http://www.qudt.org/qudt/owl/1.0.0/unit/Meter"
+	/>
+
+	<column name="ags" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" 
+	query="SELECT ?city WHERE {?city wdt:P439 '%%ags%%'.}" endpoint="http://query.wikidata.org/sparql"/> 
+
+	<column name="gml_id" prop="data" range="http://www.w3.org/2001/XMLSchema#string"/> 
+	<column name="gebid" prop="data" range="http://www.w3.org/2001/XMLSchema#integer"/> 
+	
+</file>
+</data>

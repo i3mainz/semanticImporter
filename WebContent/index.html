@@ -1,0 +1,93 @@
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<style>
+.loading { margin: auto; }
+
+.loading span {
+  line-height: 32px;
+  margin-left: 12px;
+  font-size: 16px;
+  vertical-align: middle;
+}
+
+.loading img { vertical-align: middle; }
+
+.loading_wrp {
+  background-color: #FFF;
+  display: block;
+  height: 100%;
+  left: 0;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1020;
+}
+
+.loading_wrp .x16 span {
+  line-height: 16px;
+  font-size: 12px;
+  margin-left: 6px;
+}
+
+.loading_wrp .x32 img {
+  width: 32px;
+  height: 32px;
+}
+</style>
+<script>
+function saveTextAsFile(tosave,fileext,filename)
+{
+    var a = document.createElement('a');
+    a.style = "display: none";  
+    var blob= new Blob([tosave], {type:'text/plain'});
+    var url = window.URL.createObjectURL(blob);
+    var filename = filename+fileext;
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function(){
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);  
+    }, 1000);
+}
+
+function convert() {
+    var data = new FormData(); // das ist unser Daten-Objekt ...
+    data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhngen
+    $('#loading').show();
+    $.ajax({
+       url: 'rest/service/convert?namespace='+encodeURIComponent($('#namespace').val())+"&indid="+encodeURIComponent($('#indid').val())+"&classname="+encodeURIComponent($('#classname').val()), // Wohin soll die Datei geschickt werden?
+       data: data,          // Das ist unser Datenobjekt.
+       type: 'POST',         // HTTP-Methode, hier: POST
+       processData: false,
+       contentType: false,
+       // und wenn alles erfolgreich verlaufen ist, schreibe eine Meldung
+       // in das Response-Div
+       success: function(data) { 
+    	    $('#loading').hide();
+    	   saveTextAsFile(data,".ttl","result");
+       }
+    });
+ }
+</script>
+</head>
+
+<body>
+<div id="spinner">
+  <img src="ajax-loader.gif" alt="Loading" id="loading" style="display: none"/>
+</div>
+
+	<h1>Welcome to the Data Importer</h1>
+ 
+ What do you want to do?
+ <ul>
+ <li><a href="importGML.html">Import GML file with known Schema</a></li>
+ <li><a href="importGeoJSON.html">Import GeoJSON file without known Schema</a></li>
+  <li><a href="importMappingSchema.html">Import geographic file and create Mapping Schema</a></li>
+ </ul> 
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+"name": "GeoJSON Converter",
+"description":"Converts GeoJSON to TTL",
+"type": "Webservice",
+"maintainer": "Timo Homburg",
+"project": "mainzed Data"
+}
