@@ -61,7 +61,7 @@ function saveTextAsFile(tosave,fileext,filename)
 
 function convert() {
     var data = new FormData(); // das ist unser Daten-Objekt ...
-    data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhängen
+    data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhngen
     data.append('namespace',document.getElementById('namespace').value);
     $('#loading').show();
     $.ajax({
@@ -96,7 +96,7 @@ function convert() {
  
 	   <button id="uploadButton" onclick="convert()">Upload It</button>
  <script>
- $.getJSON( "rest/service/getXSLTemplates", function( data ) {
+ $.getJSON( "service/getXSLTemplates", function( data ) {
 	  var items = "";
 	  $.each( data, function( key, val ) {
 	    items+="<option id='" + key + "'>" + key + "</option>";
