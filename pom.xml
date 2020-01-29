@@ -136,6 +136,13 @@
     <artifactId>jersey-multipart</artifactId>
     <version>1.19</version>
 </dependency>
+<dependency>
+    <groupId>com.ontmalizer</groupId>
+    <artifactId>ontmalizer</artifactId>
+    <version>1.0</version>
+    <scope>system</scope>
+    <systemPath>${project.basedir}/lib/ontmalizer.jar</systemPath>
+</dependency>
     </dependencies>
 
   <repositories>
