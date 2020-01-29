@@ -96,7 +96,7 @@ function convert() {
  
 	   <button id="uploadButton" onclick="convert()">Upload It</button>
  <script>
- $.getJSON( "rest/service/getXSLTemplates", function( data ) {
+ $.getJSON( "service/getXSLTemplates", function( data ) {
 	  var items = "";
 	  $.each( data, function( key, val ) {
 	    items+="<option id='" + key + "'>" + key + "</option>";
