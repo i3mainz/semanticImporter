@@ -1,6 +1,10 @@
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+<script src="js/circle-progress.min.js"></script>
 <style>
 .loading { margin: auto; }
 
@@ -57,10 +61,11 @@ function saveTextAsFile(tosave,fileext,filename)
 
 function convert() {
     var data = new FormData(); // das ist unser Daten-Objekt ...
-    data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhngen
+    data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhängen
+    data.append('namespace',document.getElementById('namespace').value);
     $('#loading').show();
     $.ajax({
-       url: 'rest/service/convert?namespace='+encodeURIComponent($('#namespace').val())+"&indid="+encodeURIComponent($('#indid').val())+"&classname="+encodeURIComponent($('#classname').val()), // Wohin soll die Datei geschickt werden?
+       url: 'rest/service/convertSchemaToOWL', // Wohin soll die Datei geschickt werden?
        data: data,          // Das ist unser Datenobjekt.
        type: 'POST',         // HTTP-Methode, hier: POST
        processData: false,
@@ -77,28 +82,27 @@ function convert() {
 </head>
 
 <body>
+	<h1>XSD2OWL Converter: Convert your XML Schemas to (nonperfect) OWL</h1>
 <div id="spinner">
   <img src="ajax-loader.gif" alt="Loading" id="loading" style="display: none"/>
 </div>
-
-	<h1>Upload your file for content analysis:</h1>
-	
-	<h4>Metadata</h4>
-	Creator: <input id="creator" type="text"/><br/>
-	Creation Time: <input id="creationtime" type="datetime"/><br/>
-	Target Namespace: <input type="url" name="namespace" id="namespace"><br/>
- 	Individual Attribute: <input type="text" name="indid" id="indid"><br/>
- 	Class to assign (URI): <input type="text" name="classname" id="classname"><br/>
-	
- 	<table><tr>
- 	<th>Dataset Column</th><th>Column URI</th><th>Column Range</th><th>Value SPARQL Query</th><th>Regular Expression (Optional)</th>
- 	</tr>
- 	</table>
 	   <p>
-		Select a file : <input type="file" name="file" id="files" size="45" />
+		Select a file : <input type="file" name="file" id="files" size="45" /><br/><br/>
+		Individual Namespace: <input type="url" name="namespace" id="namespace"/><br/>
+		Format Name: <input type="url" name="formatname" id="formatname"/><br/>
+		Dataset Language: <input type="url" name="language" id="language"/><br/>
+		XSL Template: <select id="xsltemplate"></select>
 	   </p>
  
 	   <button id="uploadButton" onclick="convert()">Upload It</button>
- 
+ <script>
+ $.getJSON( "rest/service/getXSLTemplates", function( data ) {
+	  var items = "";
+	  $.each( data, function( key, val ) {
+	    items+="<option id='" + key + "'>" + key + "</option>";
+	  });
+	  $('#xsltemplate').html(items)
+	});
+ </script>
 </body>
 </html>

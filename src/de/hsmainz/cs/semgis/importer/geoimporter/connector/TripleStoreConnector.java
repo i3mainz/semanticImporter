@@ -27,6 +27,7 @@ import org.apache.jena.rdfconnection.RDFConnectionFactory;
 import org.apache.jena.sparql.engine.http.QueryEngineHTTP;
 
 
+
 public class TripleStoreConnector {
 
     String prefixList;
@@ -41,6 +42,13 @@ public class TripleStoreConnector {
             // TODO Auto-generated catch block
             System.out.println(ex.getMessage());
         }
+       
+    }
+    
+    public void addOntModelToTripleStore(OntModel model,String triplestore) {
+    	RDFConnection connection=RDFConnectionFactory.connect(triplestore);
+    	connection.load(model);
+    	connection.close();
     }
 
     //Remarks: The query result is expected to consist of exactly one data row and data column.
@@ -49,6 +57,7 @@ public class TripleStoreConnector {
         try
         {
             String queryString  = new StrSubstitutor(properties, "%%", "%%").replace(queryFormatString);
+            System.out.println("Property Query: "+queryString);
             //String url = URLEncoder.encode(endpoint, StandardCharsets.UTF_8.toString());
             qexec = QueryExecutionFactory.sparqlService(endpoint, prefixList + queryString);
 		    org.apache.jena.query.ResultSet results = qexec.execSelect();
@@ -64,13 +73,6 @@ public class TripleStoreConnector {
 		}
     }
     
-	public void addOntModelToTripleStore(OntModel model,String triplestore) {
-    	RDFConnectionFactory fac=new RDFConnectionFactory();
-    	RDFConnection connection=fac.connect(triplestore);
-    	connection.load(model);
-    	connection.close();
-    }
-	
     //TODO refactoring: move control logic part to "import heuristics"
     public class GeographicalResult
     {
@@ -178,6 +180,8 @@ public class TripleStoreConnector {
                     ind.addProperty(dprop, solu.get("?obj"));
                 }
             }
+        }catch(Exception e) {
+        	e.printStackTrace();
         }
         finally {
             if (null != qexec) 
@@ -240,6 +244,8 @@ public class TripleStoreConnector {
                     ind.addProperty(model.createDatatypeProperty(solu.get("?pred").asResource().getURI()), solu.getLiteral("?obj"));
                 }
             }
+        }catch(Exception e) {
+        	e.printStackTrace();
         }
         finally {
             if (null != qexec) 

@@ -35,7 +35,7 @@ public class Main {
 
 	public static void main(String[] args) throws SAXException, IOException, ParserConfigurationException {
 		Main main=new Main();
-		String shpfile="./importdata/geographicalnames.geojson";
+		String shpfile="importdata/geographicalnames.shp";
 		String configfile="config/geographicalnames.xml";
 		main.start(shpfile,shpfile.substring(shpfile.lastIndexOf('/')+1,shpfile.lastIndexOf('.'))+"_result.ttl",configfile,false);
 	}
@@ -72,6 +72,7 @@ public class Main {
 		map.put("charset","UTF-8");
 
 		DataStore dataStore = DataStoreFinder.getDataStore(map);
+		System.out.println(dataStore);
 		String typeName = dataStore.getTypeNames()[0];
 		FeatureSource<SimpleFeatureType, SimpleFeature> source =
 				dataStore.getFeatureSource(typeName);

@@ -138,10 +138,10 @@ public class DataImporter {
 						val.append(dataRow.get(id));
 					}
 					currentind=rootClass.createIndividual(config.namespace+val);
-					//importMetaData(currentind,val.toString());
+					importMetaData(currentind,val.toString());
 				}else {
 					currentind = rootClass.createIndividual(config.namespace + dataRow.get(config.indid));
-					//importMetaData(currentind,dataRow.get(config.indid));
+					importMetaData(currentind,dataRow.get(config.indid));
 				}
 
 
@@ -242,11 +242,11 @@ public class DataImporter {
 						"<http://www.opengis.net/def/crs/EPSG/0/" + epsgCode + "> " + geom.getValue().toString(),
 						"http://www.opengis.net/ont/geosparql#wktLiteral"));
 		
-		GeoJSONWriter writer = new GeoJSONWriter();
+		/*GeoJSONWriter writer = new GeoJSONWriter();
 		GeoJSON json = writer.write((Geometry) geom.getValue());
 		geomind.addLiteral(model.createDatatypeProperty("http://www.opengis.net/ont/geosparql#asGeoJSON"),
 				model.createTypedLiteral("<http://www.opengis.net/def/crs/EPSG/0/" + epsgCode + "> " + json.toString(),
-						"http://www.opengis.net/ont/geosparql#geojsonLiteral"));
+						"http://www.opengis.net/ont/geosparql#geojsonLiteral"));*/
 		ind.addProperty(model.createObjectProperty("http://www.opengis.net/ont/geosparql#hasGeometry"), geomind);
 		
 		// Import heuristics, try to match an overlapping spatial object from
@@ -273,6 +273,7 @@ public class DataImporter {
 					firstObj = cls.createIndividual(item.ind);
 					firstObj.addLabel(item.label);
 					ind.addProperty(OWL.sameAs, firstObj);
+					firstObj.addProperty(OWL.sameAs, ind);
 				}
 			}
 			if (null == firstInd) {
