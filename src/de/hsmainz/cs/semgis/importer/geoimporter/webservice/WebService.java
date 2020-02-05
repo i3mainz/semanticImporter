@@ -19,17 +19,25 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.xpath.XPathExpressionException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.ontology.OntModel;
+import org.json.JSONArray;
 import org.json.JSONObject;
+import org.xml.sax.SAXException;
 
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
 import de.hsmainz.cs.semgis.importer.geoimporter.importer.GMLImporter;
 import de.hsmainz.cs.semgis.importer.geoimporter.parser.GeoJSONParser;
+import de.hsmainz.cs.semgis.importer.schemaconverter.XSD2OWL;
+import de.hsmainz.cs.semgis.importer.schemaconverter.XSD2OWL.XMLTypes;
 
 @Path("/service")
 public class WebService {
