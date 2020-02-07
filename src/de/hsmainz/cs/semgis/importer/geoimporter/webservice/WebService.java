@@ -51,12 +51,15 @@ public class WebService {
 			@FormDataParam("file") InputStream mappingprofileInputStream,
 			@FormDataParam("file") FormDataContentDisposition mappingprofileDetail,
 			@QueryParam("format") String format,
-			@DefaultValue("") @QueryParam("namespace") String namespace) { 
+			@DefaultValue("") @QueryParam("namespace") String namespace,
+			@DefaultValue("") @QueryParam("provider") String provider,
+			@DefaultValue("") @QueryParam("license") String license,
+			@DefaultValue("") @QueryParam("origin") String origin) { 
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
         try {
         	FileUtils.copyInputStreamToFile(uploadedInputStream, new File("tempfile.gml"));
-			OntModel model=GMLImporter.processFile(fileDetail.getType(), "tempfile.gml", false, false, namespace);
+			OntModel model=GMLImporter.processFile(fileDetail.getType(), "tempfile.gml", false, false, namespace,provider,license,origin);
 			System.out.println("Finished the conversion");
 			StreamingOutput stream = new StreamingOutput() {
 			    @Override
@@ -81,12 +84,15 @@ public class WebService {
     public Response importKnownFormat(@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail,
 			@DefaultValue("gml") @QueryParam("format") String format, 
-			@DefaultValue("") @QueryParam("namespace") String namespace) { 
+			@DefaultValue("") @QueryParam("namespace") String namespace,
+			@DefaultValue("") @QueryParam("provider") String provider,
+			@DefaultValue("") @QueryParam("license") String license,
+			@DefaultValue("") @QueryParam("origin") String origin) { 
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
         try {
         	FileUtils.copyInputStreamToFile(uploadedInputStream, new File("tempfile.gml"));
-			OntModel model=GMLImporter.processFile(fileDetail.getType(), "tempfile.gml", false, false, namespace);
+			OntModel model=GMLImporter.processFile(fileDetail.getType(), "tempfile.gml", false, false, namespace,provider,license,origin);
 			System.out.println("Finished the conversion");
 			StreamingOutput stream = new StreamingOutput() {
 			    @Override
