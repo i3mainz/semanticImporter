@@ -63,6 +63,9 @@ function convert() {
     var data = new FormData(); // das ist unser Daten-Objekt ...
     data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhängen
     data.append('namespace',document.getElementById('namespace').value);
+    data.append('provider',document.getElementById('provider').value);
+    data.append('license',document.getElementById('license').value);
+    data.append('origin',document.getElementById('origin').value);
     $('#loading').show();
     $.ajax({
        url: 'rest/service/convertGML', // Wohin soll die Datei geschickt werden?
@@ -89,6 +92,9 @@ function convert() {
 	   <p>
 		Select a file : <input type="file" name="file" id="files" size="45" /><br/><br/>
 			   Individual Namespace: <input type="url" name="namespace" id="namespace"/>
+			   Provider: <input type="text" name="provider" id="provider"/><br/>
+			   License URL: <input type="url" name="license" id="license"/><br/>
+			   Origin URL: <input type="text" name="provider" id="provider"/><br/>
 	   </p>
  
 	   <button id="uploadButton" onclick="convert()">Upload It</button>
