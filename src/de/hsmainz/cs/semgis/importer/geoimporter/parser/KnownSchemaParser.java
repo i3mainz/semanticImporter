@@ -99,7 +99,7 @@ public class KnownSchemaParser implements ContentHandler {
 
 	private StringBuilder gmlStrBuilder;
 
-	private String codeSpace = "";
+	private String codeSpace = "",provider="",license="",origin="";
 
 	private Stack<String> stack, stack2;
 
@@ -135,7 +135,7 @@ public class KnownSchemaParser implements ContentHandler {
 	
 	private Date startTime;
 
-	public KnownSchemaParser(OntModel model, Boolean range, Boolean domain) throws IOException {
+	public KnownSchemaParser(OntModel model, Boolean range, Boolean domain, String outpath, String provider, String license, String origin) throws IOException {
 		this.model = model;
 		this.codelist = model.createClass("http://semgis.de/geodata#Codelist");
 		this.outertagCounter = 0;
@@ -154,6 +154,9 @@ public class KnownSchemaParser implements ContentHandler {
 		this.stack2 = new Stack<String>();
 		this.range = range;
 		this.domain = domain;
+		this.license=license;
+		this.provider=provider;
+		this.origin=origin;
 		this.restrictionStack = new Stack<Map<String, String>>();
 		this.writerWOModel = new FileWriter(new File("outriskwoModel.rdf"));
 		startTime=new Date(System.currentTimeMillis());
@@ -165,6 +168,13 @@ public class KnownSchemaParser implements ContentHandler {
 	}
 
 	private void importMetaData(Individual ind,String indname,String publisher) {
+		ind.addRDFType(model.createClass("http://purl.org/dc/terms/Dataset"));
+		ind.addProperty(model.createDatatypeProperty("http://purl.org/dc/terms/distribution"), license);
+		OntClass dist=model.createClass("http://purl.org/dc/terms/Distribution");
+		Individual distind=dist.createIndividual(ind.getURI()+"_distribution");
+		ind.addProperty(model.createObjectProperty("http://purl.org/dc/terms/distribution"), distind);
+		distind.addProperty(model.createObjectProperty("http://purl.org/dc/terms/downloadURL"), this.origin);
+		ind.addProperty(model.createDatatypeProperty("http://purl.org/dc/terms/license"), license);
 		OntClass entity=model.createClass("http://www.w3.org/ns/prov#Entity");
 		OntClass agent=model.createClass("http://www.w3.org/ns/prov#Agent");
 		OntClass activity=model.createClass("http://www.w3.org/ns/prov#Activity");
@@ -175,7 +185,9 @@ public class KnownSchemaParser implements ContentHandler {
 		ObjectProperty used=model.createObjectProperty("http://www.w3.org/ns/prov#used");
 		DatatypeProperty startedAtTime=model.createDatatypeProperty("http://www.w3.org/ns/prov#startedAtTime");
 		DatatypeProperty endedAtTime=model.createDatatypeProperty("http://www.w3.org/ns/prov#endedAtTime");
-		Individual agentind=agent.createIndividual("http://semgis.de/geodata#"+publisher);
+		Individual agentind=agent.createIndividual("http://semgis.de/geodata#"+this.provider.toLowerCase().replace(" ","_"));
+		ind.addProperty(model.createDatatypeProperty("http://purl.org/dc/terms/publisher"), agentind);
+		agentind.setLabel(this.provider, "en");
 		ind.addProperty(wasAttributedTo, agentind);
 		ind.addProperty(wasGeneratedBy, importactivity);
 		importactivity.addProperty(wasAssociatedWith, agentind);
