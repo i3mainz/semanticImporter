@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,10 +14,13 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
+import java.util.TimeZone;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.UUID;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -126,6 +130,10 @@ public class KnownSchemaParser implements ContentHandler {
 	private Attributes attributes;
 	
 	private String uuid=UUID.randomUUID().toString(),stringAttribute="";
+	
+	GregorianCalendar gc = new GregorianCalendar(TimeZone.getTimeZone("CEST"));
+	
+	private Date startTime;
 
 	public KnownSchemaParser(OntModel model, Boolean range, Boolean domain) throws IOException {
 		this.model = model;
@@ -148,6 +156,7 @@ public class KnownSchemaParser implements ContentHandler {
 		this.domain = domain;
 		this.restrictionStack = new Stack<Map<String, String>>();
 		this.writerWOModel = new FileWriter(new File("outriskwoModel.rdf"));
+		startTime=new Date(System.currentTimeMillis());
 	}
 
 	@Override
@@ -155,6 +164,42 @@ public class KnownSchemaParser implements ContentHandler {
 		// TODO Auto-generated method stub
 	}
 
+	private void importMetaData(Individual ind,String indname,String publisher) {
+		OntClass entity=model.createClass("http://www.w3.org/ns/prov#Entity");
+		OntClass agent=model.createClass("http://www.w3.org/ns/prov#Agent");
+		OntClass activity=model.createClass("http://www.w3.org/ns/prov#Activity");
+		Individual importactivity=activity.createIndividual("http://semgis.de/geodata#"+indname+"_gmlImporter");
+		ObjectProperty wasAttributedTo=model.createObjectProperty("http://www.w3.org/ns/prov#wasAttributedTo");
+		ObjectProperty wasAssociatedWith=model.createObjectProperty("http://www.w3.org/ns/prov#wasAssociatedWith");
+		ObjectProperty wasGeneratedBy=model.createObjectProperty("http://www.w3.org/ns/prov#wasGeneratedBy");
+		ObjectProperty used=model.createObjectProperty("http://www.w3.org/ns/prov#used");
+		DatatypeProperty startedAtTime=model.createDatatypeProperty("http://www.w3.org/ns/prov#startedAtTime");
+		DatatypeProperty endedAtTime=model.createDatatypeProperty("http://www.w3.org/ns/prov#endedAtTime");
+		Individual agentind=agent.createIndividual("http://semgis.de/geodata#"+publisher);
+		ind.addProperty(wasAttributedTo, agentind);
+		ind.addProperty(wasGeneratedBy, importactivity);
+		importactivity.addProperty(wasAssociatedWith, agentind);
+		importactivity.addProperty(used, ind);
+		String convertedDate;
+		try {
+			gc.setTime(startTime);
+			convertedDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(gc).toXMLFormat();
+			importactivity.addProperty(startedAtTime, convertedDate);
+		} catch (DatatypeConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			gc.setTime(new Date(System.currentTimeMillis()));
+			convertedDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(gc).toXMLFormat();
+			importactivity.addProperty(endedAtTime, convertedDate);
+		} catch (DatatypeConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ind.addRDFType(entity);
+	}
+	
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		this.attributes = attributes;
@@ -186,6 +231,7 @@ public class KnownSchemaParser implements ContentHandler {
 				this.inClass = true;
 				if (openedTags.size() % 2 != 0) {
 					this.currentIndividual = model.createIndividual(indid, model.createOntResource(indid));
+					this.importMetaData(this.currentIndividual, indid, "GDI-DE");
 					this.currentIndividual.setRDFType(model.createClass(uriString));
 					this.currentType = uriString;
 					if (uriString.contains("Envelop")) {
@@ -546,6 +592,7 @@ public class KnownSchemaParser implements ContentHandler {
 			restrictionStack.pop();
 			if (!stack.isEmpty()) {
 				this.currentIndividual = this.model.getIndividual(stack.lastElement());
+				this.importMetaData(this.currentIndividual, this.currentIndividual.getLocalName(), "GDI-DE");
 				// System.out.println("endElement addProperty: "+lastElement);
 				this.currentIndividual.addProperty(
 						this.model.createObjectProperty(this.openedTags.get(this.openedTags.size() - 1)),
