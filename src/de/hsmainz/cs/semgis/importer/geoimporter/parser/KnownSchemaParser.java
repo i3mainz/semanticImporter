@@ -59,6 +59,8 @@ public class KnownSchemaParser implements ContentHandler {
 	public static final String NAME = "name";
 	public static final String TYPE = "type";
 	public static final String GMLLiteral = "gmlLiteral";
+	
+	public static final String hasGeometry= "hasGeometry";
 
 	private static final String TRUE = "true";
 
@@ -78,7 +80,9 @@ public class KnownSchemaParser implements ContentHandler {
 	private Map<String, OntResource> knownMappings;
 
 	private Individual currentIndividual;
-
+	
+	private Individual lastlinkedIndividual;
+	
 	private String currentType;
 
 	private Map<String, String> currentRestrictions;
@@ -244,6 +248,7 @@ public class KnownSchemaParser implements ContentHandler {
 					propInd = model.createIndividual(linkString, this.model.createOntResource(linkString));
 					this.currentIndividual
 							.addProperty(model.createObjectProperty(openedTags.get(openedTags.size() - 1)), propInd);
+					this.lastlinkedIndividual=this.currentIndividual;
 					if (domain)
 						model.getObjectProperty(openedTags.get(openedTags.size() - 1))
 								.addDomain(this.currentIndividual.getRDFType());
@@ -251,6 +256,7 @@ public class KnownSchemaParser implements ContentHandler {
 					propInd = model.getIndividual(linkString);
 					this.currentIndividual
 							.addProperty(model.createObjectProperty(openedTags.get(openedTags.size() - 1)), propInd);
+					this.lastlinkedIndividual=this.currentIndividual;
 					if (domain)
 						model.getObjectProperty(openedTags.get(openedTags.size() - 1))
 								.addDomain(this.currentIndividual.getRDFType());
@@ -314,11 +320,19 @@ public class KnownSchemaParser implements ContentHandler {
 						.append(">");
 				String gmlStr = gmlStrBuilder.toString();
 				// System.out.println("gmlStr: "+gmlStr);
+				if(this.lastlinkedIndividual!=null) {
+					this.lastlinkedIndividual.addProperty(this.model.createObjectProperty(NSGEO + hasGeometry),this.currentIndividual);
+					this.lastlinkedIndividual=null;
+				}
 				this.currentIndividual.addProperty(this.model.createDatatypeProperty(NSGEO + ASGML),
 						this.model.createTypedLiteral(gmlStr, NSGEO + GMLLiteral));
 				if (!wktlit.contains(POINT))
 					wktlit = formatWKTString(wktlit, ' ', 2);
 				try {
+					if(this.lastlinkedIndividual!=null) {
+						this.lastlinkedIndividual.addProperty(this.model.createObjectProperty(NSGEO + hasGeometry),this.currentIndividual);
+						this.lastlinkedIndividual=null;
+					}
 					Geometry geom = (Geometry) wktreader
 							.read(wktlit);
 					this.currentIndividual.addProperty(this.model.createDatatypeProperty(NSGEO + WKT),
@@ -506,6 +520,7 @@ public class KnownSchemaParser implements ContentHandler {
 				this.currentIndividual.addProperty(
 						model.createObjectProperty(openedTags.get(openedTags.size() - 1)),
 						ind);
+				this.lastlinkedIndividual=this.currentIndividual;
 		}
 		// System.out.println("Remove: "+uri+localName+ this.openedTags.contains(comb)+"
 		// - "+this.openedTags.size());
@@ -520,6 +535,8 @@ public class KnownSchemaParser implements ContentHandler {
 		{
 			if (localName.contains("Envelop")) {
 				this.envelope = false;
+				if(this.lastlinkedIndividual!=null)
+					this.lastlinkedIndividual.addProperty(this.model.createObjectProperty(NSGEO + hasGeometry),this.currentIndividual);
 				this.multipleChildrenBuffer.append("</").append(qName).append(">");
 				this.currentIndividual.addProperty(this.model.createDatatypeProperty(NSGEO + ASGML),
 						this.model.createTypedLiteral(multipleChildrenBuffer.toString(), GMLLiteral));
