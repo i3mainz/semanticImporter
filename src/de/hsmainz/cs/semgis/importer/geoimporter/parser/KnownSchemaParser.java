@@ -625,6 +625,7 @@ public class KnownSchemaParser implements ContentHandler {
 						e.printStackTrace();
 					}
 				}else if(multipleChildrenBuffer.toString().contains(":upperCorner") && multipleChildrenBuffer.toString().contains(":lowerCorner")) {
+					System.out.println(multipleChildrenBuffer.toString());
 					String lowlit = multipleChildrenBuffer.substring(multipleChildrenBuffer.indexOf(":lowerCorner"),
 							multipleChildrenBuffer.indexOf(":lowerCorner", multipleChildrenBuffer.indexOf(":lowerCorner")));
 					String uplit = multipleChildrenBuffer.substring(multipleChildrenBuffer.indexOf(":upperCorner"),
