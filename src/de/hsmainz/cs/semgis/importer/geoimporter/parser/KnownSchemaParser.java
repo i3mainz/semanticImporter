@@ -168,7 +168,7 @@ public class KnownSchemaParser implements ContentHandler {
 		OntClass entity=model.createClass("http://www.w3.org/ns/prov#Entity");
 		OntClass agent=model.createClass("http://www.w3.org/ns/prov#Agent");
 		OntClass activity=model.createClass("http://www.w3.org/ns/prov#Activity");
-		Individual importactivity=activity.createIndividual("http://semgis.de/geodata#"+indname+"_gmlImporter");
+		Individual importactivity=activity.createIndividual(ind.getURI()+"_GMLImporter");
 		ObjectProperty wasAttributedTo=model.createObjectProperty("http://www.w3.org/ns/prov#wasAttributedTo");
 		ObjectProperty wasAssociatedWith=model.createObjectProperty("http://www.w3.org/ns/prov#wasAssociatedWith");
 		ObjectProperty wasGeneratedBy=model.createObjectProperty("http://www.w3.org/ns/prov#wasGeneratedBy");
