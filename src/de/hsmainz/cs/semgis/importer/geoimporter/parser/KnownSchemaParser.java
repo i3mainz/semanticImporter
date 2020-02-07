@@ -188,6 +188,9 @@ public class KnownSchemaParser implements ContentHandler {
 		ObjectProperty used=model.createObjectProperty("http://www.w3.org/ns/prov#used");
 		DatatypeProperty startedAtTime=model.createDatatypeProperty("http://www.w3.org/ns/prov#startedAtTime");
 		DatatypeProperty endedAtTime=model.createDatatypeProperty("http://www.w3.org/ns/prov#endedAtTime");
+		if(this.provider.isEmpty()) {
+			this.provider="prov";
+		}
 		Individual agentind=agent.createIndividual("http://semgis.de/geodata#"+this.provider.toLowerCase().replace(" ","_"));
 		ind.addProperty(model.createDatatypeProperty("http://purl.org/dc/terms/publisher"), agentind);
 		agentind.setLabel(this.provider, "en");
@@ -247,7 +250,8 @@ public class KnownSchemaParser implements ContentHandler {
 				if (openedTags.size() % 2 != 0) {
 					this.currentIndividual = model.createIndividual(indid, model.createOntResource(indid));
 					this.importMetaData(this.currentIndividual, indid, "GDI-DE");
-					this.currentIndividual.setRDFType(model.createClass(uriString));
+					OntClass cls=model.createClass(uriString);
+					this.currentIndividual.setRDFType(cls);
 					this.currentType = uriString;
 					if (uriString.contains("Envelop")) {
 						this.envelope = true;
