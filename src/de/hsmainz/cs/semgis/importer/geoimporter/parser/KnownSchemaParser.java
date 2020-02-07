@@ -63,8 +63,8 @@ public class KnownSchemaParser implements ContentHandler {
 	public static final String NAME = "name";
 	public static final String TYPE = "type";
 	public static final String GMLLiteral = "gmlLiteral";
-	
-	public static final String hasGeometry= "hasGeometry";
+
+	public static final String hasGeometry = "hasGeometry";
 
 	private static final String TRUE = "true";
 
@@ -84,9 +84,9 @@ public class KnownSchemaParser implements ContentHandler {
 	private Map<String, OntResource> knownMappings;
 
 	private Individual currentIndividual;
-	
+
 	private Individual lastlinkedIndividual;
-	
+
 	private String currentType;
 
 	private Map<String, String> currentRestrictions;
@@ -99,7 +99,7 @@ public class KnownSchemaParser implements ContentHandler {
 
 	private StringBuilder gmlStrBuilder;
 
-	private String codeSpace = "",provider="",license="",origin="";
+	private String codeSpace = "", provider = "", license = "", origin = "";
 
 	private Stack<String> stack, stack2;
 
@@ -119,7 +119,7 @@ public class KnownSchemaParser implements ContentHandler {
 
 	private FileWriter writerWOModel;
 
-	private Boolean range = false, domain = false,stringAttributeBool=false;
+	private Boolean range = false, domain = false, stringAttributeBool = false;
 
 	private StringBuilder literalBuffer;
 
@@ -128,14 +128,15 @@ public class KnownSchemaParser implements ContentHandler {
 	private OntClass codelist;
 
 	private Attributes attributes;
-	
-	private String uuid=UUID.randomUUID().toString(),stringAttribute="";
-	
+
+	private String uuid = UUID.randomUUID().toString(), stringAttribute = "";
+
 	GregorianCalendar gc = new GregorianCalendar(TimeZone.getTimeZone("CEST"));
-	
+
 	private Date startTime;
 
-	public KnownSchemaParser(OntModel model, Boolean range, Boolean domain, String outpath, String provider, String license, String origin) throws IOException {
+	public KnownSchemaParser(OntModel model, Boolean range, Boolean domain, String outpath, String provider,
+			String license, String origin) throws IOException {
 		this.model = model;
 		this.codelist = model.createClass("http://semgis.de/geodata#Codelist");
 		this.outertagCounter = 0;
@@ -154,12 +155,12 @@ public class KnownSchemaParser implements ContentHandler {
 		this.stack2 = new Stack<String>();
 		this.range = range;
 		this.domain = domain;
-		this.license=license;
-		this.provider=provider;
-		this.origin=origin;
+		this.license = license;
+		this.provider = provider;
+		this.origin = origin;
 		this.restrictionStack = new Stack<Map<String, String>>();
 		this.writerWOModel = new FileWriter(new File("outriskwoModel.rdf"));
-		startTime=new Date(System.currentTimeMillis());
+		startTime = new Date(System.currentTimeMillis());
 	}
 
 	@Override
@@ -167,31 +168,32 @@ public class KnownSchemaParser implements ContentHandler {
 		// TODO Auto-generated method stub
 	}
 
-	private void importMetaData(Individual ind,String indname,String publisher) {
-		if(!this.license.isEmpty())
+	private void importMetaData(Individual ind, String indname, String publisher) {
+		if (!this.license.isEmpty())
 			ind.addProperty(model.createDatatypeProperty("http://purl.org/dc/terms/distribution"), this.license);
-		if(!origin.isEmpty()) {
-			OntClass dist=model.createClass("http://purl.org/dc/terms/Distribution");
-			Individual distind=dist.createIndividual(ind.getURI()+"_distribution");
+		if (!origin.isEmpty()) {
+			OntClass dist = model.createClass("http://purl.org/dc/terms/Distribution");
+			Individual distind = dist.createIndividual(ind.getURI() + "_distribution");
 			ind.addProperty(model.createObjectProperty("http://purl.org/dc/terms/distribution"), distind);
 			distind.addProperty(model.createObjectProperty("http://purl.org/dc/terms/downloadURL"), this.origin);
 			ind.addProperty(model.createDatatypeProperty("http://purl.org/dc/terms/license"), this.license);
 		}
 		ind.addRDFType(model.createClass("http://purl.org/dc/terms/Dataset"));
-		OntClass entity=model.createClass("http://www.w3.org/ns/prov#Entity");
-		OntClass agent=model.createClass("http://www.w3.org/ns/prov#Agent");
-		OntClass activity=model.createClass("http://www.w3.org/ns/prov#Activity");
-		Individual importactivity=activity.createIndividual(ind.getURI()+"_GMLImporter");
-		ObjectProperty wasAttributedTo=model.createObjectProperty("http://www.w3.org/ns/prov#wasAttributedTo");
-		ObjectProperty wasAssociatedWith=model.createObjectProperty("http://www.w3.org/ns/prov#wasAssociatedWith");
-		ObjectProperty wasGeneratedBy=model.createObjectProperty("http://www.w3.org/ns/prov#wasGeneratedBy");
-		ObjectProperty used=model.createObjectProperty("http://www.w3.org/ns/prov#used");
-		DatatypeProperty startedAtTime=model.createDatatypeProperty("http://www.w3.org/ns/prov#startedAtTime");
-		DatatypeProperty endedAtTime=model.createDatatypeProperty("http://www.w3.org/ns/prov#endedAtTime");
-		if(this.provider.isEmpty()) {
-			this.provider="prov";
+		OntClass entity = model.createClass("http://www.w3.org/ns/prov#Entity");
+		OntClass agent = model.createClass("http://www.w3.org/ns/prov#Agent");
+		OntClass activity = model.createClass("http://www.w3.org/ns/prov#Activity");
+		Individual importactivity = activity.createIndividual(ind.getURI() + "_GMLImporter");
+		ObjectProperty wasAttributedTo = model.createObjectProperty("http://www.w3.org/ns/prov#wasAttributedTo");
+		ObjectProperty wasAssociatedWith = model.createObjectProperty("http://www.w3.org/ns/prov#wasAssociatedWith");
+		ObjectProperty wasGeneratedBy = model.createObjectProperty("http://www.w3.org/ns/prov#wasGeneratedBy");
+		ObjectProperty used = model.createObjectProperty("http://www.w3.org/ns/prov#used");
+		DatatypeProperty startedAtTime = model.createDatatypeProperty("http://www.w3.org/ns/prov#startedAtTime");
+		DatatypeProperty endedAtTime = model.createDatatypeProperty("http://www.w3.org/ns/prov#endedAtTime");
+		if (this.provider.isEmpty()) {
+			this.provider = "prov";
 		}
-		Individual agentind=agent.createIndividual("http://semgis.de/geodata#"+this.provider.toLowerCase().replace(" ","_"));
+		Individual agentind = agent
+				.createIndividual("http://semgis.de/geodata#" + this.provider.toLowerCase().replace(" ", "_"));
 		ind.addProperty(model.createDatatypeProperty("http://purl.org/dc/terms/publisher"), agentind);
 		agentind.setLabel(this.provider, "en");
 		ind.addProperty(wasAttributedTo, agentind);
@@ -217,7 +219,7 @@ public class KnownSchemaParser implements ContentHandler {
 		}
 		ind.addRDFType(entity);
 	}
-	
+
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		this.attributes = attributes;
@@ -250,7 +252,7 @@ public class KnownSchemaParser implements ContentHandler {
 				if (openedTags.size() % 2 != 0) {
 					this.currentIndividual = model.createIndividual(indid, model.createOntResource(indid));
 					this.importMetaData(this.currentIndividual, indid, "GDI-DE");
-					OntClass cls=model.createClass(uriString);
+					OntClass cls = model.createClass(uriString);
 					this.currentIndividual.setRDFType(cls);
 					this.currentType = uriString;
 					if (uriString.contains("Envelop")) {
@@ -313,7 +315,7 @@ public class KnownSchemaParser implements ContentHandler {
 					propInd = model.createIndividual(linkString, this.model.createOntResource(linkString));
 					this.currentIndividual
 							.addProperty(model.createObjectProperty(openedTags.get(openedTags.size() - 1)), propInd);
-					this.lastlinkedIndividual=this.currentIndividual;
+					this.lastlinkedIndividual = this.currentIndividual;
 					if (domain)
 						model.getObjectProperty(openedTags.get(openedTags.size() - 1))
 								.addDomain(this.currentIndividual.getRDFType());
@@ -321,7 +323,7 @@ public class KnownSchemaParser implements ContentHandler {
 					propInd = model.getIndividual(linkString);
 					this.currentIndividual
 							.addProperty(model.createObjectProperty(openedTags.get(openedTags.size() - 1)), propInd);
-					this.lastlinkedIndividual=this.currentIndividual;
+					this.lastlinkedIndividual = this.currentIndividual;
 					if (domain)
 						model.getObjectProperty(openedTags.get(openedTags.size() - 1))
 								.addDomain(this.currentIndividual.getRDFType());
@@ -343,7 +345,6 @@ public class KnownSchemaParser implements ContentHandler {
 
 		literalBuffer = new StringBuilder();
 
-
 	}
 
 	@Override
@@ -351,15 +352,15 @@ public class KnownSchemaParser implements ContentHandler {
 		// if(outertagCounter>beginProcessing){
 		String literal = new String(ch, start, length);
 		literalBuffer.append(literal.trim());
-		 if (featureMember && openedTags.size() > 1 && !literal.trim().isEmpty() ) {
-			 if(openedTags.get(openedTags.size() - 1).contains("value")) {
-					this.stringAttributeBool=false;
-					System.out.println("StringAttribute Adding: "+this.stringAttribute+" - "+literal);
-					currentIndividual.addProperty(model.createDatatypeProperty(this.stringAttribute),
-							this.determineLiteralType(literal));
-					this.stringAttribute="";
-					this.alreadyHandled=true;
-				}else if (knownMappings.get(openedTags.get(openedTags.size() - 1)) != null
+		if (featureMember && openedTags.size() > 1 && !literal.trim().isEmpty()) {
+			if (openedTags.get(openedTags.size() - 1).contains("value")) {
+				this.stringAttributeBool = false;
+				System.out.println("StringAttribute Adding: " + this.stringAttribute + " - " + literal);
+				currentIndividual.addProperty(model.createDatatypeProperty(this.stringAttribute),
+						this.determineLiteralType(literal));
+				this.stringAttribute = "";
+				this.alreadyHandled = true;
+			} else if (knownMappings.get(openedTags.get(openedTags.size() - 1)) != null
 					&& knownMappings.get(openedTags.get(openedTags.size() - 1)).isObjectProperty()
 					&& this.currentRestrictions.containsKey(openedTags.get(openedTags.size() - 1))
 					&& !this.currentRestrictions.get(openedTags.get(openedTags.size() - 1))
@@ -385,21 +386,22 @@ public class KnownSchemaParser implements ContentHandler {
 						.append(">");
 				String gmlStr = gmlStrBuilder.toString();
 				// System.out.println("gmlStr: "+gmlStr);
-				if(this.lastlinkedIndividual!=null) {
-					this.lastlinkedIndividual.addProperty(this.model.createObjectProperty(NSGEO + hasGeometry),this.currentIndividual);
-					this.lastlinkedIndividual=null;
+				if (this.lastlinkedIndividual != null) {
+					this.lastlinkedIndividual.addProperty(this.model.createObjectProperty(NSGEO + hasGeometry),
+							this.currentIndividual);
+					this.lastlinkedIndividual = null;
 				}
 				this.currentIndividual.addProperty(this.model.createDatatypeProperty(NSGEO + ASGML),
 						this.model.createTypedLiteral(gmlStr, NSGEO + GMLLiteral));
 				if (!wktlit.contains(POINT))
 					wktlit = formatWKTString(wktlit, ' ', 2);
 				try {
-					if(this.lastlinkedIndividual!=null) {
-						this.lastlinkedIndividual.addProperty(this.model.createObjectProperty(NSGEO + hasGeometry),this.currentIndividual);
-						this.lastlinkedIndividual=null;
+					if (this.lastlinkedIndividual != null) {
+						this.lastlinkedIndividual.addProperty(this.model.createObjectProperty(NSGEO + hasGeometry),
+								this.currentIndividual);
+						this.lastlinkedIndividual = null;
 					}
-					Geometry geom = (Geometry) wktreader
-							.read(wktlit);
+					Geometry geom = (Geometry) wktreader.read(wktlit);
 					this.currentIndividual.addProperty(this.model.createDatatypeProperty(NSGEO + WKT),
 							this.model.createTypedLiteral(wktlit, NSGEO + WKTLiteral));
 				} catch (Exception e) {
@@ -409,11 +411,10 @@ public class KnownSchemaParser implements ContentHandler {
 			}
 
 		}
-		/*if(!this.stringAttribute.isEmpty()) {
-			this.stringAttributeBool=true;
-		}else {
-			this.stringAttributeBool=false;
-		}*/
+		/*
+		 * if(!this.stringAttribute.isEmpty()) { this.stringAttributeBool=true; }else {
+		 * this.stringAttributeBool=false; }
+		 */
 	}
 
 	public static String formatWKTString(String str, char c, int n) {
@@ -531,7 +532,7 @@ public class KnownSchemaParser implements ContentHandler {
 					this.currentIndividual.addProperty(
 							model.createAnnotationProperty(openedTags.get(openedTags.size() - 1)),
 							this.model.createOntResource(literal));
-					alreadyHandled=true;
+					alreadyHandled = true;
 				} else if (knownMappings.get(openedTags.get(openedTags.size() - 1)) != null
 						&& knownMappings.get(openedTags.get(openedTags.size() - 1)).isDatatypeProperty()) {
 					if (!codeSpace.isEmpty()) {
@@ -552,7 +553,7 @@ public class KnownSchemaParser implements ContentHandler {
 								model.getDatatypeProperty(openedTags.get(openedTags.size() - 1)),
 								model.getResource(liter.getDatatypeURI()));
 					}
-					alreadyHandled=true;
+					alreadyHandled = true;
 				} else if (knownMappings.get(openedTags.get(openedTags.size() - 1)) != null
 						&& knownMappings.get(openedTags.get(openedTags.size() - 1)).isProperty()) {
 					if (!codeSpace.isEmpty()) {
@@ -564,28 +565,26 @@ public class KnownSchemaParser implements ContentHandler {
 								model.createDatatypeProperty(openedTags.get(openedTags.size() - 1)),
 								this.determineLiteralType(literal));
 					}
-					alreadyHandled=true;
+					alreadyHandled = true;
 				}
 			}
 		}
-		if(openedTags.size() % 2 == 0 && !alreadyHandled && !stack.isEmpty() && !openedTags.isEmpty() 
-				 && literal.isEmpty() && attributes.getLength()>1) {
-				OntClass cls=model.createClass(uuid);
-				Individual ind=cls.createIndividual(UUID.randomUUID().toString());
-				System.out.println((openedTags.get(openedTags.size() - 1)));
-				System.out.println(openedTags.get(openedTags.size() - 1)+" Literal is empty "+attributes.getLength());
-				int i=0;
-				while(i<attributes.getLength()) {
-					System.out.println(openedTags.get(openedTags.size() - 1)+" - "
-				+attributes.getLocalName(i)+" - "+attributes.getValue(i));
-					ind.addProperty(model.createDatatypeProperty(attributes.getLocalName(i)),
-							determineLiteralType(attributes.getValue(i)));
-					i++;
-				}
-				this.currentIndividual.addProperty(
-						model.createObjectProperty(openedTags.get(openedTags.size() - 1)),
-						ind);
-				this.lastlinkedIndividual=this.currentIndividual;
+		if (openedTags.size() % 2 == 0 && !alreadyHandled && !stack.isEmpty() && !openedTags.isEmpty()
+				&& literal.isEmpty() && attributes.getLength() > 1) {
+			OntClass cls = model.createClass(uuid);
+			Individual ind = cls.createIndividual(UUID.randomUUID().toString());
+			System.out.println((openedTags.get(openedTags.size() - 1)));
+			System.out.println(openedTags.get(openedTags.size() - 1) + " Literal is empty " + attributes.getLength());
+			int i = 0;
+			while (i < attributes.getLength()) {
+				System.out.println(openedTags.get(openedTags.size() - 1) + " - " + attributes.getLocalName(i) + " - "
+						+ attributes.getValue(i));
+				ind.addProperty(model.createDatatypeProperty(attributes.getLocalName(i)),
+						determineLiteralType(attributes.getValue(i)));
+				i++;
+			}
+			this.currentIndividual.addProperty(model.createObjectProperty(openedTags.get(openedTags.size() - 1)), ind);
+			this.lastlinkedIndividual = this.currentIndividual;
 		}
 		// System.out.println("Remove: "+uri+localName+ this.openedTags.contains(comb)+"
 		// - "+this.openedTags.size());
@@ -600,27 +599,31 @@ public class KnownSchemaParser implements ContentHandler {
 		{
 			if (localName.contains("Envelop")) {
 				this.envelope = false;
-				if(this.lastlinkedIndividual!=null)
-					this.lastlinkedIndividual.addProperty(this.model.createObjectProperty(NSGEO + hasGeometry),this.currentIndividual);
+				if (this.lastlinkedIndividual != null)
+					this.lastlinkedIndividual.addProperty(this.model.createObjectProperty(NSGEO + hasGeometry),
+							this.currentIndividual);
 				this.multipleChildrenBuffer.append("</").append(qName).append(">");
 				this.currentIndividual.addProperty(this.model.createDatatypeProperty(NSGEO + ASGML),
 						this.model.createTypedLiteral(multipleChildrenBuffer.toString(), GMLLiteral));
-				String lit=multipleChildrenBuffer.substring(multipleChildrenBuffer.indexOf(":pos"),multipleChildrenBuffer.indexOf(":pos",multipleChildrenBuffer.indexOf(":pos")));
-				lit=lit.substring(lit.indexOf('>')+1,lit.indexOf('<'));
-				String wktlit = this.currentIndividual.getRDFType().getLocalName() + "(" + lit + ")";
-				if (!wktlit.contains(POINT))
-					wktlit = formatWKTString(wktlit, ' ', 2);
-				try {
-					if(this.lastlinkedIndividual!=null) {
-						this.lastlinkedIndividual.addProperty(this.model.createObjectProperty(NSGEO + hasGeometry),this.currentIndividual);
-						this.lastlinkedIndividual=null;
+				if (multipleChildrenBuffer.toString().contains(":pos")) {
+					String lit = multipleChildrenBuffer.substring(multipleChildrenBuffer.indexOf(":pos"),
+							multipleChildrenBuffer.indexOf(":pos", multipleChildrenBuffer.indexOf(":pos")));
+					lit = lit.substring(lit.indexOf('>') + 1, lit.indexOf('<'));
+					String wktlit = this.currentIndividual.getRDFType().getLocalName() + "(" + lit + ")";
+					if (!wktlit.contains(POINT))
+						wktlit = formatWKTString(wktlit, ' ', 2);
+					try {
+						if (this.lastlinkedIndividual != null) {
+							this.lastlinkedIndividual.addProperty(this.model.createObjectProperty(NSGEO + hasGeometry),
+									this.currentIndividual);
+							this.lastlinkedIndividual = null;
+						}
+						Geometry geom = (Geometry) wktreader.read(wktlit);
+						this.currentIndividual.addProperty(this.model.createDatatypeProperty(NSGEO + WKT),
+								this.model.createTypedLiteral(wktlit, NSGEO + WKTLiteral));
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
-					Geometry geom = (Geometry) wktreader
-							.read(wktlit);
-					this.currentIndividual.addProperty(this.model.createDatatypeProperty(NSGEO + WKT),
-							this.model.createTypedLiteral(wktlit, NSGEO + WKTLiteral));
-				} catch (Exception e) {
-					e.printStackTrace();
 				}
 			}
 			String lastElement = stack.pop();
@@ -639,15 +642,14 @@ public class KnownSchemaParser implements ContentHandler {
 			}
 			if (!restrictionStack.isEmpty())
 				this.currentRestrictions = restrictionStack.lastElement();
-			alreadyHandled=true;
+			alreadyHandled = true;
 		}
 
-		
 		if (featureMembers.contains(localName)) {
 			this.featureMember = false;
 		}
-		if(localName.contains("stringAttribute")) {
-			stringAttributeBool=false;
+		if (localName.contains("stringAttribute")) {
+			stringAttributeBool = false;
 		}
 		if ((uri + "#" + localName).equals(currentType)) {
 			this.inClass = false;
@@ -759,7 +761,6 @@ public class KnownSchemaParser implements ContentHandler {
 		}
 		test2.close();
 	}
-
 
 	@Override
 	public void setDocumentLocator(Locator locator) {
