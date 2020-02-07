@@ -624,6 +624,17 @@ public class KnownSchemaParser implements ContentHandler {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
+				}else if(multipleChildrenBuffer.toString().contains(":upperCorner") && multipleChildrenBuffer.toString().contains(":lowerCorner")) {
+					String lowlit = multipleChildrenBuffer.substring(multipleChildrenBuffer.indexOf(":lowerCorner"),
+							multipleChildrenBuffer.indexOf(":lowerCorner", multipleChildrenBuffer.indexOf(":lowerCorner")));
+					String uplit = multipleChildrenBuffer.substring(multipleChildrenBuffer.indexOf(":upperCorner"),
+							multipleChildrenBuffer.indexOf(":upperCorner", multipleChildrenBuffer.indexOf(":upperCorner")));
+					lowlit = lowlit.substring(lowlit.indexOf('>') + 1, lowlit.indexOf('<'));
+					uplit = uplit.substring(uplit.indexOf('>') + 1, uplit.indexOf('<'));
+					String combinedlit=lowlit+" "+uplit;
+					combinedlit="ENVELOPE("+combinedlit.trim().replace(" ",",")+")";
+					this.currentIndividual.addProperty(this.model.createDatatypeProperty(NSGEO + WKT),
+							this.model.createTypedLiteral(combinedlit, NSGEO + WKTLiteral));
 				}
 			}
 			String lastElement = stack.pop();
