@@ -605,6 +605,23 @@ public class KnownSchemaParser implements ContentHandler {
 				this.multipleChildrenBuffer.append("</").append(qName).append(">");
 				this.currentIndividual.addProperty(this.model.createDatatypeProperty(NSGEO + ASGML),
 						this.model.createTypedLiteral(multipleChildrenBuffer.toString(), GMLLiteral));
+				String lit=multipleChildrenBuffer.substring(multipleChildrenBuffer.indexOf(":pos"),multipleChildrenBuffer.indexOf(":pos",multipleChildrenBuffer.indexOf(":pos")));
+				lit=lit.substring(lit.indexOf('>')+1,lit.indexOf('<'));
+				String wktlit = this.currentIndividual.getRDFType().getLocalName() + "(" + lit + ")";
+				if (!wktlit.contains(POINT))
+					wktlit = formatWKTString(wktlit, ' ', 2);
+				try {
+					if(this.lastlinkedIndividual!=null) {
+						this.lastlinkedIndividual.addProperty(this.model.createObjectProperty(NSGEO + hasGeometry),this.currentIndividual);
+						this.lastlinkedIndividual=null;
+					}
+					Geometry geom = (Geometry) wktreader
+							.read(wktlit);
+					this.currentIndividual.addProperty(this.model.createDatatypeProperty(NSGEO + WKT),
+							this.model.createTypedLiteral(wktlit, NSGEO + WKTLiteral));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 			String lastElement = stack.pop();
 			stack2.pop();
