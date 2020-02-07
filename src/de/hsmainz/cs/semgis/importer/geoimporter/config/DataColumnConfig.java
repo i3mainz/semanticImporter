@@ -24,6 +24,8 @@ public class DataColumnConfig {
 
 	public String range; // valuetype
 	public String valueprop;
+	
+	public String keepdataprop;
 
 	public String isind;	//TODO??
 	

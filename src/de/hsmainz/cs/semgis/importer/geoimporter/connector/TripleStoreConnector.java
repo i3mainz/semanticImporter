@@ -57,7 +57,7 @@ public class TripleStoreConnector {
         try
         {
             String queryString  = new StrSubstitutor(properties, "%%", "%%").replace(queryFormatString);
-            System.out.println("Property Query: "+queryString);
+            //System.out.println("Property Query: "+queryString);
             //String url = URLEncoder.encode(endpoint, StandardCharsets.UTF_8.toString());
             qexec = QueryExecutionFactory.sparqlService(endpoint, prefixList + queryString);
 		    org.apache.jena.query.ResultSet results = qexec.execSelect();
@@ -102,7 +102,7 @@ public class TripleStoreConnector {
             
            //classOfResourceQuery.append("FILTER NOT EXISTS { ?x rdfs:subClassOf ?class. FILTER (?x != ?class) }}");
             classOfResourceQuery.append("}");
-            System.out.println("Query: "+classOfResourceQuery.toString());
+            //System.out.println("Query: "+classOfResourceQuery.toString());
             qexec = new QueryEngineHTTP(endpoint, classOfResourceQuery.toString());
             org.apache.jena.query.ResultSet results = qexec.execSelect();
             
@@ -150,7 +150,7 @@ public class TripleStoreConnector {
             classOfResourceQuery.append("OPTIONAL {?obj wdt:P31 ?class .}"+System.lineSeparator());
             classOfResourceQuery.append("SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }}"+System.lineSeparator());
             
-            System.out.println(classOfResourceQuery.toString());
+            //System.out.println(classOfResourceQuery.toString());
             qexec = new QueryEngineHTTP(endpoint, classOfResourceQuery.toString());
             ResultSet results = qexec.execSelect();
             OntClass superCls=model.createClass(defaultNamespace + superClass);
@@ -205,7 +205,7 @@ public class TripleStoreConnector {
             classOfResourceQuery.append("OPTIONAL {?class rdfs:label ?classLabel .}"+System.lineSeparator());
             */classOfResourceQuery.append("}"+System.lineSeparator());
             
-            System.out.println(classOfResourceQuery.toString());
+            //System.out.println(classOfResourceQuery.toString());
             qexec = new QueryEngineHTTP(endpoint, classOfResourceQuery.toString());
             ResultSet results = qexec.execSelect();
             OntClass superCls=model.createClass(defaultNamespace + superClass);

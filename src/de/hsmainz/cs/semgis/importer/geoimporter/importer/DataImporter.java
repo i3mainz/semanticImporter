@@ -30,6 +30,7 @@ import org.apache.jena.ontology.impl.AnnotationPropertyImpl;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.OWL;
+import org.apache.jena.vocabulary.RDFS;
 import org.apache.jena.vocabulary.XSD;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
@@ -57,10 +58,12 @@ public class DataImporter {
 	private final OntClass featurecl;
 	private final Integer epsgCode;
 	private Date startTime;
+	private Integer sameAsCount=0;
 	GregorianCalendar gc = new GregorianCalendar(TimeZone.getTimeZone("CEST"));
 
 	public DataImporter(Config config, Integer epsgCode, String geomType) {
 		this.config = config;
+		this.sameAsCount=0;
 		this.model = ModelFactory.createOntologyModel();
 		OntClass geometry = model.createClass("http://www.opengis.net/ont/geosparql#Geometry");
 		OntClass spatial = model.createClass("http://www.opengis.net/ont/geosparql#SpatialObject");
@@ -181,7 +184,7 @@ public class DataImporter {
 						}
 
 					} else {
-						System.out.println("Property " + columnName + " nicht erfasst!");
+						//System.out.println("Property " + columnName + " nicht erfasst!");
 					}
 				}
 			}
@@ -354,10 +357,16 @@ public class DataImporter {
 			}
 			pro.addDomain(rootClass);
 			if (xc.queryString != null) {
+				String res = dbConnector.executeSPARQLQuery(xc.queryString, xc.endpoint, dataRow);
 				Resource obj = model
-						.createResource(dbConnector.executeSPARQLQuery(xc.queryString, xc.endpoint, dataRow));
+						.createResource(res);
 				ind.addProperty(pro, obj);
-
+				if(xc.keepdataprop.equals("true")) {
+					if(res!=null)
+						System.out.println("sameAsCount: "+sameAsCount++);
+					ind.addProperty(RDFS.label,value);
+				}
+				
 				// TODO: structure not here
 				dbConnector.createWDOntologyFromInd("https://query.wikidata.org/sparql", obj, model, "Wikidata",
 						DEFAULTNAMESPACE);

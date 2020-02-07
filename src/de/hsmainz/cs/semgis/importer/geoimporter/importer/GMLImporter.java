@@ -168,7 +168,7 @@ public class GMLImporter {
 		return result;
 	}
 
-	public static OntModel processFile(String fileformat,String filepath,Boolean isString,Boolean enrich,String outpath) {
+	public static OntModel processFile(String fileformat,String filepath,Boolean isString,Boolean enrich,String outpath,String provider, String license, String origin) {
 		File infile=null;
 		String file="";
 		if(!isString) {
@@ -184,9 +184,9 @@ public class GMLImporter {
 		try {
 			KnownSchemaParser parser;
 			if (fileformat.isEmpty()) {
-				parser = new KnownSchemaParser(model, true, true);
+				parser = new KnownSchemaParser(model, true, true,outpath,provider,license,origin);
 			} else {
-				parser = new KnownSchemaParser(model, false, false);
+				parser = new KnownSchemaParser(model, false, false,outpath,provider,license,origin);
 			}
 			XMLReader reader = XMLReaderFactory.createXMLReader();
 			reader.setContentHandler(parser);
@@ -235,7 +235,7 @@ public class GMLImporter {
 				}
 			}
 			System.out.println(filepath + " - " + outpath + " - " + fileformat);
-			processFile(fileformat, filepath, false, enrich, outpath);
+			processFile(fileformat, filepath, false, enrich, outpath,"","","");
 		}
 
 	}

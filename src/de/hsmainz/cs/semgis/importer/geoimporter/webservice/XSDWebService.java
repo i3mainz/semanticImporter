@@ -1,13 +1,8 @@
 package de.hsmainz.cs.semgis.importer.geoimporter.webservice;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
@@ -16,25 +11,19 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.StreamingOutput;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.xpath.XPathExpressionException;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.jena.ontology.OntModel;
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.xml.sax.SAXException;
 
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
-import de.hsmainz.cs.semgis.importer.geoimporter.importer.GMLImporter;
 import de.hsmainz.cs.semgis.importer.schemaconverter.XSD2OWL;
 import de.hsmainz.cs.semgis.importer.schemaconverter.XSD2OWL.XMLTypes;
 

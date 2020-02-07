@@ -106,7 +106,7 @@ public class Config extends DefaultHandler2 {
 				currentconfig.range=attributes.getValue("range");
 				currentconfig.isind=attributes.getValue("isind");
 				currentconfig.propertyuri=attributes.getValue("propiri");
-				
+				currentconfig.keepdataprop=attributes.getValue("keepdataprop");
 				if(attributes.getValue("valuemapping")!=null) {
 					currentconfig.valuemapping=new TreeMap<String,String>();
 					String valmap=attributes.getValue("valuemapping");

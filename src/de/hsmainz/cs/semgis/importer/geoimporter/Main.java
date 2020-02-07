@@ -43,7 +43,7 @@ public class Main {
 	
 	public void importKnownSchema(String file,String outpath) throws SAXException, FileNotFoundException, IOException {
 		OntModel model = ModelFactory.createOntologyModel();
-		KnownSchemaParser parser=new KnownSchemaParser(model, true, true);
+		KnownSchemaParser parser=new KnownSchemaParser(model, true, true,"","","","");
 		XMLReader reader = XMLReaderFactory.createXMLReader();
 		reader.setContentHandler(parser);
 		reader.parse(new InputSource(new FileReader(file)));
