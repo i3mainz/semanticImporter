@@ -168,14 +168,14 @@ public class KnownSchemaParser implements ContentHandler {
 	}
 
 	private void importMetaData(Individual ind,String indname,String publisher) {
-		if(!license.isEmpty())
-			ind.addProperty(model.createDatatypeProperty("http://purl.org/dc/terms/distribution"), license);
+		if(!this.license.isEmpty())
+			ind.addProperty(model.createDatatypeProperty("http://purl.org/dc/terms/distribution"), this.license);
 		if(!origin.isEmpty()) {
 			OntClass dist=model.createClass("http://purl.org/dc/terms/Distribution");
 			Individual distind=dist.createIndividual(ind.getURI()+"_distribution");
 			ind.addProperty(model.createObjectProperty("http://purl.org/dc/terms/distribution"), distind);
 			distind.addProperty(model.createObjectProperty("http://purl.org/dc/terms/downloadURL"), this.origin);
-			ind.addProperty(model.createDatatypeProperty("http://purl.org/dc/terms/license"), license);
+			ind.addProperty(model.createDatatypeProperty("http://purl.org/dc/terms/license"), this.license);
 		}
 		ind.addRDFType(model.createClass("http://purl.org/dc/terms/Dataset"));
 		OntClass entity=model.createClass("http://www.w3.org/ns/prov#Entity");
