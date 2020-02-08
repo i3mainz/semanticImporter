@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
@@ -27,8 +29,15 @@ import javax.xml.xpath.XPathExpressionException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.ontology.OntModel;
+import org.geotools.data.DataStore;
+import org.geotools.data.DataStoreFinder;
+import org.geotools.data.FeatureSource;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.opengis.feature.Attribute;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.feature.type.AttributeDescriptor;
 import org.xml.sax.SAXException;
 
 import com.sun.jersey.core.header.FormDataContentDisposition;
@@ -77,6 +86,39 @@ public class WebService {
 		} 	       	
 	}
 	
+	
+	@POST
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces({"text/ttl"})
+	@Path("/analyzeFile")
+    public Response analyzeFile(@FormDataParam("file") InputStream uploadedInputStream,
+			@FormDataParam("file") FormDataContentDisposition fileDetail) { 
+		final String dir = System.getProperty("user.dir");
+        System.out.println("current dir = " + dir); 
+        try {
+        	File file=new File("tempfile.gml");
+        	FileUtils.copyInputStreamToFile(uploadedInputStream, file);
+        	Map<String, Object> map = new HashMap<>();
+    		map.put("url", file.toURI().toURL());
+    		map.put("charset","UTF-8");
+        	DataStore dataStore = DataStoreFinder.getDataStore(map);
+    		System.out.println(dataStore);
+    		String typeName = dataStore.getTypeNames()[0];
+    		FeatureSource<SimpleFeatureType, SimpleFeature> source =
+    				dataStore.getFeatureSource(typeName);
+    		JSONObject result=new JSONObject();
+    		for(AttributeDescriptor att:source.getSchema().getAttributeDescriptors()) {
+    			result.put(att.getName().toString(), att.getType().toString());
+    		}
+			return Response.ok(result.toString(2)).type(MediaType.APPLICATION_JSON).build();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			 return Response.ok("").build();	
+		} 	       	
+	}
+	
+
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces({"text/ttl"})
