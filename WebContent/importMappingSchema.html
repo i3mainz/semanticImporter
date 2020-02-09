@@ -54,7 +54,7 @@ function saveTextAsFile(tosave,fileext,filename)
         window.URL.revokeObjectURL(url);  
     }, 1000);
 }
-
+var filedata={}
 function analyzeFile(){
 	    var data = new FormData(); // das ist unser Daten-Objekt ...
 	    data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhängen
@@ -69,6 +69,7 @@ function analyzeFile(){
 	       // in das Response-Div
 	       success: function(data) { 
 	    	    var json=JSON.parse(data);
+	    	    filedata=json
 	    	    var table="<tr><th>Dataset Column</th><th>Column URI</th><th>Column Range</th><th>Value SPARQL Query</th><th>Regular Expression (Optional)</th></tr>"
 	    	    var i=1;
 	    	    for(key in data){
@@ -76,6 +77,7 @@ function analyzeFile(){
 	    	    	i++;
 	    	    }
 	    	    $('#datasettable').html(table)
+	    	    toggleAnalysis()
 	       }
 	    });
 }
@@ -85,7 +87,7 @@ function convert() {
     data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhngen
     $('#loading').show();
     $.ajax({
-       url: 'rest/service/analyzeFile?namespace='+encodeURIComponent($('#namespace').val())+"&indid="+encodeURIComponent($('#indid').val())+"&classname="+encodeURIComponent($('#classname').val()), // Wohin soll die Datei geschickt werden?
+       url: 'rest/service/convert?namespace='+encodeURIComponent($('#namespace').val())+"&indid="+encodeURIComponent($('#indid').val())+"&classname="+encodeURIComponent($('#classname').val()), // Wohin soll die Datei geschickt werden?
        data: data,          // Das ist unser Datenobjekt.
        type: 'POST',         // HTTP-Methode, hier: POST
        processData: false,
@@ -98,6 +100,23 @@ function convert() {
        }
     });
  }
+ 
+function toggleTripleStore() {
+	  var x = document.getElementById("triplestoreimport");
+	  if (x.style.display === "none") {
+	    x.style.display = "block";
+	  } else {
+	    x.style.display = "none";
+	  }
+	}
+function toggleAnalysis() {
+	  var x = document.getElementById("metadata");
+	  if (x.style.display === "none") {
+	    x.style.display = "block";
+	  } else {
+	    x.style.display = "none";
+	  }
+	}
 </script>
 </head>
 
@@ -108,20 +127,28 @@ function convert() {
 
 	<h1>Upload your file for content analysis:</h1>
 	
+	<p id="metadata" style="display:none">
 	<h4>Metadata</h4>
 	Creator: <input id="creator" type="text"/><br/>
 	Creation Time: <input id="creationtime" type="datetime"/><br/>
 	Target Namespace: <input type="url" name="namespace" id="namespace"><br/>
  	Individual Attribute: <input type="text" name="indid" id="indid"><br/>
  	Class to assign (URI): <input type="text" name="classname" id="classname"><br/>
-	
+ 	<input type="checkbox" id="importTripleStore" onChange="toggleTripleStore()">Import to a triple store
+ 	<p id="triplestoreimport" style="visibility: hidden">
+ 	  I want to import the file into the following triple store:<br/>
+	   TripleStore: <input type="text" name="triplestore" id="triplestore" value=""/><br/>
+	   Username: <input type="text" name="triplestoreuser" id="triplestoreuser" value=""/><br/>
+ 	   Password: <input type="text" name="triplestorepasswd" id="triplestorepasswd" value=""/><br/>
+ 	</p>
+	</p>
  	<table id="datasettable">
  	</table>
 	   <p>
 		Select a file : <input type="file" name="file" id="files" size="45" />
 	   </p>
- 
-	   <button id="uploadButton" onclick="convert()">Upload It</button>
+
+	   <button id="uploadButton" onclick="analyzeFile()">Upload It</button>
  
 </body>
 </html>
