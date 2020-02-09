@@ -55,12 +55,37 @@ function saveTextAsFile(tosave,fileext,filename)
     }, 1000);
 }
 
+function analyzeFile(){
+	    var data = new FormData(); // das ist unser Daten-Objekt ...
+	    data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhängen
+	    $('#loading').show();
+	    $.ajax({
+	       url: 'rest/service/analyzeFile', // Wohin soll die Datei geschickt werden?
+	       data: data,          // Das ist unser Datenobjekt.
+	       type: 'POST',         // HTTP-Methode, hier: POST
+	       processData: false,
+	       contentType: false,
+	       // und wenn alles erfolgreich verlaufen ist, schreibe eine Meldung
+	       // in das Response-Div
+	       success: function(data) { 
+	    	    var json=JSON.parse(data);
+	    	    var table="<tr><th>Dataset Column</th><th>Column URI</th><th>Column Range</th><th>Value SPARQL Query</th><th>Regular Expression (Optional)</th></tr>"
+	    	    var i=1;
+	    	    for(key in data){
+	    	    	table+="<tr><td id=\"datasetcol_"+i+"\">"+key+"</td><td id=\"coluri_"+i+"\"></td><td id=\"colrange_"+i+"\">"+data[key]+"</td><td id=\"valuesparql_"+i+"\"></td><td id=\"valueregex_"+i+"\"></td></tr>"
+	    	    	i++;
+	    	    }
+	    	    $('#datasettable').html(table)
+	       }
+	    });
+}
+
 function convert() {
     var data = new FormData(); // das ist unser Daten-Objekt ...
     data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhngen
     $('#loading').show();
     $.ajax({
-       url: 'rest/service/convert?namespace='+encodeURIComponent($('#namespace').val())+"&indid="+encodeURIComponent($('#indid').val())+"&classname="+encodeURIComponent($('#classname').val()), // Wohin soll die Datei geschickt werden?
+       url: 'rest/service/analyzeFile?namespace='+encodeURIComponent($('#namespace').val())+"&indid="+encodeURIComponent($('#indid').val())+"&classname="+encodeURIComponent($('#classname').val()), // Wohin soll die Datei geschickt werden?
        data: data,          // Das ist unser Datenobjekt.
        type: 'POST',         // HTTP-Methode, hier: POST
        processData: false,
@@ -90,9 +115,7 @@ function convert() {
  	Individual Attribute: <input type="text" name="indid" id="indid"><br/>
  	Class to assign (URI): <input type="text" name="classname" id="classname"><br/>
 	
- 	<table><tr>
- 	<th>Dataset Column</th><th>Column URI</th><th>Column Range</th><th>Value SPARQL Query</th><th>Regular Expression (Optional)</th>
- 	</tr>
+ 	<table id="datasettable">
  	</table>
 	   <p>
 		Select a file : <input type="file" name="file" id="files" size="45" />
