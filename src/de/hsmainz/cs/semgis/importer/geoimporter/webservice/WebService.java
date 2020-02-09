@@ -29,6 +29,9 @@ import javax.xml.xpath.XPathExpressionException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.ontology.OntModel;
+import org.apache.jena.rdfconnection.RDFConnection;
+import org.apache.jena.rdfconnection.RDFConnectionFactory;
+import org.apache.jena.rdfconnection.RDFConnectionRemoteBuilder;
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
 import org.geotools.data.FeatureSource;
@@ -63,7 +66,11 @@ public class WebService {
 			@DefaultValue("") @QueryParam("namespace") String namespace,
 			@DefaultValue("") @QueryParam("provider") String provider,
 			@DefaultValue("") @QueryParam("license") String license,
-			@DefaultValue("") @QueryParam("origin") String origin) { 
+			@DefaultValue("") @QueryParam("origin") String origin,
+			@DefaultValue("") @QueryParam("triplestore") String triplestore,
+			@DefaultValue("") @QueryParam("triplestoregraph") String triplestoregraph,
+			@DefaultValue("") @QueryParam("triplestoreuser") String triplestoreuser,
+			@DefaultValue("") @QueryParam("triplestorepasswd") String triplestorepasswd) { 
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
         try {
@@ -129,7 +136,11 @@ public class WebService {
 			@DefaultValue("") @QueryParam("namespace") String namespace,
 			@DefaultValue("") @QueryParam("provider") String provider,
 			@DefaultValue("") @QueryParam("license") String license,
-			@DefaultValue("") @QueryParam("origin") String origin) { 
+			@DefaultValue("") @QueryParam("origin") String origin,
+			@DefaultValue("") @QueryParam("triplestore") String triplestore,
+			@DefaultValue("") @QueryParam("triplestoregraph") String triplestoregraph,
+			@DefaultValue("") @QueryParam("triplestoreuser") String triplestoreuser,
+			@DefaultValue("") @QueryParam("triplestorepasswd") String triplestorepasswd) { 
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
         try {
@@ -161,7 +172,11 @@ public class WebService {
 			@QueryParam("format") String format, 
 			@QueryParam("namespace") String namespace, 
 			@QueryParam("classname") String classname, 
-			@QueryParam("indid") String indid) { 
+			@QueryParam("indid") String indid,			
+			@DefaultValue("") @QueryParam("triplestore") String triplestore,
+			@DefaultValue("") @QueryParam("triplestoregraph") String triplestoregraph,
+			@DefaultValue("") @QueryParam("triplestoreuser") String triplestoreuser,
+			@DefaultValue("") @QueryParam("triplestorepasswd") String triplestorepasswd) { 
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
         try {
@@ -177,6 +192,9 @@ public class WebService {
 			      model.write(writer, "TTL");
 			    }
 			  };
+			  if(!triplestore.isEmpty() && !triplestoregraph.isEmpty() && !triplestoreuser.isEmpty() && !triplestorepasswd.isEmpty()) {
+				  storeGraphResult(model,triplestore,triplestoregraph, triplestoreuser,triplestorepasswd);
+			  }
 			  return Response.ok(stream).type("text/ttl").build();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -211,7 +229,11 @@ public class WebService {
 			@QueryParam("xsl") String xsl,
 			@QueryParam("formatname") String formatname,
 			@DefaultValue("en") @QueryParam("language") String language,
-			@DefaultValue("") @QueryParam("namespace") String namespace) { 
+			@DefaultValue("") @QueryParam("namespace") String namespace,
+			@DefaultValue("") @QueryParam("triplestore") String triplestore,
+			@DefaultValue("") @QueryParam("triplestoregraph") String triplestoregraph,
+			@DefaultValue("") @QueryParam("triplestoreuser") String triplestoreuser,
+			@DefaultValue("") @QueryParam("triplestorepasswd") String triplestorepasswd) { 
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
         XSD2OWL xsd2owl=new XSD2OWL();
@@ -227,8 +249,14 @@ public class WebService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 
 		return Response.ok("").type("text/ttl").build();
+	}
+	
+	public void storeGraphResult(OntModel model,String triplestore,String graph, String triplestoreuser,String triplestorepasswd) {
+		RDFConnection builder = RDFConnectionFactory.connect(triplestore);
+		builder.load(model);		
 	}
 	
 }

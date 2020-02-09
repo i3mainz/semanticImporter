@@ -58,6 +58,11 @@ function saveTextAsFile(tosave,fileext,filename)
 function convert() {
     var data = new FormData(); // das ist unser Daten-Objekt ...
     data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhngen
+    data.append('namespace',document.getElementById('namespace').value);
+    data.append('triplestore',document.getElementById('triplestore').value);
+    data.append('triplestoregraph',document.getElementById('triplestoregraph').value);
+    data.append('triplestoreuser',document.getElementById('triplestoreuser').value);
+    data.append('triplestorepasswd',document.getElementById('triplestorepasswd').value);
     $('#loading').show();
     $.ajax({
        url: 'rest/service/convertGeoJSON?namespace='+encodeURIComponent($('#namespace').val())+"&indid="+encodeURIComponent($('#indid').val())+"&classname="+encodeURIComponent($('#classname').val()), // Wohin soll die Datei geschickt werden?
@@ -73,6 +78,14 @@ function convert() {
        }
     });
  }
+function toggleTripleStore() {
+	  var x = document.getElementById("triplestoreimport");
+	  if (x.style.display === "none") {
+	    x.style.display = "block";
+	  } else {
+	    x.style.display = "none";
+	  }
+	}
 </script>
 </head>
 
@@ -90,7 +103,16 @@ function convert() {
 	   <p>
 		Select a file : <input type="file" name="file" id="files" size="45" />
 	   </p>
- 
+	<input type="checkbox" id="importTripleStore" onChange="toggleTripleStore()">Import to a triple store
+ 	<p id="triplestoreimport" style="display:none">
+ 	  I want to import the file into the following triple store:<br/>
+ 	  <table>
+	   <tr><td>TripleStore:</td><td><input type="text" name="triplestore" id="triplestore" value=""/></td></tr>
+	   <tr><td>Graph:</td><td> <input type="text" name="triplestoregraph" id="triplestoregraph" value=""/></td></tr>
+	   <tr><td>Username:</td><td> <input type="text" name="triplestoreuser" id="triplestoreuser" value=""/></td></tr>
+ 	   <tr><td>Password: </td><td><input type="text" name="triplestorepasswd" id="triplestorepasswd" value=""/></td></tr>
+ 	   </table>
+ 	</p>
 	   <button id="uploadButton" onclick="convert()">Upload It</button>
  
 </body>

@@ -32,6 +32,8 @@ public class Config extends DefaultHandler2 {
 	
 	public String license;
 	
+	public String interlinkItem;
+	
 	public Style pointStyle;
 	
 	public Style lineStringStyle;
@@ -42,6 +44,8 @@ public class Config extends DefaultHandler2 {
 
 	//If present in shapefiles, shapefile epsg enjoys precendence.
 	public Integer epsg;
+
+
 
 	public static String getAttrValue(Attributes attr, String qName, String defaultVal)
 	{

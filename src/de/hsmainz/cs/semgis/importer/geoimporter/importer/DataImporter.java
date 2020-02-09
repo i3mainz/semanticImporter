@@ -77,8 +77,6 @@ public class DataImporter {
 		this.epsgCode = epsgCode;
 		this.geomClass = model.createClass("http://www.opengis.net/ont/sf#" + geomType);
 		startTime=new Date(System.currentTimeMillis());
-
-
 	}
 
 	public static String toCamelCase(String s) {
