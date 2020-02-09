@@ -144,8 +144,10 @@ public class WebService {
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
         try {
+        	System.out.println("Namespace: "+namespace+" Provider: "+provider+" License: "+license+" Origin:"+origin);
         	FileUtils.copyInputStreamToFile(uploadedInputStream, new File("tempfile.gml"));
-			OntModel model=GMLImporter.processFile(fileDetail.getType(), "tempfile.gml", false, false, namespace,provider,license,origin);
+			OntModel model=GMLImporter.processFile(fileDetail.getType(), "tempfile.gml", false, false, 
+					namespace,provider,license,origin);
 			System.out.println("Finished the conversion");
 			StreamingOutput stream = new StreamingOutput() {
 			    @Override
