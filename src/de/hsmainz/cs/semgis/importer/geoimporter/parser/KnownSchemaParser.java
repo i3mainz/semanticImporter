@@ -438,7 +438,7 @@ public class KnownSchemaParser implements ContentHandler {
 		// System.out.println("Lastpos: "+lastpos+" - "+str.length());
 		builder.delete(builder.length() - 1, builder.length());
 		builder.append(str.substring(lastpos, str.length()));
-		String result=builder.toString();
+		String result=builder.toString().toUpperCase();
 		if(result.contains("LINESTRINGSEGMENT")) {
 			result=result.replace("LINESTRINGSEGMENT","LINESTRING");
 		}
