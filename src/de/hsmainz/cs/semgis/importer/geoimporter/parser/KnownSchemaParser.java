@@ -442,6 +442,9 @@ public class KnownSchemaParser implements ContentHandler {
 		if(result.contains("LINESTRINGSEGMENT")) {
 			result=result.replace("LINESTRINGSEGMENT","LINESTRING");
 		}
+	   if(result.contains("LINEARRING")) {
+			result=result.replace("LINEARRING","POLYGON");
+		}
 		return result;
 	}
 
