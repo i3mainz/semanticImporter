@@ -406,6 +406,7 @@ public class KnownSchemaParser implements ContentHandler {
 							this.model.createTypedLiteral(wktlit, NSGEO + WKTLiteral));
 				} catch (Exception e) {
 					e.printStackTrace();
+					System.out.println(wktlit);
 				}
 				alreadyHandled = true;
 			}
@@ -419,31 +420,27 @@ public class KnownSchemaParser implements ContentHandler {
 
 	public static String formatWKTString(String str, char c, int n) {
 		// System.out.println(str);
-		int pos = str.indexOf(c, 0);
 		if (StringUtils.countMatches(str, " ") <= 1)
 			return str;
 		StringBuilder builder = new StringBuilder();
-		boolean second = true;
-		int lastpos = 0;
-		while (pos != -1) {
-			pos = str.indexOf(c, pos + 1);
-			if (!second)
-				second = true;
-			else if (pos != -1) {
-				second = false;
-				builder.append(str.substring(lastpos, pos)).append(",");
-				lastpos = pos;
+		String[] splitted=str.split(c+"");
+		for(int i=0;i<splitted.length;i++) {
+			if(i%2==0) {
+				builder.append(splitted[i]+" ");
+			}else {
+				builder.append(splitted[i]+",");
 			}
 		}
-		// System.out.println("Lastpos: "+lastpos+" - "+str.length());
 		builder.delete(builder.length() - 1, builder.length());
-		builder.append(str.substring(lastpos, str.length()));
 		String result=builder.toString().toUpperCase();
 		if(result.contains("LINESTRINGSEGMENT")) {
 			result=result.replace("LINESTRINGSEGMENT","LINESTRING");
 		}
-	   if(result.contains("LINEARRING")) {
-			result=result.replace("LINEARRING","POLYGON");
+		if(result.contains("ARCSTRING")) {
+			result=result.replace("ARCSTRING","LINESTRING");
+		}
+		if(result.contains("LINEARRING")) {
+			result=result.replace("LINEARRING","POLYGON(")+")";
 		}
 		return result;
 	}
@@ -630,6 +627,7 @@ public class KnownSchemaParser implements ContentHandler {
 								this.model.createTypedLiteral(wktlit, NSGEO + WKTLiteral));
 					} catch (Exception e) {
 						e.printStackTrace();
+						System.out.println(wktlit);
 					}
 				}else if(multipleChildrenBuffer.toString().contains(":upperCorner") && multipleChildrenBuffer.toString().contains(":lowerCorner")) {
 					System.out.println(multipleChildrenBuffer.toString());
