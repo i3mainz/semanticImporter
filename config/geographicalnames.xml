@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<data>
+<file class="http://inspire.ec.europa.eu/schemas/gn/4.0#NamedPlace" 
+indid="inspireId" namespace="http://de-gdi.org/geodata#" epsg="4326" interlinkItem="true">
+
+	<column name="inspireId" prop="data" range="http://www.w3.org/2001/XMLSchema#string"/> 
+	
+	<column name="language" prop="data" range="http://www.w3.org/2001/XMLSchema#string"/> 
+	
+	<column name="type" prop="obj" propiri="http://inspire.ec.europa.eu/schemas/gn/4.0#type" concept="http://inspire.ec.europa.eu/schemas/gn/4.0#NamedPlaceTypeValue" indname="%%type%%"/> 
+	
+	<column name="localType" prop="obj" propiri="http://inspire.ec.europa.eu/schemas/gn/4.0#localType" concept="http://www.isotc211.org/2005/gmd#LocalisedCharacterString" indname="%%localType%%"/> 
+	
+	<columncollection name="name" propiri="http://inspire.ec.europa.eu/schemas/gn/4.0#name" class="http://inspire.ec.europa.eu/schemas/gn/4.0#GeographicalName">
+		<column name="nativeness" propiri="http://inspire.ec.europa.eu/schemas/gn/4.0#nativeness" prop="obj" range="http://www.w3.org/2001/XMLSchema#string" concept="http://inspire.ec.europa.eu/schemas/gn/4.0#NativenessValue" indname="%%nativeness%%"/> 
+		<column name="nameStatus" propiri="http://inspire.ec.europa.eu/schemas/gn/4.0#nameStatus" prop="obj" range="http://www.w3.org/2001/XMLSchema#string" concept="http://inspire.ec.europa.eu/schemas/gn/4.0#NameStatusValue" indname="%%nameStatus%%"/> 
+		<column name="sourceOfNa" propiri="http://inspire.ec.europa.eu/schemas/gn/4.0#sourceOfName" prop="data" range="http://www.w3.org/2001/XMLSchema#string"/> 
+		<columncollection name="name" propiri="http://inspire.ec.europa.eu/schemas/gn/4.0#spelling" class="http://inspire.ec.europa.eu/schemas/gn/4.0#SpellingOfName">
+			<column name="text" propiri="http://inspire.ec.europa.eu/schemas/gn/4.0#text" prop="data" range="http://www.w3.org/2001/XMLSchema#string"/> 
+			<column name="script" propiri="http://inspire.ec.europa.eu/schemas/gn/4.0#script" prop="data" range="http://www.w3.org/2001/XMLSchema#string"/> 	
+		</columncollection>
+	</columncollection>
+	
+	<column name="beginLifes" propiri="http://inspire.ec.europa.eu/schemas/gn/4.0#beginLifespanVersion" prop="data" range="http://www.w3.org/2001/XMLSchema#string"/> 
+
+	<column name="endLifes" propiri="http://inspire.ec.europa.eu/schemas/gn/4.0#endLifespanVersion" prop="data" range="http://www.w3.org/2001/XMLSchema#string"/> 
+
+	<!--<column name="AGS" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" 
+	query="SELECT ?city WHERE {?city wdt:P439 '%%AGS%%'.}" endpoint="http://query.wikidata.org/sparql"/> -->
+
+	<!-- <column name="text" prop="obj" keepdataprop="true" propiri="http://www.w3.org/2002/07/owl#sameAs" 
+	query="SELECT ?gn WHERE {?abc wdt:P131 ?gn . ?gn ?label '%%text%%'@de .} LIMIT 1" endpoint="http://query.wikidata.org/sparql"/> -->
+	
+</file>
+</data>

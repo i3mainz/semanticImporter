@@ -58,6 +58,7 @@ var filedata={}
 function analyzeFile(){
 	    var data = new FormData(); // das ist unser Daten-Objekt ...
 	    data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhängen
+	    data.append('fileformat',document.getElementById('fileformat').value)
 	    $('#loading').show();
 	    $.ajax({
 	       url: 'rest/service/analyzeFile', // Wohin soll die Datei geschickt werden?
@@ -148,7 +149,10 @@ function toggleAnalysis() {
  	<table id="datasettable">
  	</table>
 	   <p>
-		Select a file : <input type="file" name="file" id="files" size="45" />
+		Select a file : <input type="file" name="file" id="files" size="45" /><br/>
+		Fileformat: 
+		<select id="fileformat"><option value="shp">Shapefile</option>
+		<option value="geojson">GeoJSON</option></select>
 	   </p>
 
 	   <button id="uploadButton" onclick="analyzeFile()">Upload It</button>

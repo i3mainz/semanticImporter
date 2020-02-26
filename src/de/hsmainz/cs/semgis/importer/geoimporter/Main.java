@@ -13,7 +13,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.geotools.data.DataStore;
+/*import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
 import org.geotools.data.FeatureSource;
 import org.geotools.feature.FeatureCollection;
@@ -21,7 +21,7 @@ import org.geotools.referencing.CRS;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
-import org.opengis.referencing.FactoryException;
+import org.opengis.referencing.FactoryException;*/
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -71,7 +71,7 @@ public class Main {
 		map.put("url", file.toURI().toURL());
 		map.put("charset","UTF-8");
 
-		DataStore dataStore = DataStoreFinder.getDataStore(map);
+		/*DataStore dataStore = DataStoreFinder.getDataStore(map);
 		System.out.println(dataStore);
 		String typeName = dataStore.getTypeNames()[0];
 		FeatureSource<SimpleFeatureType, SimpleFeature> source =
@@ -92,13 +92,13 @@ public class Main {
 		}
 		if (null == epsgCode)
 			throw new RuntimeException("The epsg code could not be determined. Please provide the information in the profile.xml");
-
+		
 		String geomType = collection.getSchema().getGeometryDescriptor().getType().getName().toString();
 
 
 		//Import the data
 		DataImporter dataImporter = new DataImporter(config, epsgCode, geomType);
-		dataImporter.importToOwl(outputPath, collection,featurefile);
+		dataImporter.importToOwl(outputPath, collection,featurefile);*/
 	}
 	
 }

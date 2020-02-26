@@ -37,19 +37,36 @@
       <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <geotools.version>20-SNAPSHOT</geotools.version>
+        <sis.version>1.0</sis.version>
+        <geotk.version>4.0.0</geotk.version>
+		 <geoapi.version>4.0-M06</geoapi.version>
     </properties>
         <dependencies>
 <!-- https://mvnrepository.com/artifact/org.locationtech.jts/jts-core -->
 <dependency>
     <groupId>org.locationtech.jts</groupId>
     <artifactId>jts-core</artifactId>
-    <version>1.16.0</version>
+    <version>1.16.1</version>
 </dependency>
 <dependency>
     <groupId>org.wololo</groupId>
     <artifactId>jts2geojson</artifactId>
     <version>0.12.0</version>
 </dependency>
+
+<!-- https://mvnrepository.com/artifact/org.antlr/antlr4-annotations -->
+<dependency>
+    <groupId>org.antlr</groupId>
+    <artifactId>antlr4-annotations</artifactId>
+    <version>4.2.2</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.antlr/antlr4-runtime -->
+<dependency>
+    <groupId>org.antlr</groupId>
+    <artifactId>antlr4-runtime</artifactId>
+    <version>4.2.2</version>
+</dependency>
+
         <!-- https://mvnrepository.com/artifact/org.apache.jena/jena-core -->
         <dependency>
             <groupId>org.apache.jena</groupId>
@@ -73,8 +90,15 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.sis.storage/sis-storage -->
+<!-- <dependency>
+    <groupId>org.apache.sis.storage</groupId>
+    <artifactId>sis-storage</artifactId>
+    <version>1.0</version>
+</dependency>
+     -->   
         <!-- Attention: If the gt-epsg-hsql is missing, we get no compile error, but the geotools library silently fails to resolve epsg codes. -->
-         <dependency>
+        <!--  <dependency>
             <groupId>org.geotools</groupId>
             <artifactId>gt-epsg-hsql</artifactId>
             <version>${geotools.version}</version>
@@ -108,7 +132,146 @@
             <groupId>org.geotools</groupId>
             <artifactId>gt-geojson</artifactId>
             <version>${geotools.version}</version>
+        </dependency>--> 
+ <dependency>
+            <groupId>org.geotoolkit</groupId>
+            <artifactId>geotk-client-wcs</artifactId>
+            <version>${geotk.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.geotoolkit</groupId>
+            <artifactId>geotk-client-csw</artifactId>
+            <version>${geotk.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotoolkit</groupId>
+            <artifactId>geotk-feature-csv</artifactId>
+            <version>${geotk.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotoolkit</groupId>
+            <artifactId>geotk-xml-citygml</artifactId>
+            <version>${geotk.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.geotoolkit</groupId>
+            <artifactId>geotk-client-wms</artifactId>
+            <version>${geotk.version}</version>
+        </dependency>
+         <dependency>
+            <groupId>org.geotoolkit</groupId>
+            <artifactId>geotk-client-osm</artifactId>
+            <version>${geotk.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.geotoolkit</groupId>
+            <artifactId>geotk-client-wfs</artifactId>
+            <version>${geotk.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotoolkit</groupId>
+            <artifactId>geotk-feature-shapefile</artifactId>
+            <version>${geotk.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotoolkit</groupId>
+            <artifactId>geotk-feature</artifactId>
+            <version>${geotk.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotoolkit</groupId>
+            <artifactId>geotk-utility</artifactId>
+            <version>${geotk.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotoolkit</groupId>
+            <artifactId>geotk-feature-geojson</artifactId>
+            <version>${geotk.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotoolkit</groupId>
+            <artifactId>geotk-feature-kml</artifactId>
+            <version>${geotk.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotoolkit</groupId>
+            <artifactId>geotk-feature-osm</artifactId>
+            <version>${geotk.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotoolkit</groupId>
+            <artifactId>geotk-logging-commons</artifactId>
+            <version>${geotk.version}</version>
+        </dependency>
+       
+      <dependency>
+           <groupId>org.opengis</groupId>
+            <artifactId>geoapi</artifactId>
+            <version>${geoapi.version}</version>
+        </dependency>
+              <dependency>
+           <groupId>org.opengis</groupId>
+            <artifactId>geoapi</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+             <dependency>
+            <groupId>org.geotoolkit</groupId>
+            <artifactId>geotk-coverage</artifactId>
+            <version>${geotk.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.sis.core</groupId>
+            <artifactId>sis-feature</artifactId>
+            <version>${sis.version}</version>
+        </dependency>
+         <dependency>
+            <groupId>org.apache.sis.storage</groupId>
+            <artifactId>sis-storage</artifactId>
+            <version>${sis.version}</version>
+        </dependency>
+                 <dependency>
+            <groupId>org.apache.sis.storage</groupId>
+            <artifactId>sis-geotiff</artifactId>
+            <version>${sis.version}</version>
+        </dependency>
+         <dependency>
+            <groupId>org.apache.sis.storage</groupId>
+            <artifactId>sis-netcdf</artifactId>
+            <version>${sis.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.sis.core</groupId>
+            <artifactId>sis-metadata</artifactId>
+            <version>${sis.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.sis.core</groupId>
+            <artifactId>sis-referencing</artifactId>
+            <version>${sis.version}</version>
+        </dependency>
+         <dependency>
+            <groupId>org.apache.sis.core</groupId>
+            <artifactId>sis-referencing-by-identifiers</artifactId>
+            <version>${sis.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.sis.core</groupId>
+            <artifactId>sis-utility</artifactId>
+            <version>${sis.version}</version>
+        </dependency>
+ <!--        <dependency>
+    <groupId>org.apache.sis.non-free</groupId>
+    <artifactId>sis-embedded-data</artifactId>
+    <version>${sis.version}</version>
+    <scope>runtime</scope>
+  </dependency>
+  <dependency>
+    <groupId>org.apache.sis.non-free</groupId>
+    <artifactId>sis-embedded-data</artifactId>
+    <version>${sis.version}</version>
+  </dependency>-->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -178,6 +341,11 @@
           <id>boundless</id>
           <name>Boundless Maven Repository</name>
           <url>http://repo.boundlessgeo.com/main</url>
+        </repository>
+        <repository>
+            <id>geotoolkit</id>
+            <name>Geotk repository</name>
+            <url>http://maven.geotoolkit.org/</url>
         </repository>
     </repositories>
     <distributionManagement>

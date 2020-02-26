@@ -1,9 +1,27 @@
 package de.hsmainz.cs.semgis.importer.geoimporter.config;
 
+import java.util.List;
 import java.util.Map;
 
 public class DataColumnConfig {
 
+	@Override
+	public String toString() {
+		return "DataColumnConfig [isCollection=" + isCollection + ", subconfigs=" + subconfigs + ", isSubConfig="
+				+ isSubConfig + ", name=" + name + ", queryString=" + queryString + ", endpoint=" + endpoint
+				+ ", resultvar=" + resultvar + ", indname=" + indname + ", concept=" + concept + ", prop=" + prop
+				+ ", propertyuri=" + propertyuri + ", unit=" + unit + ", unitprop=" + unitprop + ", range=" + range
+				+ ", valueprop=" + valueprop + ", keepdataprop=" + keepdataprop + ", isind=" + isind
+				+ ", separationCharacter=" + separationCharacter + ", splitposition=" + splitposition + ", splitregex="
+				+ splitregex + ", valuemapping=" + valuemapping + "]";
+	}
+
+	public Boolean isCollection=false;
+	
+	public List<DataColumnConfig> subconfigs;
+	
+	public Boolean isSubConfig=false;
+	
 	//id
 	public String name;
 	

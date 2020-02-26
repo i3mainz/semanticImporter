@@ -7,7 +7,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.util.HashMap;
+import java.net.URI;
+import java.util.TreeMap;
 import java.util.Map;
 
 import javax.ws.rs.Consumes;
@@ -32,15 +33,21 @@ import org.apache.jena.ontology.OntModel;
 import org.apache.jena.rdfconnection.RDFConnection;
 import org.apache.jena.rdfconnection.RDFConnectionFactory;
 import org.apache.jena.rdfconnection.RDFConnectionRemoteBuilder;
-import org.geotools.data.DataStore;
-import org.geotools.data.DataStoreFinder;
-import org.geotools.data.FeatureSource;
+import org.apache.sis.storage.DataStoreException;
+import org.geotoolkit.data.AbstractFileFeatureStoreFactory;
+import org.geotoolkit.data.FeatureCollection;
+import org.geotoolkit.data.FeatureStore;
+import org.geotoolkit.data.FeatureStoreFactory;
+import org.geotoolkit.data.csv.CSVFeatureStoreFactory;
+import org.geotoolkit.data.geojson.GeoJSONFeatureStoreFactory;
+import org.geotoolkit.data.query.QueryBuilder;
+import org.geotoolkit.data.session.Session;
+import org.geotoolkit.feature.Property;
+import org.geotoolkit.storage.DataStore;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.opengis.feature.Attribute;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
+import org.opengis.feature.PropertyType;
 import org.xml.sax.SAXException;
 
 import com.sun.jersey.core.header.FormDataContentDisposition;
@@ -99,26 +106,39 @@ public class WebService {
 	@Produces({"text/ttl"})
 	@Path("/analyzeFile")
     public Response analyzeFile(@FormDataParam("file") InputStream uploadedInputStream,
-			@FormDataParam("file") FormDataContentDisposition fileDetail) { 
+			@FormDataParam("file") FormDataContentDisposition fileDetail,
+			@FormDataParam("fileformat") String fileFormat) { 
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
+        System.out.println(fileFormat);
         try {
         	File file=new File("tempfile.gml");
         	FileUtils.copyInputStreamToFile(uploadedInputStream, file);
-        	Map<String, Object> map = new HashMap<>();
-    		map.put("url", file.toURI().toURL());
-    		map.put("charset","UTF-8");
-        	DataStore dataStore = DataStoreFinder.getDataStore(map);
-    		System.out.println(dataStore);
-    		String typeName = dataStore.getTypeNames()[0];
-    		FeatureSource<SimpleFeatureType, SimpleFeature> source =
-    				dataStore.getFeatureSource(typeName);
-    		JSONObject result=new JSONObject();
-    		for(AttributeDescriptor att:source.getSchema().getAttributeDescriptors()) {
-    			result.put(att.getName().toString(), att.getType().toString());
-    		}
-			return Response.ok(result.toString(2)).type(MediaType.APPLICATION_JSON).build();
-		} catch (IOException e) {
+        	AbstractFileFeatureStoreFactory fac;
+        	switch(fileFormat) {
+        	case "geojson":
+        		fac=new GeoJSONFeatureStoreFactory();
+        		break;
+        	case "csv":
+        		fac=new CSVFeatureStoreFactory();
+        		break;
+        	default: 
+        		return Response.ok("").build();
+        	}
+        	Map<String,URI> map=new TreeMap<String,URI>();
+        	map.put("url",file.toURI());
+        	FeatureStore dataStore;
+			dataStore = ((AbstractFileFeatureStoreFactory) fac).createDataStore(file.toURI());
+			Session session=dataStore.createSession(true);
+			FeatureCollection collect = session
+    		     .getFeatureCollection(QueryBuilder.all(dataStore.getNames().iterator().next()));
+			JSONObject result=new JSONObject();
+			for(PropertyType prop:collect.getFeatureType().getProperties(false)) {
+				prop.getName();
+			}
+    		
+			return Response.ok("").type(MediaType.APPLICATION_JSON).build();
+		} catch (IOException | DataStoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			 return Response.ok("").build();	

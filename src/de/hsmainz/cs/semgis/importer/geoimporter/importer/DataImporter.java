@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -26,19 +27,14 @@ import org.apache.jena.ontology.Individual;
 import org.apache.jena.ontology.ObjectProperty;
 import org.apache.jena.ontology.OntClass;
 import org.apache.jena.ontology.OntModel;
-import org.apache.jena.ontology.impl.AnnotationPropertyImpl;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.OWL;
 import org.apache.jena.vocabulary.RDFS;
-import org.apache.jena.vocabulary.XSD;
-import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureIterator;
-import org.opengis.feature.GeometryAttribute;
+import org.geotoolkit.data.FeatureCollection;
+import org.geotoolkit.data.FeatureIterator;
+import org.geotoolkit.feature.Feature;
 import org.opengis.feature.Property;
-import org.opengis.feature.simple.SimpleFeature;
-import org.wololo.geojson.GeoJSON;
-import org.wololo.jts2geojson.GeoJSONWriter;
 
 import de.hsmainz.cs.semgis.importer.geoimporter.config.Config;
 import de.hsmainz.cs.semgis.importer.geoimporter.config.DataColumnConfig;
@@ -100,13 +96,13 @@ public class DataImporter {
 	public void importToOwl(String outputPath, FeatureCollection collection, String filename) throws IOException {
 		Boolean first = true;
 		Integer counter = 0;
-		try (FeatureIterator<SimpleFeature> features = collection.features()) {
+		try (FeatureIterator features = collection.iterator()) {
 			
 			while (features.hasNext()) {
 				System.out.println(counter++ + "/" + collection.size());
 
 				// Transfer the current data row to a hash map.
-				SimpleFeature feature = features.next();
+				Feature feature = features.next();
 				Map<String, String> dataRow = new HashMap<String, String>();
 				for (Property prop : feature.getProperties()) {
 					String value = null != prop.getValue() ? prop.getValue().toString() : null;
@@ -144,51 +140,65 @@ public class DataImporter {
 					currentind = rootClass.createIndividual(config.namespace + dataRow.get(config.indid));
 					importMetaData(currentind,dataRow.get(config.indid));
 				}
-
-
 				// Import geometry column.
 				importGeometry(currentind, feature.getDefaultGeometryProperty());
 
 				// Import data columns.
-				for (Map.Entry<String, String> property : dataRow.entrySet()) {
-					String columnName = property.getKey();
-					String value = property.getValue();
-					if (config.resultmap.containsKey(columnName)) {
-						for (DataColumnConfig curconf : config.resultmap.get(columnName)) {
-							if (curconf.separationCharacter != null && curconf.splitposition != null) {
-								String[] spl = value.split(curconf.separationCharacter);
-								Integer position = 0;
-								String toadd = "";
-								if (curconf.splitposition.equals("last")) {
-									position = spl.length - 1;
-									toadd = spl[position];
-								} else if (curconf.splitposition.equals("untillast")) {
-									for (int i = 0; i < spl.length - 1; i++) {
-										toadd += spl[i]+curconf.separationCharacter;
-									}
-									toadd=toadd.substring(0,toadd.length()-curconf.separationCharacter.length());
-								} else {
-									position = Integer.valueOf(curconf.splitposition);
-									toadd = spl[position];
-								}
-								importValue(curconf, currentind, dataRow, toadd);
-							} else if (curconf.splitregex != null && curconf.splitposition != null) {
-								Pattern pattern = Pattern.compile(curconf.splitregex);
-								String toadd = pattern.matcher(value).group(Integer.valueOf(curconf.splitposition));
-								importValue(curconf, currentind, dataRow, toadd);
-							} else {
-								importValue(curconf, currentind, dataRow, value);
-							}
+				for (String key : config.resultmap.keySet()) {
+					List<DataColumnConfig> conflist=config.resultmap.get(key);
+					String columnName = key;
+					for (DataColumnConfig curconf:conflist) {
+						if (config.resultmap.containsKey(columnName)) {						
+							parseDataColumnConfigs(curconf, currentind, dataRow, dataRow.get(key), 1);
 						}
-
-					} else {
-						//System.out.println("Property " + columnName + " nicht erfasst!");
-					}
+					} 
 				}
 			}
 		}
 
 		model.write(new OutputStreamWriter(new FileOutputStream(outputPath), StandardCharsets.UTF_8), "TTL");
+	}
+	
+	
+	public void parseDataColumnConfigs(DataColumnConfig curconf,Individual currentind,
+			Map<String, String> dataRow,String value, Integer depth) {
+			System.out.println("ParseDataColumnConfigs in depth "+depth);
+			System.out.println(curconf.name+" - "+curconf.isCollection+" "+curconf.subconfigs);
+			if(curconf.isCollection) {
+				System.out.println("Found Collection: "+curconf.name);
+				OntClass cls=model.createClass(curconf.concept);
+				Individual subind=cls.createIndividual(this.config.namespace+UUID.randomUUID());
+				currentind.addProperty(model.createObjectProperty(curconf.propertyuri), subind);
+				for(DataColumnConfig subconf:curconf.subconfigs) {	
+					System.out.println("Found subconfigs in depth "+depth);
+					this.parseDataColumnConfigs(subconf,subind,dataRow,dataRow.get(subconf.name), depth+1);
+				}
+			}else {
+				if (curconf.separationCharacter != null && curconf.splitposition != null) {
+					String[] spl = value.split(curconf.separationCharacter);
+					Integer position = 0;
+					String toadd = "";
+					if (curconf.splitposition.equals("last")) {
+						position = spl.length - 1;
+						toadd = spl[position];
+					} else if (curconf.splitposition.equals("untillast")) {
+						for (int i = 0; i < spl.length - 1; i++) {
+							toadd += spl[i]+curconf.separationCharacter;
+						}
+						toadd=toadd.substring(0,toadd.length()-curconf.separationCharacter.length());
+					} else {
+						position = Integer.valueOf(curconf.splitposition);
+						toadd = spl[position];
+					}
+					importValue(curconf, currentind, dataRow, toadd);
+				} else if (curconf.splitregex != null && curconf.splitposition != null) {
+					Pattern pattern = Pattern.compile(curconf.splitregex);
+					String toadd = pattern.matcher(value).group(Integer.valueOf(curconf.splitposition));
+					importValue(curconf, currentind, dataRow, toadd);
+				} else {
+					importValue(curconf, currentind, dataRow, value);
+				}
+			}
 	}
 
 	private void importMetaData(Individual ind,String indname) {
@@ -235,7 +245,7 @@ public class DataImporter {
 	 * @param geom
 	 *            the geometry
 	 */
-	private void importGeometry(Individual ind, GeometryAttribute geom) {
+	private void importGeometry(Individual ind, Property geom) {
 		Individual geomind = geomClass.createIndividual(ind.getURI() + "_geom");
 		if(geom!=null && geom.getValue()!=null) {
 		geomind.addLiteral(model.createDatatypeProperty("http://www.opengis.net/ont/geosparql#asWKT"),
