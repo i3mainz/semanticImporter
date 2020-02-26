@@ -818,3 +818,4 @@ public class KnownSchemaParser implements ContentHandler {
 	}
 
 }
+
