@@ -15,7 +15,7 @@ indid="inspireId" namespace="http://de-gdi.org/geodata#" epsg="4326" interlinkIt
 		<column name="nativeness" propiri="http://inspire.ec.europa.eu/schemas/gn/4.0#nativeness" prop="obj" range="http://www.w3.org/2001/XMLSchema#string" concept="http://inspire.ec.europa.eu/schemas/gn/4.0#NativenessValue" indname="%%nativeness%%"/> 
 		<column name="nameStatus" propiri="http://inspire.ec.europa.eu/schemas/gn/4.0#nameStatus" prop="obj" range="http://www.w3.org/2001/XMLSchema#string" concept="http://inspire.ec.europa.eu/schemas/gn/4.0#NameStatusValue" indname="%%nameStatus%%"/> 
 		<column name="sourceOfNa" propiri="http://inspire.ec.europa.eu/schemas/gn/4.0#sourceOfName" prop="data" range="http://www.w3.org/2001/XMLSchema#string"/> 
-		<columncollection name="name" propiri="http://inspire.ec.europa.eu/schemas/gn/4.0#spelling" class="http://inspire.ec.europa.eu/schemas/gn/4.0#SpellingOfName">
+		<columncollection name="spelling" propiri="http://inspire.ec.europa.eu/schemas/gn/4.0#spelling" class="http://inspire.ec.europa.eu/schemas/gn/4.0#SpellingOfName">
 			<column name="text" propiri="http://inspire.ec.europa.eu/schemas/gn/4.0#text" prop="data" range="http://www.w3.org/2001/XMLSchema#string"/> 
 			<column name="script" propiri="http://inspire.ec.europa.eu/schemas/gn/4.0#script" prop="data" range="http://www.w3.org/2001/XMLSchema#string"/> 	
 		</columncollection>

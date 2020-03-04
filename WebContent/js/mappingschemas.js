@@ -30,32 +30,47 @@ var mappingschemas={
 		"Unesco Heritage Sachsen-Anhalt":"schema/quedlinburg_unesco.xml"
 }
 
-function processColumns(columnhead,xml){
-	if(this.tagName=="column" || this.tagName=="addcolumn"){
-        output+="<tr><td align=\"center\" style=\"color:red\">"+((typeof $(this).attr("name") !== 'undefined')?$(this).attr("name"):"Additional column")+"</td>"
-        output+="<td align=\"center\">"+$(this).attr("prop")+"</td>"
-        output+="<td align=\"center\"><a href=\""+$(this).attr("propiri")+"\" target=\"_blank\" >"+((typeof $(this).attr("propiri") !== 'undefined')?$(this).attr("propiri").substring($(this).attr("propiri").lastIndexOf('/')+1):"")+"</a></td>"
-        output+="<td align=\"center\"><a target=\"_blank\" href=\""+$(this).attr("range")+"\">"+((typeof $(this).attr("range") !== 'undefined')?$(this).attr("range").substring($(this).attr("range").lastIndexOf('#')+1):"")+"</a></td>"
-        if($(this).children().length>0 && $(this).attr("prop")=="subclass"){
+var output=""
+
+function processColumns(columnhead,xml,depth){
+	console.log("Depth "+depth);
+	console.log()
+	if(xml.tagName=="column" || xml.tagName=="addcolumn"){
+        output+="<tr><td align=\"center\" style=\"color:red\">"+((typeof $(xml).attr("name") !== 'undefined')?columnhead+$(xml).attr("name"):"Additional column")+"</td>"
+        output+="<td align=\"center\">"+$(xml).attr("prop")+"</td>"
+        output+="<td align=\"center\"><a href=\""+$(xml).attr("propiri")+"\" target=\"_blank\" >"+((typeof $(xml).attr("propiri") !== 'undefined')?$(xml).attr("propiri").substring($(xml).attr("propiri").lastIndexOf('/')+1):"")+"</a></td>"
+        output+="<td align=\"center\"><a target=\"_blank\" href=\""+$(xml).attr("range")+"\">"+((typeof $(xml).attr("range") !== 'undefined')?$(xml).attr("range").substring($(xml).attr("range").lastIndexOf('#')+1):"")+"</a></td>"
+        if($(xml).children().length>0 && $(xml).attr("prop")=="subclass"){
         	output+="<td><table width=\"100%\" border=1><tr><th>from</th><th>to</th></tr>"
-        	$(this).children().each(function(){
-        		if(this.tagName=="valuemapping"){
-        			output+="<tr><td>"+$(this).attr("from")+"</td><td><a href=\""+$(this).attr("to")+"\" target=\"_blank\">"+$(this).attr("to")+"</a></td></tr>"
+        	$(xml).children().each(function(){
+        		if(xml.tagName=="valuemapping"){
+        			output+="<tr><td>"+$(xml).attr("from")+"</td><td><a href=\""+$(xml).attr("to")+"\" target=\"_blank\">"+$(xml).attr("to")+"</a></td></tr>"
         		}
         	});
         	output+="</table></td>"
         }else{
-        	output+="<td align=\"center\"><a href=\""+$(this).attr("concept")+"\" target=\"_blank\" >"+((typeof $(this).attr("concept") !== 'undefined')?$(this).attr("concept").substring($(this).attr("concept").lastIndexOf('/')+1):"")+"</a></td>"
+        	output+="<td align=\"center\"><a href=\""+$(xml).attr("concept")+"\" target=\"_blank\" >"+((typeof $(xml).attr("concept") !== 'undefined')?$(xml).attr("concept").substring($(xml).attr("concept").lastIndexOf('/')+1):"")+"</a></td>"
         }
-        output+="<td align=\"center\">"+((typeof $(this).attr("query") !== 'undefined')?$(this).attr("query"):"")+"</td>"
-        output+="<td align=\"center\">"+((typeof $(this).attr("endpoint") !== 'undefined')?"<a href=\""+$(this).attr("endpoint")+"\">"+$(this).attr("endpoint")+"</a>":"")+"</td>"
+        output+="<td align=\"center\">"+((typeof $(xml).attr("query") !== 'undefined')?$(this).attr("query"):"")+"</td>"
+        output+="<td align=\"center\">"+((typeof $(xml).attr("endpoint") !== 'undefined')?"<a href=\""+$(xml).attr("endpoint")+"\">"+$(xml).attr("endpoint")+"</a>":"")+"</td>"
         output+="</tr>";
-    }else if(this.tagName=="columncollection"){
-    	
+    }else if(xml.tagName=="columncollection"){
+    	console.log("Columncollection!!!")
+    	output+="<tr><td align=\"center\" style=\"color:red\">"+((typeof $(xml).attr("name") !== 'undefined')?columnhead+$(xml).attr("name"):"Additional column")+"</td>"
+    	output+="<td align=\"center\">obj</td>"
+        output+="<td align=\"center\"><a href=\""+$(xml).attr("propiri")+"\" target=\"_blank\" >"+((typeof $(xml).attr("propiri") !== 'undefined')?$(xml).attr("propiri").substring($(xml).attr("propiri").lastIndexOf('/')+1):"")+"</a></td>"
+        output+="<td></td>"
+        output+="<td align=\"center\"><a href=\""+$(xml).attr("class")+"\" target=\"_blank\" >"+((typeof $(xml).attr("concept") !== 'undefined')?$(xml).attr("concept").substring($(xml).attr("concept").lastIndexOf('/')+1):"")+"</a></td>"
+        output+="<td></td><td></td></tr>"        
+    	columnhead+=$(xml).attr("name")+"."
+        $(xml).children().each(function(){
+               processColumns(columnhead,this,depth+1)
+        });
     }
 }
 
 function mappingSchemaReader(url){
+	output=""
     $.get(url, {}, function (xml){
     	header="Class: <a target=\"_blank\" href=\""+$(xml).find('file').attr("class")+"\">"+$(xml).find('file').attr("class")+"</a><br/>"
     	header+="Individual ID: "+$(xml).find('file').attr("indid")+"<br/>"
@@ -64,6 +79,8 @@ function mappingSchemaReader(url){
 
     	output="<tr><th>Column</th><th>Type</th><th>Property IRI</th><th>Range</th><th>Concept</th><th>Query</th><th>Endpoint</th></tr>"
     	$(xml).find('file').children().each(function(){
+            processColumns("",this,1)
+        /*
             if(this.tagName=="column" || this.tagName=="addcolumn"){
                 output+="<tr><td align=\"center\" style=\"color:red\">"+((typeof $(this).attr("name") !== 'undefined')?$(this).attr("name"):"Additional column")+"</td>"
                 output+="<td align=\"center\">"+$(this).attr("prop")+"</td>"
@@ -85,7 +102,7 @@ function mappingSchemaReader(url){
                 output+="</tr>";
             }else if(this.tagName=="columncollection"){
             	
-            }
+            }*/
         });
     	$('#datasettable').html(output);
     	$('#tableheader').html(header);
