@@ -24,3 +24,11 @@ var mappingschemas={
 		"Schulen Hessen":"schema/hessen_schulen.xml",
 		"Schulen NRW":"schema/nrw_schulen.xml"
 }
+
+function mappingSchemaReader(url){
+    $.get(url, {}, function (xml){
+        $('marker',xml).each(function(i){
+           markers = $(this);
+        });
+    });
+}

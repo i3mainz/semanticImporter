@@ -133,9 +133,6 @@ function toggleAnalysis() {
 	<h4>Metadata</h4>
 	Creator: <input id="creator" type="text"/><br/>
 	Creation Time: <input id="creationtime" type="datetime"/><br/>
-	Target Namespace: <input type="url" name="namespace" id="namespace"><br/>
- 	Individual Attribute: <input type="text" name="indid" id="indid"><br/>
- 	Class to assign (URI): <input type="text" name="classname" id="classname"><br/>
  	<input type="checkbox" id="importTripleStore" onChange="toggleTripleStore()">Import to a triple store
  	<p id="triplestoreimport" style="display:none">
  	  I want to import the file into the following triple store:<br/>
@@ -163,7 +160,7 @@ result=""
 for(mapping in mappingschemas){
 	result+="<option value=\""+mappingschemas[mapping]+"\">"+mapping+"</option>"
 }
-document.getElementById("mappingschema").innerHTML(result)
+$("#mappingschema").html(result)
 </script>
 </body>
 </html>
