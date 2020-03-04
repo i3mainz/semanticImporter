@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<data>
+<file class="https://www.wikidata.org/wiki/Q41487" indidprefix="poi_hochschule_" indid="HS_Nr" 
+namespace="http://de-gdi.org/geodata#"
+geoendpoint="http://linkedgeodata.org/sparql" 
+geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false" epsg="25833">
+	
+	<metadata publisher="BKG" timestamp="2018-05-30T09:30:10Z" license="https://www.govdata.de/dl-de/by-2-0" />
+	
+	<style>
+		<point size="2" border="1" borderColor="black" fillColor="red"/>
+		<linestring size="2" border="1" borderColor="black" fillColor="red"/>
+		<polygon size="2" border="1" borderColor="black" fillColor="red"/>
+	</style>
+	
+	
+    
+	<column name="Name" prop="annotation" propiri="http://www.w3.org/2000/01/rdf-schema#label" range="http://www.w3.org/2001/XMLSchema#string"/> 
+
+	<column name="Kurzname" prop="annotation" propiri="http://www.wikidata.org/prop/direct/P1813" range="http://www.w3.org/2001/XMLSchema#string"/>     
+    
+    <column name="Strasse" prop="data" propiri="http://www.wikidata.org/prop/direct/P669" range="http://www.w3.org/2001/XMLSchema#string"/> 
+
+    <column name="Hn" prop="data" propiri="http://www.wikidata.org/prop/direct/P670" range="http://www.w3.org/2001/XMLSchema#string"/> 
+	
+    <column name="PLZ" prop="data" propiri="http://www.wikidata.org/prop/direct/P281" range="http://www.w3.org/2001/XMLSchema#integer"/> 
+    
+    <column name="Telefon" prop="data" propiri="http://www.wikidata.org/prop/direct/P1329" range="http://www.w3.org/2001/XMLSchema#string"/> 
+
+    <column name="Telefax" prop="data" propiri="http://www.wikidata.org/prop/direct/P2900" range="http://www.w3.org/2001/XMLSchema#string"/>   
+    
+    <column name="E_Mail" prop="data" propiri="http://www.wikidata.org/prop/direct/P968" range="http://www.w3.org/2001/XMLSchema#string"/>
+  
+    <column name="Homepage" prop="data" propiri="http://www.wikidata.org/prop/direct/P856" range="http://www.w3.org/2001/XMLSchema#string"/>
+
+    <column name="Typ" prop="subclass">
+		<valuemapping from="Amtsgericht" to="https://www.wikidata.org/wiki/Q480477"/>
+		<valuemapping from="Amtsgericht (A)" to="https://www.wikidata.org/wiki/Q480477"/>
+		<valuemapping from="Amtsgericht (G)" to="https://www.wikidata.org/wiki/Q480477"/>
+		<valuemapping from="Amtsgericht (N)" to="https://www.wikidata.org/wiki/Q480477"/>
+		<valuemapping from="Arbeitsgericht" to="https://www.wikidata.org/wiki/Q627718"/>
+		<valuemapping from="Arbeitsgericht (A)" to="https://www.wikidata.org/wiki/Q627718"/>
+		<valuemapping from="Bundesarbeitsgericht" to="https://www.wikidata.org/wiki/Q176936"/>
+		<valuemapping from="Bundesfinanzhof" to="https://www.wikidata.org/wiki/Q702415"/>
+		<valuemapping from="Bundesgerichtshof" to="https://www.wikidata.org/wiki/Q687323"/>
+		<valuemapping from="Bundesgerichtshof (N)" to="https://www.wikidata.org/wiki/Q687323"/>
+		<valuemapping from="Bundespatentgericht" to="https://www.wikidata.org/wiki/Q314237"/>
+		<valuemapping from="Bundessozialgericht" to="https://www.wikidata.org/wiki/Q674868"/>
+		<valuemapping from="Bundesverwaltungsgericht" to="https://www.wikidata.org/wiki/Q702424"/>
+		<valuemapping from="Oberlandesgericht" to="https://www.wikidata.org/wiki/Q452543"/>
+		<valuemapping from="Oberlandesgericht (A)" to="https://www.wikidata.org/wiki/Q452543"/>
+		<valuemapping from="Oberlandesgericht (N)" to="https://www.wikidata.org/wiki/Q452543"/>
+		<valuemapping from="Verfassungsgericht" to="https://www.wikidata.org/wiki/Q32766"/>
+		<valuemapping from="Landgericht" to="https://www.wikidata.org/wiki/Q13384978"/>
+		<valuemapping from="Landgericht (A)" to="https://www.wikidata.org/wiki/Q13384978"/>
+		<valuemapping from="Landgericht (N)" to="https://www.wikidata.org/wiki/Q13384978"/>
+		<valuemapping from="Landesarbeitsgericht" to="https://www.wikidata.org/wiki/Q1802087"/>
+		<valuemapping from="Landesarbeitsgericht (A)" to="https://www.wikidata.org/wiki/Q1802087"/>
+		<valuemapping from="Landessozialgericht" to="https://www.wikidata.org/wiki/Q1802611"/>
+		<valuemapping from="Landessozialgericht (A)" to="https://www.wikidata.org/wiki/Q1802611"/>
+		<valuemapping from="Finanzgericht" to="https://www.wikidata.org/wiki/Q897056"/>
+		<valuemapping from="Finanzgericht (A)" to="https://www.wikidata.org/wiki/Q897056"/>
+		<valuemapping from="Kammergericht" to="https://www.wikidata.org/wiki/Q59165607"/>
+		<valuemapping from="Verwaltungsgericht" to="https://www.wikidata.org/wiki/Q1641572"/>
+		<valuemapping from="Verwaltungsgericht (N)" to="https://www.wikidata.org/wiki/Q1641572"/>
+		<valuemapping from="Sozialgericht" to="https://www.wikidata.org/wiki/Q2305602"/>
+		<valuemapping from="Sozialgericht (N)" to="https://www.wikidata.org/wiki/Q2305602"/>
+		<valuemapping from="Oberverwaltungsgericht" to="https://www.wikidata.org/wiki/Q2011365"/>
+		<valuemapping from="Oberverwaltungsgericht (A)" to="https://www.wikidata.org/wiki/Q2011365"/>
+	</column>  	
+	
+    <column name="Postfach" prop="data" propiri="http://www.wikidata.org/prop/direct/P2918" range="http://www.w3.org/2001/XMLSchema#string"/>    
+
+	<column name="RS" prop="data" propiri="http://www.wikidata.org/prop/direct/P1388" range="http://www.w3.org/2001/XMLSchema#string"/> 
+
+	<column name="Kreis" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" 
+	query="SELECT distinct ?item WHERE{ ?ind wdt:P131 ?item . ?item ?label '%%Kreis%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql"/> 
+	
+	<column name="Gemeinde" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" concept="https://www.wikidata.org/entity/Q262166"
+	query="SELECT ?city WHERE {?city wdt:P31 wd:Q262166 . ?item ?label '%%Gemeinde%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql"/> 
+    
+    <column name="Bundesland" prop="data" propiri="http://www.wikidata.org/prop/direct/P131" range="http://www.w3.org/2001/XMLSchema#string" concept="https://www.wikidata.org/wiki/Q1221156"/>
+    
+</file>
+</data>
+ 

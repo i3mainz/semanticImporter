@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<data>
+<file class="https://www.wikidata.org/wiki/Q9259" indidprefix="wh_hamburg_" indid="gml_id" 
+namespace="http://de-gdi.org/geodata#"
+geoendpoint="http://linkedgeodata.org/sparql" 
+geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false" epsg="25833">
+	
+	<metadata publisher="BKG" timestamp="2018-05-30T09:30:10Z" license="https://www.govdata.de/dl-de/by-2-0" />
+	
+	<style>
+		<point size="2" border="1" borderColor="black" fillColor="red"/>
+		<linestring size="2" border="1" borderColor="black" fillColor="red"/>
+		<polygon size="2" border="1" borderColor="black" fillColor="red"/>
+	</style>
+	
+	<column name="area" prop="data" propiri="https://www.wikidata.org/wiki/Property:P2046" range="http://www.w3.org/2001/XMLSchema#double"/> 
+	
+    <column name="wk_objekt" prop="annotation" propiri="http://www.w3.org/2000/01/rdf-schema#label" range="http://www.w3.org/2001/XMLSchema#string"/> 
+    
+	<column name="zone" prop="obj" range="http://www.w3.org/2001/XMLSchema#double">
+        <valuemapping from="Pufferzone" to="https://www.wikidata.org/wiki/Q64364418"/>
+        <valuemapping from="Kernzone" to="https://www.wikidata.org/wiki/Q9259"/>
+    </column>
+    
+
+</file>
+</data>
+ 

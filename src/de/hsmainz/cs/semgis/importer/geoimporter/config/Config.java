@@ -9,8 +9,10 @@ import de.hsmainz.cs.semgis.importer.geoimporter.Style;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 
 public class Config extends DefaultHandler2 {
@@ -19,7 +21,13 @@ public class Config extends DefaultHandler2 {
 	
 	public String rootClass;
 	
-	public String indid;	
+	public Set<String> additionalClasses=new TreeSet<String>();
+	
+	public String indid;
+	
+	public String indidprefix;
+	
+	public String indidsuffix;	
 	
 	public String geomatchingclass;
 	
@@ -68,6 +76,8 @@ public class Config extends DefaultHandler2 {
 		case "file":
 				rootClass=attributes.getValue("class");
 				indid=attributes.getValue("indid");
+				indidprefix=attributes.getValue("indidprefix");
+				indidsuffix=attributes.getValue("indidsuffix");
 				namespace=attributes.getValue("namespace");
 				geomatchingclass=attributes.getValue("geomatchingclass");
 				geoendpoint=attributes.getValue("geoendpoint");
@@ -79,7 +89,7 @@ public class Config extends DefaultHandler2 {
 			  currentconfig.isCollection=true;
 			  currentconfig.subconfigs=new LinkedList<>();
 			  currentconfig.concept=attributes.getValue("class");
-			  currentconfig.propertyuri=attributes.getValue("propiri");
+			  currentconfig.propertyuri.add(attributes.getValue("propiri"));
 			  currentconfig.name=attributes.getValue("name");
 			  if(this.columnLists.isEmpty()) {
 				  System.out.println("Top Level Collection: Adding "+attributes.getValue("name"));
@@ -121,6 +131,19 @@ public class Config extends DefaultHandler2 {
 			  this.lineStringStyle.size=attributes.getValue("size");
 			  this.lineStringStyle.fillColor=attributes.getValue("fillColor");
 			  break;
+		case "valuemapping":
+			  currentconfig.valuemapping.put(attributes.getValue("from"),attributes.getValue("to"));
+			  break;
+		case "propiri":
+			  currentconfig.propertyuri.add(attributes.getValue("value"));
+			  break;
+		case "classmapping":
+			  additionalClasses.add(attributes.getValue("class"));
+			  break;
+		case "addcolumn":
+			  currentconfig=new DataColumnConfig();
+			  currentconfig.propertyuri.add(attributes.getValue("propiri"));
+			  currentconfig.staticvalue=attributes.getValue("value");
 		case "column":
 				//id
 				currentconfig=new DataColumnConfig();
@@ -150,9 +173,12 @@ public class Config extends DefaultHandler2 {
 				currentconfig.unit=attributes.getValue("unit");
 				currentconfig.range=attributes.getValue("range");
 				currentconfig.isind=attributes.getValue("isind");
-				currentconfig.propertyuri=attributes.getValue("propiri");
+				currentconfig.language=attributes.getValue("language");
+				currentconfig.propertyuri.add(attributes.getValue("propiri"));
 				currentconfig.keepdataprop=attributes.getValue("keepdataprop");
-				if(attributes.getValue("valuemapping")!=null) {
+				currentconfig.valueprefix=attributes.getValue("valueprefix");
+				currentconfig.valuesuffix=attributes.getValue("valuesuffix");
+				/*if(attributes.getValue("valuemapping")!=null) {
 					currentconfig.valuemapping=new TreeMap<String,String>();
 					String valmap=attributes.getValue("valuemapping");
 					String[] spl=valmap.split(";");
@@ -160,7 +186,7 @@ public class Config extends DefaultHandler2 {
 						currentconfig.valuemapping.put(keyval.substring(0,keyval.indexOf(':')),
 								keyval.substring(keyval.indexOf(':')+1));
 					}
-				}
+				}*/
 				currentconfig.splitposition=attributes.getValue("splitposition");
 				currentconfig.splitregex=attributes.getValue("splitregex");
 				currentconfig.separationCharacter=attributes.getValue("splitcharacter");

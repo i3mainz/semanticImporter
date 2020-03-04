@@ -1,6 +1,7 @@
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="js/mappingschemas.js"></script>
 <style>
 .loading { margin: auto; }
 
@@ -118,6 +119,9 @@ function toggleAnalysis() {
 	    x.style.display = "none";
 	  }
 	}
+function mappingSchemaToTable(){
+	mappingSchemaReader($('#mappingschema').val())
+}
 </script>
 </head>
 
@@ -127,14 +131,11 @@ function toggleAnalysis() {
 </div>
 
 	<h1>Upload your file for content analysis:</h1>
-
+	
 	<p id="metadata" style="display:none">
 	<h4>Metadata</h4>
 	Creator: <input id="creator" type="text"/><br/>
 	Creation Time: <input id="creationtime" type="datetime"/><br/>
-	Target Namespace: <input type="url" name="namespace" id="namespace"><br/>
- 	Individual Attribute: <input type="text" name="indid" id="indid"><br/>
- 	Class to assign (URI): <input type="text" name="classname" id="classname"><br/>
  	<input type="checkbox" id="importTripleStore" onChange="toggleTripleStore()">Import to a triple store
  	<p id="triplestoreimport" style="display:none">
  	  I want to import the file into the following triple store:<br/>
@@ -146,16 +147,25 @@ function toggleAnalysis() {
  	   </table>
  	</p>
 	</p>
- 	<table id="datasettable">
+	Mappingschema: <select id="mappingschema" onChange="mappingSchemaToTable()"></select><br/><br/>
+	<span id="tableheader"></span><br/>
+ 	<table id="datasettable" width="100%" align="center" border="1">
  	</table>
 	   <p>
 		Select a file : <input type="file" name="file" id="files" size="45" /><br/>
 		Fileformat: 
 		<select id="fileformat"><option value="shp">Shapefile</option>
 		<option value="geojson">GeoJSON</option></select>
+
 	   </p>
 
 	   <button id="uploadButton" onclick="analyzeFile()">Upload It</button>
- 
+<script>
+result=""
+for(mapping in mappingschemas){
+	result+="<option value=\""+mappingschemas[mapping]+"\">"+mapping+"</option>"
+}
+$("#mappingschema").html(result)
+</script>
 </body>
 </html>
