@@ -131,9 +131,6 @@ public class Config extends DefaultHandler2 {
 			  this.lineStringStyle.size=attributes.getValue("size");
 			  this.lineStringStyle.fillColor=attributes.getValue("fillColor");
 			  break;
-		case "valuemapping":
-			  currentconfig.valuemapping.put(attributes.getValue("from"),attributes.getValue("to"));
-			  break;
 		case "propiri":
 			  currentconfig.propertyuri.add(attributes.getValue("value"));
 			  break;
