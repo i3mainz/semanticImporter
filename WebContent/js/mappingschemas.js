@@ -1,14 +1,14 @@
 var mappingschemas={
 		"POI Berufsfeuerwehr":"schema/bfw.xml",
 		"POI Botschaften/Konsulate":"schema/botkon.xml",
-		"POI Bundesbehörden":"schema/bbeh.xml",
+		"POI Bundesbehoerden":"schema/bbeh.xml",
 		"POI Gerichte":"schema/gerichte.xml",
 		"POI Hochschulen":"schema/hs.xml",
 		"POI Justizvollzugsanstalt":"schema/jva.xml",
 		"POI KFZ Zulassungsstelle":"schema/kfz.xml",
-		"POI Krankenhäuser":"schema/khv.xml",
+		"POI Krankenhaeuser":"schema/khv.xml",
 		"POI Kita":"schema/kita.xml",
-		"POI Landesbehörden":"schema/lbeh.xml",
+		"POI Landesbehoerden":"schema/lbeh.xml",
 		"POI Landespolizei":"schema/lpol.xml",
 		"POI Rehaklinik":"schema/rhv.xml",
 		"POI Schulen Allgemein":"schema/schulen_allg.xml",
@@ -28,8 +28,9 @@ var mappingschemas={
 function mappingSchemaReader(url){
     $.get(url, {}, function (xml){
     	header="Class: <a target=\"_blank\" href=\""+$(xml).find('file').attr("class")+"\">"+$(xml).find('file').attr("class")+"</a><br/>"
+    	header+="Individual ID: "+$(xml).find('file').attr("indid")+"<br/>"
     	header+="Namespace: <a target=\"_blank\" href=\""+$(xml).find('file').attr("namespace")+"\">"+$(xml).find('file').attr("namespace")+"</a><br/>"
-    	header+="EPSG: <a target=\"_blank\" href=\""+$(xml).find('file').attr("namespace")+"\">EPSG:"+$(xml).find('file').attr("epsg")+"</a><br/>"
+    	header+="EPSG: <a target=\"_blank\" href=\"http://www.opengis.net/def/crs/EPSG/0/"+$(xml).find('file').attr("epsg")+"\">EPSG:"+$(xml).find('file').attr("epsg")+"</a><br/>"
 
     	output="<tr><th>Column</th><th>Type</th><th>Property IRI</th><th>Range</th><th>Concept</th><th>Query</th><th>Endpoint</th></tr>"
     	$(xml).find('file').children().each(function(){

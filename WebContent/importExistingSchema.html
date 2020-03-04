@@ -147,6 +147,7 @@ function mappingSchemaToTable(){
  	   </table>
  	</p>
 	</p>
+	Mappingschema: <select id="mappingschema" onChange="mappingSchemaToTable()"></select><br/><br/>
 	<span id="tableheader"></span><br/>
  	<table id="datasettable" width="100%" align="center" border="1">
  	</table>
@@ -155,7 +156,7 @@ function mappingSchemaToTable(){
 		Fileformat: 
 		<select id="fileformat"><option value="shp">Shapefile</option>
 		<option value="geojson">GeoJSON</option></select>
-		Mappingschema: <select id="mappingschema" onChange="mappingSchemaToTable()"></select>
+
 	   </p>
 
 	   <button id="uploadButton" onclick="analyzeFile()">Upload It</button>
