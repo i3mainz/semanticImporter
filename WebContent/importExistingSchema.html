@@ -1,6 +1,7 @@
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="js/mappingschemas.js"></script>
 <style>
 .loading { margin: auto; }
 
@@ -127,7 +128,7 @@ function toggleAnalysis() {
 </div>
 
 	<h1>Upload your file for content analysis:</h1>
-
+	
 	<p id="metadata" style="display:none">
 	<h4>Metadata</h4>
 	Creator: <input id="creator" type="text"/><br/>
@@ -153,9 +154,16 @@ function toggleAnalysis() {
 		Fileformat: 
 		<select id="fileformat"><option value="shp">Shapefile</option>
 		<option value="geojson">GeoJSON</option></select>
+		Mappingschema: <select id="mappingschema"></select>
 	   </p>
 
 	   <button id="uploadButton" onclick="analyzeFile()">Upload It</button>
- 
+<script>
+result=""
+for(mapping in mappingschemas){
+	result+="<option value=\""+mappingschemas[mapping]+"\">"+mapping+"</option>"
+}
+document.getElementById("mappingschema").innerHTML(result)
+</script>
 </body>
 </html>

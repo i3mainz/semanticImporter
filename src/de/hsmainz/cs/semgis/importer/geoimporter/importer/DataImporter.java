@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
@@ -50,6 +51,7 @@ public class DataImporter {
 	private final Config config;
 	private final OntModel model;
 	private OntClass rootClass;
+	private List<OntClass> additionalClasses=new LinkedList<OntClass>();
 	private final OntClass geomClass;
 	private final OntClass featurecl;
 	private final Integer epsgCode;
@@ -69,6 +71,11 @@ public class DataImporter {
 		if(!config.rootClass.contains("%%")) {
 			this.rootClass = model.createClass(config.rootClass);
 			rootClass.addSuperClass(featurecl);
+		}
+		for(String addcls:config.additionalClasses) {
+			OntClass addc=model.createClass(addcls);
+			additionalClasses.add(addc);
+			rootClass.addSuperClass(addc);			
 		}
 		this.epsgCode = epsgCode;
 		this.geomClass = model.createClass("http://www.opengis.net/ont/sf#" + geomType);
@@ -134,11 +141,28 @@ public class DataImporter {
 					for(String id:ids) {
 						val.append(dataRow.get(id));
 					}
-					currentind=rootClass.createIndividual(config.namespace+val);
-					importMetaData(currentind,val.toString());
+					String vall=val.toString();
+					if(config.indidprefix!=null) {
+						vall=config.indidprefix+vall;
+					}
+					if(config.indidsuffix!=null) {
+						vall=vall+config.indidsuffix;
+					}	
+					currentind=rootClass.createIndividual(config.namespace+vall);
+					importMetaData(currentind,vall);
 				}else {
-					currentind = rootClass.createIndividual(config.namespace + dataRow.get(config.indid));
-					importMetaData(currentind,dataRow.get(config.indid));
+					String indd=dataRow.get(config.indid);
+					if(config.indidprefix!=null) {
+						indd=config.indidprefix+indd;
+					}
+					if(config.indidsuffix!=null) {
+						indd=indd+config.indidsuffix;
+					}	
+					currentind = rootClass.createIndividual(config.namespace + indd);
+					importMetaData(currentind,indd);
+				}
+				for(OntClass cls:additionalClasses) {
+					currentind.addRDFType(cls);
 				}
 				// Import geometry column.
 				importGeometry(currentind, feature.getDefaultGeometryProperty());
@@ -150,6 +174,8 @@ public class DataImporter {
 					for (DataColumnConfig curconf:conflist) {
 						if (config.resultmap.containsKey(columnName)) {						
 							parseDataColumnConfigs(curconf, currentind, dataRow, dataRow.get(key), 1);
+						}else if(curconf.staticvalue!=null) {
+							parseDataColumnConfigs(curconf, currentind, dataRow, curconf.staticvalue, 1);
 						}
 					} 
 				}
@@ -168,7 +194,9 @@ public class DataImporter {
 				System.out.println("Found Collection: "+curconf.name);
 				OntClass cls=model.createClass(curconf.concept);
 				Individual subind=cls.createIndividual(this.config.namespace+UUID.randomUUID());
-				currentind.addProperty(model.createObjectProperty(curconf.propertyuri), subind);
+				for(String prop:curconf.propertyuri) {
+					currentind.addProperty(model.createObjectProperty(prop), subind);
+				}
 				for(DataColumnConfig subconf:curconf.subconfigs) {	
 					System.out.println("Found subconfigs in depth "+depth);
 					this.parseDataColumnConfigs(subconf,subind,dataRow,dataRow.get(subconf.name), depth+1);
@@ -190,14 +218,39 @@ public class DataImporter {
 						position = Integer.valueOf(curconf.splitposition);
 						toadd = spl[position];
 					}
-					importValue(curconf, currentind, dataRow, toadd);
+					if(curconf.valueprefix!=null) {
+						toadd=curconf.valueprefix+toadd;
+					}
+					if(curconf.valuesuffix!=null) {
+						toadd=toadd+curconf.valuesuffix;
+					}
+					for(String iri:curconf.propertyuri) {
+						importValue(curconf, currentind, dataRow, toadd,iri);
+					}
 				} else if (curconf.splitregex != null && curconf.splitposition != null) {
 					Pattern pattern = Pattern.compile(curconf.splitregex);
 					String toadd = pattern.matcher(value).group(Integer.valueOf(curconf.splitposition));
-					importValue(curconf, currentind, dataRow, toadd);
+					if(curconf.valueprefix!=null) {
+						toadd=curconf.valueprefix+toadd;
+					}
+					if(curconf.valuesuffix!=null) {
+						toadd=toadd+curconf.valuesuffix;
+					}
+					for(String iri:curconf.propertyuri) {
+						importValue(curconf, currentind, dataRow, toadd,iri);
+					}
 				} else {
-					importValue(curconf, currentind, dataRow, value);
+					if(curconf.valueprefix!=null) {
+						value=curconf.valueprefix+value;
+					}
+					if(curconf.valuesuffix!=null) {
+						value=curconf.valuesuffix+value;
+					}
+					for(String iri:curconf.propertyuri) {
+						importValue(curconf, currentind, dataRow, value,iri);
+					}
 				}
+				
 			}
 	}
 
@@ -311,7 +364,7 @@ public class DataImporter {
 	 * @param value
 	 *            the value to insert
 	 */
-	private void importValue(DataColumnConfig xc, Individual ind, Map<String, String> dataRow, String value) {
+	private void importValue(DataColumnConfig xc, Individual ind, Map<String, String> dataRow, String value,String propiri) {
 		if (value == null || value.isEmpty())
 			return;
 		if (xc.prop.equals("subclass")) {
@@ -330,12 +383,12 @@ public class DataImporter {
 			if (xc.propertyuri == null) {
 				pro = model.createDatatypeProperty(DEFAULTNAMESPACE + "has" + toCamelCase(xc.name));
 			} else {
-				pro = model.createDatatypeProperty(xc.propertyuri.replace(" ", "_"));
+				pro = model.createDatatypeProperty(propiri.replace(" ", "_"));
 			}
 			if (xc.range != null) {
 				pro.addRange(model.createResource(xc.range));
 			}
-			if (xc.valuemapping != null && xc.valuemapping.containsKey(value)) {
+			if (xc.valuemapping != null && xc.valuemapping.containsKey(value)) {				
 				ind.addProperty(pro, model.createTypedLiteral(xc.valuemapping.get(value), xc.range));
 			} else {
 				ind.addProperty(pro, model.createTypedLiteral(value, xc.range));
@@ -346,7 +399,7 @@ public class DataImporter {
 			if (xc.propertyuri == null) {
 				pro = model.createAnnotationProperty(DEFAULTNAMESPACE + "has" + toCamelCase(xc.name.replace(" ", "_")));
 			} else {
-				pro = model.createAnnotationProperty(xc.propertyuri.replace(" ", "_"));
+				pro = model.createAnnotationProperty(propiri.replace(" ", "_"));
 			}
 			if (xc.valuemapping != null && xc.valuemapping.containsKey(value)) {
 				ind.addProperty(pro, model.createTypedLiteral(xc.valuemapping.get(value), xc.range));
@@ -358,7 +411,7 @@ public class DataImporter {
 			if (xc.propertyuri == null) {
 				pro = model.createObjectProperty(DEFAULTNAMESPACE + "has" + toCamelCase(xc.name.replace(" ", "_")));
 			} else {
-				pro = model.createObjectProperty(xc.propertyuri.replace(" ", "_"));
+				pro = model.createObjectProperty(propiri.replace(" ", "_"));
 			}
 			if (xc.range != null) {
 				pro.addRange(model.createClass(xc.range));
@@ -373,8 +426,7 @@ public class DataImporter {
 					if(res!=null)
 						System.out.println("sameAsCount: "+sameAsCount++);
 					ind.addProperty(RDFS.label,value);
-				}
-				
+				}				
 				// TODO: structure not here
 				dbConnector.createWDOntologyFromInd("https://query.wikidata.org/sparql", obj, model, "Wikidata",
 						DEFAULTNAMESPACE);
@@ -383,7 +435,6 @@ public class DataImporter {
 				String s = new StrSubstitutor(dataRow, "%%", "%%").replace(xc.indname);
 				Individual obj = cls.createIndividual(s.replace(" ", "_"));
 				ind.addProperty(pro, obj);
-
 				if (xc.unit != null) {
 					obj.addProperty(model.createObjectProperty(xc.unitprop), model.createResource(xc.unit));
 				}

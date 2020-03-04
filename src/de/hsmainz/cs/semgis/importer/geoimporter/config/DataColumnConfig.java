@@ -2,6 +2,7 @@ package de.hsmainz.cs.semgis.importer.geoimporter.config;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class DataColumnConfig {
 
@@ -35,13 +36,15 @@ public class DataColumnConfig {
 	
 	public String concept;	// -> objtype
 	public String prop;	// -> proptype
-	public String propertyuri;
+	public Set<String> propertyuri;
 	
 	public String unit; // -> unittype
 	public String unitprop;
 
 	public String range; // valuetype
 	public String valueprop;
+	
+	public String language;
 	
 	public String keepdataprop;
 
@@ -54,6 +57,12 @@ public class DataColumnConfig {
 	public String splitregex;
 	
 	public Map<String,String> valuemapping;
+
+	public String valueprefix=null;
+	
+	public String valuesuffix=null;
+
+	public String staticvalue;
 	
 	
 }
