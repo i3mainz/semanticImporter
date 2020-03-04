@@ -1,4 +1,5 @@
 var mappingschemas={
+		"NamedPlaces":"schema/geographicalnames.xml",
 		"POI Berufsfeuerwehr":"schema/bfw.xml",
 		"POI Botschaften/Konsulate":"schema/botkon.xml",
 		"POI Bundesbehoerden":"schema/bbeh.xml",
@@ -22,7 +23,11 @@ var mappingschemas={
 		"Schulen Bremen":"schema/bremen_schulen.xml",
 		"Schulen Hamburg":"schema/hamburg_schulen.xml",
 		"Schulen Hessen":"schema/hessen_schulen.xml",
-		"Schulen NRW":"schema/nrw_schulen.xml"
+		"Schulen NRW":"schema/nrw_schulen.xml",
+		"Unesco Heritage Bauhaus":"schema/bauhaus_unesco.xml",
+		"Unesco Heritage Hamburg":"schema/hamburg_unesco.xml",
+		"Unesco Heritage Quedlinburg":"schema/quedlinburg_unesco.xml",
+		"Unesco Heritage Sachsen-Anhalt":"schema/quedlinburg_unesco.xml"
 }
 
 function mappingSchemaReader(url){
@@ -43,6 +48,8 @@ function mappingSchemaReader(url){
                 	output+="<td><table width=\"100%\" border=1><tr><th>from</th><th>to</th></tr>"
                 	$(this).children().each(function(){
                 		if(this.tagName=="valuemapping"){
+                			output+="<tr><td>"+$(this).attr("from")+"</td><td><a href=\""+$(this).attr("to")+"\" target=\"_blank\">"+$(this).attr("to")+"</a></td></tr>"
+                		}else if(this.tagName=="valuemapping"){
                 			output+="<tr><td>"+$(this).attr("from")+"</td><td><a href=\""+$(this).attr("to")+"\" target=\"_blank\">"+$(this).attr("to")+"</a></td></tr>"
                 		}
                 	});
