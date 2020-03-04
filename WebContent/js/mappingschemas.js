@@ -44,7 +44,7 @@ function processColumns(columnhead,xml,depth){
         	output+="<td><table width=\"100%\" border=1><tr><th>from</th><th>to</th></tr>"
         	$(xml).children().each(function(){
         		if(xml.tagName=="valuemapping"){
-        			output+="<tr><td>"+$(xml).attr("from")+"</td><td><a href=\""+$(xml).attr("to")+"\" target=\"_blank\">"+$(xml).attr("to")+"</a></td></tr>"
+        			output+="<tr><td>"+$(this).attr("from")+"</td><td><a href=\""+$(this).attr("to")+"\" target=\"_blank\">"+$(this).attr("to")+"</a></td></tr>"
         		}
         	});
         	output+="</table></td>"
