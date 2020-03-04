@@ -106,8 +106,6 @@ public class Config extends DefaultHandler2 {
 			  break;
 		case "mapping":
 			  break;
-		case "valuemapping":
-			  break;
 		case "metadata":
 			  publisher=attributes.getValue("publisher");
 			  license=attributes.getValue("license");
