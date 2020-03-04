@@ -27,8 +27,12 @@ var mappingschemas={
 
 function mappingSchemaReader(url){
     $.get(url, {}, function (xml){
-        $('marker',xml).each(function(i){
-           markers = $(this);
+    	output="<tr><th>Column</th><th>Property IRI</th><th>Range</th><th>Concept</th><th>Options</th></tr>"
+    	$(xml).children().each(function(){
+            if(this.tagName=="column" || this.tagName=="addcolumn"){
+                $output+="<tr><td>"+$(this).attr("name")+"</td><td>"+$(this).attr("propiri")+"</td><td>"+$(this).attr("range")+"</td><td>"+$(this).attr("concept")+"</td><td></td></tr>";
+            }
         });
+    	$('#datasettable').html(output);
     });
 }
