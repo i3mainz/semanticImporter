@@ -43,7 +43,7 @@ function processColumns(columnhead,xml,depth){
         if($(xml).children().length>0 && $(xml).attr("prop")=="subclass"){
         	output+="<td><table width=\"100%\" border=1><tr><th>from</th><th>to</th></tr>"
         	$(xml).children().each(function(){
-        		if(xml.tagName=="valuemapping"){
+        		if(this.tagName=="valuemapping"){
         			output+="<tr><td>"+$(this).attr("from")+"</td><td><a href=\""+$(this).attr("to")+"\" target=\"_blank\">"+$(this).attr("to")+"</a></td></tr>"
         		}
         	});
