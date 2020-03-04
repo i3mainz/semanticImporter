@@ -106,8 +106,6 @@ public class Config extends DefaultHandler2 {
 			  break;
 		case "mapping":
 			  break;
-		case "valuemapping":
-			  break;
 		case "metadata":
 			  publisher=attributes.getValue("publisher");
 			  license=attributes.getValue("license");
@@ -130,6 +128,9 @@ public class Config extends DefaultHandler2 {
 			  this.lineStringStyle.borderColor=attributes.getValue("borderColor");
 			  this.lineStringStyle.size=attributes.getValue("size");
 			  this.lineStringStyle.fillColor=attributes.getValue("fillColor");
+			  break;
+		case "valuemapping":
+			  currentconfig.valuemapping.put(attributes.getValue("from"),attributes.getValue("to"));
 			  break;
 		case "propiri":
 			  currentconfig.propertyuri.add(attributes.getValue("value"));
@@ -205,6 +206,6 @@ public class Config extends DefaultHandler2 {
 			System.out.println("After pop: "+this.columnLists.size());
 		}
 	}
-	
-	
+		
 }
+
