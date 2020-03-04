@@ -30,6 +30,31 @@ var mappingschemas={
 		"Unesco Heritage Sachsen-Anhalt":"schema/quedlinburg_unesco.xml"
 }
 
+function processColumns(columnhead,xml){
+	if(this.tagName=="column" || this.tagName=="addcolumn"){
+        output+="<tr><td align=\"center\" style=\"color:red\">"+((typeof $(this).attr("name") !== 'undefined')?$(this).attr("name"):"Additional column")+"</td>"
+        output+="<td align=\"center\">"+$(this).attr("prop")+"</td>"
+        output+="<td align=\"center\"><a href=\""+$(this).attr("propiri")+"\" target=\"_blank\" >"+((typeof $(this).attr("propiri") !== 'undefined')?$(this).attr("propiri").substring($(this).attr("propiri").lastIndexOf('/')+1):"")+"</a></td>"
+        output+="<td align=\"center\"><a target=\"_blank\" href=\""+$(this).attr("range")+"\">"+((typeof $(this).attr("range") !== 'undefined')?$(this).attr("range").substring($(this).attr("range").lastIndexOf('#')+1):"")+"</a></td>"
+        if($(this).children().length>0 && $(this).attr("prop")=="subclass"){
+        	output+="<td><table width=\"100%\" border=1><tr><th>from</th><th>to</th></tr>"
+        	$(this).children().each(function(){
+        		if(this.tagName=="valuemapping"){
+        			output+="<tr><td>"+$(this).attr("from")+"</td><td><a href=\""+$(this).attr("to")+"\" target=\"_blank\">"+$(this).attr("to")+"</a></td></tr>"
+        		}
+        	});
+        	output+="</table></td>"
+        }else{
+        	output+="<td align=\"center\"><a href=\""+$(this).attr("concept")+"\" target=\"_blank\" >"+((typeof $(this).attr("concept") !== 'undefined')?$(this).attr("concept").substring($(this).attr("concept").lastIndexOf('/')+1):"")+"</a></td>"
+        }
+        output+="<td align=\"center\">"+((typeof $(this).attr("query") !== 'undefined')?$(this).attr("query"):"")+"</td>"
+        output+="<td align=\"center\">"+((typeof $(this).attr("endpoint") !== 'undefined')?"<a href=\""+$(this).attr("endpoint")+"\">"+$(this).attr("endpoint")+"</a>":"")+"</td>"
+        output+="</tr>";
+    }else if(this.tagName=="columncollection"){
+    	
+    }
+}
+
 function mappingSchemaReader(url){
     $.get(url, {}, function (xml){
     	header="Class: <a target=\"_blank\" href=\""+$(xml).find('file').attr("class")+"\">"+$(xml).find('file').attr("class")+"</a><br/>"
@@ -40,7 +65,7 @@ function mappingSchemaReader(url){
     	output="<tr><th>Column</th><th>Type</th><th>Property IRI</th><th>Range</th><th>Concept</th><th>Query</th><th>Endpoint</th></tr>"
     	$(xml).find('file').children().each(function(){
             if(this.tagName=="column" || this.tagName=="addcolumn"){
-                output+="<tr><td align=\"center\">"+$(this).attr("name")+"</td>"
+                output+="<tr><td align=\"center\" style=\"color:red\">"+((typeof $(this).attr("name") !== 'undefined')?$(this).attr("name"):"Additional column")+"</td>"
                 output+="<td align=\"center\">"+$(this).attr("prop")+"</td>"
                 output+="<td align=\"center\"><a href=\""+$(this).attr("propiri")+"\" target=\"_blank\" >"+((typeof $(this).attr("propiri") !== 'undefined')?$(this).attr("propiri").substring($(this).attr("propiri").lastIndexOf('/')+1):"")+"</a></td>"
                 output+="<td align=\"center\"><a target=\"_blank\" href=\""+$(this).attr("range")+"\">"+((typeof $(this).attr("range") !== 'undefined')?$(this).attr("range").substring($(this).attr("range").lastIndexOf('#')+1):"")+"</a></td>"
@@ -48,8 +73,6 @@ function mappingSchemaReader(url){
                 	output+="<td><table width=\"100%\" border=1><tr><th>from</th><th>to</th></tr>"
                 	$(this).children().each(function(){
                 		if(this.tagName=="valuemapping"){
-                			output+="<tr><td>"+$(this).attr("from")+"</td><td><a href=\""+$(this).attr("to")+"\" target=\"_blank\">"+$(this).attr("to")+"</a></td></tr>"
-                		}else if(this.tagName=="valuemapping"){
                 			output+="<tr><td>"+$(this).attr("from")+"</td><td><a href=\""+$(this).attr("to")+"\" target=\"_blank\">"+$(this).attr("to")+"</a></td></tr>"
                 		}
                 	});
@@ -60,6 +83,8 @@ function mappingSchemaReader(url){
                 output+="<td align=\"center\">"+((typeof $(this).attr("query") !== 'undefined')?$(this).attr("query"):"")+"</td>"
                 output+="<td align=\"center\">"+((typeof $(this).attr("endpoint") !== 'undefined')?"<a href=\""+$(this).attr("endpoint")+"\">"+$(this).attr("endpoint")+"</a>":"")+"</td>"
                 output+="</tr>";
+            }else if(this.tagName=="columncollection"){
+            	
             }
         });
     	$('#datasettable').html(output);
