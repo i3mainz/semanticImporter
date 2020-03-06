@@ -67,9 +67,9 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
 		<valuemapping from="Wirtschaftsschulen" to="https://www.wikidata.org/wiki/Q925216"/>
 	</column>
 	
-	<column name="Traeger" prop="subclass" propiri="https://www.wikidata.org/entity/Property:P1454" >
-		<valuemapping from="1" to="https://www.wikidata.org/entity/Q56292968"/>
-		<valuemapping from="2" to="https://www.wikidata.org/entity/Q1454131"/>
+	<column name="Traeger" prop="subclass" propiri="https://www.wikidata.org/entity/P1454" >
+		<valuemapping from="öffentlich" to="https://www.wikidata.org/wiki/Q1080794"/>
+		<valuemapping from="privat" to="https://www.wikidata.org/wiki/Q423208"/>
 	</column>
 	
 	<column name="Typ" prop="subclass">

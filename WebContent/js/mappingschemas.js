@@ -33,12 +33,13 @@ var mappingschemas={
 }
 
 var output=""
+var classes=""
 
 function processColumns(columnhead,xml,depth){
 	console.log("Depth "+depth);
 	console.log()
 	if(xml.tagName=="column" || xml.tagName=="addcolumn"){
-        output+="<tr><td align=\"center\" style=\"color:red\">"+((typeof $(xml).attr("name") !== 'undefined')?columnhead+$(xml).attr("name"):"Additional column")+"</td>"
+        output+="<tr>"+((typeof $(xml).attr("name") !== 'undefined')?"<td align=\"center\" style=\"color:red\">"+columnhead+$(xml).attr("name"):"<td align=\"center\" style=\"color:green\">Additional column")+"</td>"
         output+="<td align=\"center\">"+$(xml).attr("prop")+"</td>"
         output+="<td align=\"center\"><a href=\""+$(xml).attr("propiri")+"\" target=\"_blank\" >"+((typeof $(xml).attr("propiri") !== 'undefined')?$(xml).attr("propiri").substring($(xml).attr("propiri").lastIndexOf('/')+1):"")+"</a></td>"
         output+="<td align=\"center\"><a target=\"_blank\" href=\""+$(xml).attr("range")+"\">"+((typeof $(xml).attr("range") !== 'undefined')?$(xml).attr("range").substring($(xml).attr("range").lastIndexOf('#')+1):"")+"</a></td>"
@@ -83,22 +84,26 @@ function processColumns(columnhead,xml,depth){
         $(xml).children().each(function(){
                processColumns(columnhead,this,depth+1)
         });
+    }else if(xml.tagName=="classmapping"){
+    	classes+="<a target=\"_blank\" href=\""+$(xml).find('file').attr("class")+"\">"+$(xml).find('file').attr("class")+"</a><br/>"
     }
 }
 
 function mappingSchemaReader(url){
 	output=""
+    classes=""
     $.get(url, {}, function (xml){
-    	header="Class: <a target=\"_blank\" href=\""+$(xml).find('file').attr("class")+"\">"+$(xml).find('file').attr("class")+"</a><br/>"
+       	output="<tr><th>Column</th><th>Type</th><th>Property IRI</th><th>Range</th><th>Concept</th><th>Query</th><th>Endpoint</th><th>Regex</th></tr>"
+    	classes="<a target=\"_blank\" href=\""+$(xml).find('file').attr("class")+"\">"+$(xml).find('file').attr("class")+"</a><br/>"
+       	$(xml).find('file').children().each(function(){
+            processColumns("",this,1)
+        });
+       	header="Classes: ["+classes+"]"
     	header+="Individual ID: "+((typeof $(xml).attr("indidprefix") !== 'undefined')?columnhead+$(xml).attr("indidprefix"):"")+"%%"+$(xml).find('file').attr("indid")+"%%<br/>"
     	header+="Namespace: <a target=\"_blank\" href=\""+$(xml).find('file').attr("namespace")+"\">"+$(xml).find('file').attr("namespace")+"</a><br/>"
     	header+="Value Namespace: <a target=\"_blank\" href=\""+$(xml).find('file').attr("attnamespace")+"\">"+$(xml).find('file').attr("attnamespace")+"</a><br/>"
     	header+="EPSG: <a target=\"_blank\" href=\"http://www.opengis.net/def/crs/EPSG/0/"+$(xml).find('file').attr("epsg")+"\">EPSG:"+$(xml).find('file').attr("epsg")+"</a><br/>"
-    	output="<tr><th>Column</th><th>Type</th><th>Property IRI</th><th>Range</th><th>Concept</th><th>Query</th><th>Endpoint</th><th>Regex</th></tr>"
-    	$(xml).find('file').children().each(function(){
-            processColumns("",this,1)
-        });
-    	$('#datasettable').html(output);
+    	$('#datasettable').html(output);    	
     	$('#tableheader').html(header);
     });
 }
