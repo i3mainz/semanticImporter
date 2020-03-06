@@ -68,10 +68,12 @@ function processColumns(columnhead,xml,depth){
         				$(this).children().each(function(){
         					output+="<table>"
         					if(this.tagName=="addcolumn"){
+        						output+="<tr><td>"
         						if((typeof $(this).attr("propiri") !== 'undefined')){
         	        				output+="<a href=\""+$(this).attr("propiri")+"\" target=\"_blank\">"+$(this).attr("propiri").substring($(this).attr("propiri").lastIndexOf('#')+1)
         	        				+"</a>:"
         	        			}
+        						output+="</td><td>"
         						if((typeof $(this).attr("value") !== 'undefined')){
         						if($(this).attr("value").includes("#")){
         	        				output+="<a href=\""+$(this).attr("value")+"\" target=\"_blank\">"+$(this).attr("value").substring($(this).attr("value").lastIndexOf('#')+1)
@@ -84,6 +86,7 @@ function processColumns(columnhead,xml,depth){
         	        				+"</a>"
         	        			}
         						}
+        						output+="</td></tr>"
         					}
         					output+="</table>"
         				});
@@ -125,7 +128,7 @@ function processColumns(columnhead,xml,depth){
                processColumns(columnhead,this,depth+1)
         });
     }else if(xml.tagName=="classmapping"){
-    	classes+="<a target=\"_blank\" href=\""+$(xml).attr("class")+"\">"+$(xml).attr("class")+"</a>"
+    	classes+="<a target=\"_blank\" href=\""+$(xml).attr("class")+"\">"+$(xml).attr("class")+"</a>&nbsp;"
     }
 }
 
