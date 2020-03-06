@@ -119,7 +119,7 @@ function processColumns(columnhead,xml,depth){
                processColumns(columnhead,this,depth+1)
         });
     }else if(xml.tagName=="classmapping"){
-    	classes+="<a target=\"_blank\" href=\""+$(xml).attr("class")+"\">"+$(xml).attr("class")+"</a><br/>"
+    	classes+="<a target=\"_blank\" href=\""+$(xml).attr("class")+"\">"+$(xml).attr("class")+"</a>"
     }
 }
 
@@ -128,11 +128,11 @@ function mappingSchemaReader(url){
     classes=""
     $.get(url, {}, function (xml){
        	output="<tr><th>Column</th><th>Type</th><th>Property IRI</th><th>Range</th><th>Concept</th><th>Query</th><th>Endpoint</th><th>Regex</th></tr>"
-    	classes="<a target=\"_blank\" href=\""+$(xml).find('file').attr("class")+"\">"+$(xml).find('file').attr("class")+"</a><br/>"
+    	classes="<a target=\"_blank\" href=\""+$(xml).find('file').attr("class")+"\">"+$(xml).find('file').attr("class")+"</a>"
        	$(xml).find('file').children().each(function(){
             processColumns("",this,1)
         });
-       	header="Classes: ["+classes+"]"
+       	header="Classes: ["+classes+"]<br/>"
     	header+="Individual ID: "+((typeof $(xml).attr("indidprefix") !== 'undefined')?columnhead+$(xml).attr("indidprefix"):"")+"%%"+$(xml).find('file').attr("indid")+"%%<br/>"
     	header+="Namespace: <a target=\"_blank\" href=\""+$(xml).find('file').attr("namespace")+"\">"+$(xml).find('file').attr("namespace")+"</a><br/>"
     	header+="Value Namespace: <a target=\"_blank\" href=\""+$(xml).find('file').attr("attnamespace")+"\">"+$(xml).find('file').attr("attnamespace")+"</a><br/>"
