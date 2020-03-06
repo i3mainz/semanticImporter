@@ -42,7 +42,7 @@ function processColumns(columnhead,xml,depth){
         output+="<td align=\"center\">"+$(xml).attr("prop")+"</td>"
         output+="<td align=\"center\"><a href=\""+$(xml).attr("propiri")+"\" target=\"_blank\" >"+((typeof $(xml).attr("propiri") !== 'undefined')?$(xml).attr("propiri").substring($(xml).attr("propiri").lastIndexOf('/')+1):"")+"</a></td>"
         output+="<td align=\"center\"><a target=\"_blank\" href=\""+$(xml).attr("range")+"\">"+((typeof $(xml).attr("range") !== 'undefined')?$(xml).attr("range").substring($(xml).attr("range").lastIndexOf('#')+1):"")+"</a></td>"
-        if($(xml).children().length>0 && $(xml).attr("prop")=="subclass"){
+        if($(xml).children().length>0 && $(xml).attr("prop")=="subclass" || $(xml).attr("prop")=="obj"){
         	output+="<td><table width=\"100%\" border=1><tr><th>from</th><th>to</th></tr>"
         	$(xml).children().each(function(){
         		if(this.tagName=="valuemapping"){
