@@ -100,7 +100,7 @@ function processColumns(columnhead,xml,depth){
         output+="<td align=\"center\">"       	
         if((typeof $(xml).attr("query") !== 'undefined')){
         	output+=$(xml).attr("query")
-        }else if((typeof $(xml).attr("query") !== 'undefined')){
+        }else if((typeof $(xml).attr("value") !== 'undefined')){
         	output+=$(xml).attr("value")
         }
         output+="</td>"
