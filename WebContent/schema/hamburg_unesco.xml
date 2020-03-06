@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <data>
-<file class="https://www.wikidata.org/wiki/Q9259" indidprefix="wh_hamburg_" indid="gml_id" 
+<file class="https://www.wikidata.org/entity/Q9259" indidprefix="wh_hamburg_" indid="gml_id" 
 namespace="http://gdi-de.org/geodata#"
 attnamespace="http://gdi-de.org/datatype#"
 geoendpoint="http://linkedgeodata.org/sparql" 
@@ -14,13 +14,13 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
 		<polygon size="2" border="1" borderColor="black" fillColor="red"/>
 	</style>
 	
-	<column name="area" prop="data" propiri="https://www.wikidata.org/wiki/Property:P2046" range="http://www.w3.org/2001/XMLSchema#double"/> 
+	<column name="area" prop="data" propiri="http://www.wikidata.org/prop/direct/P2046" range="http://www.w3.org/2001/XMLSchema#double"/> 
 	
     <column name="wk_objekt" prop="annotation" propiri="http://www.w3.org/2000/01/rdf-schema#label" range="http://www.w3.org/2001/XMLSchema#string"/> 
     
 	<column name="zone" prop="obj" range="http://www.w3.org/2001/XMLSchema#double">
-        <valuemapping from="Pufferzone" to="https://www.wikidata.org/wiki/Q64364418"/>
-        <valuemapping from="Kernzone" to="https://www.wikidata.org/wiki/Q9259"/>
+        <valuemapping from="Pufferzone" to="https://www.wikidata.org/entity/Q64364418"/>
+        <valuemapping from="Kernzone" to="https://www.wikidata.org/entity/Q9259"/>
     </column>
     
 
