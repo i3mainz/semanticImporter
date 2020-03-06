@@ -52,7 +52,7 @@ geomatchingclass="http://www.xplanung.de/xplangml/5/0#BP_Plan" nearestMatch="fal
 		<valuemapping from="Kerngebiet" propiri="http://www.xplanung.de/xplangml/5/0#besondereArtDerBaulNutzung" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1600">
 			<addcolumn prop="obj" propiri="http://www.xplanung.de/xplangml/5/0#allgArtDerBaulNutzung" value="http://www.xplanung.de/xplangml/5/0#XP_AllgArtDerBaulNutzung_2000"/>
 		</valuemapping>
-		<valuemapping from="Gewerbegebiet" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1700">
+		<valuemapping from="Gewerbegebiet" propiri="http://www.xplanung.de/xplangml/5/0#besondereArtDerBaulNutzung" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1700">
 			<addcolumn prop="obj" propiri="http://www.xplanung.de/xplangml/5/0#allgArtDerBaulNutzung" value="http://www.xplanung.de/xplangml/5/0#XP_AllgArtDerBaulNutzung_3000"/>
 		</valuemapping>	
 		<valuemapping from="Industriegebiet" propiri="http://www.xplanung.de/xplangml/5/0#besondereArtDerBaulNutzung" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1800">
