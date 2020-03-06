@@ -35,6 +35,8 @@ public class Config extends DefaultHandler2 {
 	
 	public String namespace;
 	
+	public String attnamespace;
+	
 	public String publisher;
 	
 	public String timestamp;
@@ -79,6 +81,7 @@ public class Config extends DefaultHandler2 {
 				indidprefix=attributes.getValue("indidprefix");
 				indidsuffix=attributes.getValue("indidsuffix");
 				namespace=attributes.getValue("namespace");
+				attnamespace=attributes.getValue("attnamespace");
 				geomatchingclass=attributes.getValue("geomatchingclass");
 				geoendpoint=attributes.getValue("geoendpoint");
 				epsg = Integer.valueOf(attributes.getValue("epsg"));
@@ -190,7 +193,12 @@ public class Config extends DefaultHandler2 {
 				currentconfig.separationCharacter=attributes.getValue("splitcharacter");
 				
 				String induri = getAttrValue(attributes, "indname", namespace + currentconfig.name);
-				currentconfig.indname= induri.startsWith("http")? induri : namespace + induri;	//TODO proper isRelativeUri test
+				if(attnamespace!=null) {
+					currentconfig.indname= induri.startsWith("http")? induri : namespace + induri;	//TODO proper isRelativeUri test
+				}else {
+					currentconfig.indname= induri.startsWith("http")? induri : attnamespace + induri;	//TODO proper isRelativeUri test
+				}
+
 				
 				currentconfig.valueprop=getAttrValue(attributes, "valueprop", "http://qudt.org/schema/qudt#value"); 
 				currentconfig.unitprop=getAttrValue(attributes, "unitprop", "http://qudt.org/schema/qudt#unit"); 

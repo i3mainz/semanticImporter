@@ -36,7 +36,7 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
 
     <column name="Postfach" prop="data" propiri="http://www.wikidata.org/prop/direct/P2918" range="http://www.w3.org/2001/XMLSchema#string"/>    
 
-	<column name="Kreis" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" 
+	<column name="Kreis" prop="obj" concept="https://www.wikidata.org/wiki/Q106658" propiri="http://www.wikidata.org/prop/direct/P131" 
 	query="SELECT distinct ?item WHERE{ ?ind wdt:P131 ?item . ?item ?label '%%Kreis%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql"/> 
 	
 	<column name="Gemeinde" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" concept="https://www.wikidata.org/entity/Q262166"

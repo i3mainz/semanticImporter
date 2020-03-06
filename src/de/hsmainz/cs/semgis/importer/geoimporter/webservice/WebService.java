@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.URI;
+import java.net.URL;
 import java.util.TreeMap;
 import java.util.Map;
 
@@ -48,11 +49,16 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.opengis.feature.Attribute;
 import org.opengis.feature.PropertyType;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLReaderFactory;
 
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
+import de.hsmainz.cs.semgis.importer.geoimporter.Main;
+import de.hsmainz.cs.semgis.importer.geoimporter.config.Config;
 import de.hsmainz.cs.semgis.importer.geoimporter.importer.GMLImporter;
 import de.hsmainz.cs.semgis.importer.geoimporter.parser.GeoJSONParser;
 import de.hsmainz.cs.semgis.importer.schemaconverter.XSD2OWL;
@@ -219,6 +225,41 @@ public class WebService {
 			  }
 			  return Response.ok(stream).type("text/ttl").build();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return Response.ok("Conversion failed").build();
+		} 
+	}
+	
+	@POST
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces({"text/ttl"})
+	@Path("/convertExistingSchema")
+    public Response convertGeoJSON(@FormDataParam("file") InputStream uploadedInputStream,
+			@FormDataParam("file") FormDataContentDisposition fileDetail,
+			@QueryParam("mappingschema") String schemaurl) { 
+		final String dir = System.getProperty("user.dir");
+        System.out.println("current dir = " + dir); 
+        try {
+			String theString = IOUtils.toString(uploadedInputStream, "UTF-8");
+        	FileUtils.copyInputStreamToFile(uploadedInputStream, new File("tempfile.gml"));
+			Config config=new Config();
+			XMLReader myReader = XMLReaderFactory.createXMLReader();
+			myReader.setContentHandler(config);
+			myReader.parse(new InputSource(new URL(schemaurl).openStream()));
+			Main main=new Main();
+			main.processFeatures("tempfile.gml", "result.ttl", config);
+			OntModel result=null;
+			StreamingOutput stream = new StreamingOutput() {
+			    @Override
+			    public void write(OutputStream os) throws IOException,
+			    WebApplicationException {
+			      Writer writer = new BufferedWriter(new OutputStreamWriter(os));
+			      result.write(writer, "TTL");
+			    }
+			  };
+			return Response.ok(stream).type("text/ttl").build();
+		} catch (IOException | SAXException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return Response.ok("Conversion failed").build();
