@@ -119,7 +119,7 @@ function processColumns(columnhead,xml,depth){
                processColumns(columnhead,this,depth+1)
         });
     }else if(xml.tagName=="classmapping"){
-    	classes+="<a target=\"_blank\" href=\""+$(xml).find('file').attr("class")+"\">"+$(xml).find('file').attr("class")+"</a><br/>"
+    	classes+="<a target=\"_blank\" href=\""+$(xml).attr("class")+"\">"+$(xml).attr("class")+"</a><br/>"
     }
 }
 
