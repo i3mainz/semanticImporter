@@ -103,7 +103,9 @@ public class Config extends DefaultHandler2 {
 			  this.columnLists.push(currentconfig.subconfigs);
 			  System.out.println(this.columnLists.peek());
 			  System.out.println(this.columnLists.size());
-			  break;			  
+			  break;
+		case "mapping":
+			  break;
 		case "metadata":
 			  publisher=attributes.getValue("publisher");
 			  license=attributes.getValue("license");
@@ -204,6 +206,6 @@ public class Config extends DefaultHandler2 {
 			System.out.println("After pop: "+this.columnLists.size());
 		}
 	}
-	
-	
+		
 }
+
