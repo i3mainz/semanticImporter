@@ -27,7 +27,9 @@ var mappingschemas={
 		"Unesco Heritage Bauhaus":"schema/bauhaus_unesco.xml",
 		"Unesco Heritage Hamburg":"schema/hamburg_unesco.xml",
 		"Unesco Heritage Quedlinburg":"schema/quedlinburg_unesco.xml",
-		"Unesco Heritage Sachsen-Anhalt":"schema/quedlinburg_unesco.xml"
+		"Unesco Heritage Sachsen-Anhalt":"schema/quedlinburg_unesco.xml",
+		"XPlanung BP_Plan ST":"schema/xplanung_st_bp_plan.xml",
+		"XPlanung FP_Plan ST":"schema/xplanung_st_fp_plan.xml"
 }
 
 function processColumns(columnhead,xml){

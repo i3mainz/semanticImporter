@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <data>
 <file class="https://www.wikidata.org/wiki/Q314024" indid="gml_id" 
-namespace="http://de-gdi.org/geodata#"
+namespace="http://gdi-de.org/geodata#"
 geoendpoint="http://linkedgeodata.org/sparql" 
 geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false" epsg="25833">
 	

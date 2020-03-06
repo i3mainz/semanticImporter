@@ -2,6 +2,7 @@
 <data>
 <file class="https://www.wikidata.org/entity/Q3914" indid="schul_nr" 
 namespace="http://de-gdi.org/geodata#"
+attnamespace="http://gdi-de.org/datatype#"
 geoendpoint="http://linkedgeodata.org/sparql" 
 geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false" epsg="25833">
 	
