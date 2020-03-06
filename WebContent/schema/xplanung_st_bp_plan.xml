@@ -31,21 +31,43 @@ geomatchingclass="http://www.xplanung.de/xplangml/5/0#BP_Plan" nearestMatch="fal
 		<valuemapping from="Gemischte Baufläche" to="http://www.xplanung.de/xplangml/5/0#XP_AllgArtDerBaulNutzung_2000"/>
 		<valuemapping from="Gewerbliche Baufläche" to="http://www.xplanung.de/xplangml/5/0#XP_AllgArtDerBaulNutzung_3000"/>
 		<valuemapping from="Sonderbaufläche" to="http://www.xplanung.de/xplangml/5/0#XP_AllgArtDerBaulNutzung_4000"/>
-		<valuemapping from="Kleinsiedlungsgebiet" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1000"/>
-		<valuemapping from="reines Wohngebiet" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1100"/>
-		<valuemapping from="allgemeines Wohngebiet" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1200"/>
-		<valuemapping from="besonderes Wohngebiet" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1300"/>
-		<valuemapping from="Kerngebiet" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1600"/>
-		<valuemapping from="Industriegebiet" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1800"/>
-		<valuemapping from="Mischgebiet" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1500"/>
-		<valuemapping from="Gewerbegebiet" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1700"/>	
-		<valuemapping from="Dorfgebiet" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1400"/>
-		<valuemapping from="Gemeinbedarf" to="http://www.xplanung.de/xplangml/5/0#XP_ZweckbestimmungGemeinbedarf_1000"/>
-		<valuemapping from="Friedhof" to="http://www.xplanung.de/xplangml/5/0#XP_ZweckbestimmungGruen_2600"/>
+		<valuemapping from="Kleinsiedlungsgebiet" propiri="http://www.xplanung.de/xplangml/5/0#besondereArtDerBaulNutzung" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1000">
+			<addcolumn prop="obj" propiri="http://www.xplanung.de/xplangml/5/0#allgArtDerBaulNutzung" value="http://www.xplanung.de/xplangml/5/0#XP_AllgArtDerBaulNutzung_1000"/>
+		</valuemapping>
+		<valuemapping from="reines Wohngebiet" propiri="http://www.xplanung.de/xplangml/5/0#besondereArtDerBaulNutzung" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1100">
+			<addcolumn prop="obj" propiri="http://www.xplanung.de/xplangml/5/0#allgArtDerBaulNutzung" value="http://www.xplanung.de/xplangml/5/0#XP_AllgArtDerBaulNutzung_1000"/>
+		</valuemapping>
+		<valuemapping from="allgemeines Wohngebiet" propiri="http://www.xplanung.de/xplangml/5/0#besondereArtDerBaulNutzung" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1200">
+			<addcolumn prop="obj" propiri="http://www.xplanung.de/xplangml/5/0#allgArtDerBaulNutzung" value="http://www.xplanung.de/xplangml/5/0#XP_AllgArtDerBaulNutzung_1000"/>
+		</valuemapping>
+		<valuemapping from="besonderes Wohngebiet" propiri="http://www.xplanung.de/xplangml/5/0#besondereArtDerBaulNutzung" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1300">
+			<addcolumn prop="obj" propiri="http://www.xplanung.de/xplangml/5/0#allgArtDerBaulNutzung" value="http://www.xplanung.de/xplangml/5/0#XP_AllgArtDerBaulNutzung_1000"/>
+		</valuemapping>´
+		<valuemapping from="Dorfgebiet" propiri="http://www.xplanung.de/xplangml/5/0#besondereArtDerBaulNutzung" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1400">
+			<addcolumn prop="obj" propiri="http://www.xplanung.de/xplangml/5/0#allgArtDerBaulNutzung" value="http://www.xplanung.de/xplangml/5/0#XP_AllgArtDerBaulNutzung_2000"/>
+		</valuemapping>
+		<valuemapping from="Mischgebiet" propiri="http://www.xplanung.de/xplangml/5/0#besondereArtDerBaulNutzung" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1500">
+			<addcolumn prop="obj" propiri="http://www.xplanung.de/xplangml/5/0#allgArtDerBaulNutzung" value="http://www.xplanung.de/xplangml/5/0#XP_AllgArtDerBaulNutzung_2000"/>
+		</valuemapping>
+		<valuemapping from="Kerngebiet" propiri="http://www.xplanung.de/xplangml/5/0#besondereArtDerBaulNutzung" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1600">
+			<addcolumn prop="obj" propiri="http://www.xplanung.de/xplangml/5/0#allgArtDerBaulNutzung" value="http://www.xplanung.de/xplangml/5/0#XP_AllgArtDerBaulNutzung_2000"/>
+		</valuemapping>
+		<valuemapping from="Gewerbegebiet" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1700">
+			<addcolumn prop="obj" propiri="http://www.xplanung.de/xplangml/5/0#allgArtDerBaulNutzung" value="http://www.xplanung.de/xplangml/5/0#XP_AllgArtDerBaulNutzung_3000"/>
+		</valuemapping>	
+		<valuemapping from="Industriegebiet" propiri="http://www.xplanung.de/xplangml/5/0#besondereArtDerBaulNutzung" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1800">
+			<addcolumn prop="obj" propiri="http://www.xplanung.de/xplangml/5/0#allgArtDerBaulNutzung" value="http://www.xplanung.de/xplangml/5/0#XP_AllgArtDerBaulNutzung_3000"/>
+		</valuemapping>
+		<valuemapping from="Industriegebiet" propiri="http://www.xplanung.de/xplangml/5/0#besondereArtDerBaulNutzung" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1800">
+			<addcolumn prop="obj" propiri="http://www.xplanung.de/xplangml/5/0#allgArtDerBaulNutzung" value="http://www.xplanung.de/xplangml/5/0#XP_AllgArtDerBaulNutzung_3000"/>
+		</valuemapping>
+		<valuemapping from="Gemeinbedarf" propiri="http://www.xplanung.de/xplangml/5/0#zweckbestimmung" to="http://www.xplanung.de/xplangml/5/0#XP_ZweckbestimmungGemeinbedarf_1000"/>
+		<valuemapping from="Friedhof" propiri="http://www.xplanung.de/xplangml/5/0#zweckbestimmung" to="http://www.xplanung.de/xplangml/5/0#XP_ZweckbestimmungGruen_2600"/>
+		<valuemapping from="Sportanlage" propiri="http://www.xplanung.de/xplangml/5/0#zweckbestimmung" to="http://www.xplanung.de/xplangml/5/0#XP_ZweckbestimmungSpielSportanlage_1000"/>
 		<valuemapping from="Parkplatz" to="http://www.xplanung.de/xplangml/5/0#LP_ErholungFreizeitFunktionen_5000"/>
-		<valuemapping from="sonstiges Sondergebiet" to="http://www.xplanung.de/xplangml/5/0#XP_Sondernutzungen_9999"/>
-		<valuemapping from="Einkaufszentrum §11(3) BauNVO" to="http://www.xplanung.de/xplangml/5/0#XP_Sondernutzungen_16001"/>
-		<valuemapping from="Sportanlage" to="http://www.xplanung.de/xplangml/5/0#XP_ZweckbestimmungSpielSportanlage_1000"/>
+		<valuemapping from="sonstiges Sondergebiet" propiri="http://www.xplanung.de/xplangml/5/0#sondernutzung" to="http://www.xplanung.de/xplangml/5/0#XP_Sondernutzungen_9999"/>
+		<valuemapping from="Einkaufszentrum §11(3) BauNVO" propiri="http://www.xplanung.de/xplangml/5/0#sondernutzung" to="http://www.xplanung.de/xplangml/5/0#XP_Sondernutzungen_16001"/>
+
 	</column>
 	
 	<column name="LANDKREIS" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" 

@@ -50,13 +50,45 @@ function processColumns(columnhead,xml,depth){
         	$(xml).children().each(function(){
         		if(this.tagName=="valuemapping"){
         			output+="<tr><td>"+$(this).attr("from")+"</td><td>"
+        			if((typeof $(this).attr("propiri") !== 'undefined')){
+        				output+="<a href=\""+$(this).attr("propiri")+"\" target=\"_blank\">"+$(this).attr("propiri").substring($(this).attr("propiri").lastIndexOf('#')+1)
+        				+"</a>:"
+        			}
         			if($(this).attr("to").includes("#")){
-        				output+="<a href=\""+$(this).attr("to")+"\" target=\"_blank\">"+$(this).attr("to").substring($(this).attr("to").lastIndexOf('#')+1)+"</a></td></tr>"
+        				output+="<a href=\""+$(this).attr("to")+"\" target=\"_blank\">"+$(this).attr("to").substring($(this).attr("to").lastIndexOf('#')+1)
+        				+"</a>"
         			}else if($(this).attr("to").includes("/")){
-        				output+="<a href=\""+$(this).attr("to")+"\" target=\"_blank\">"+$(this).attr("to").substring($(this).attr("to").lastIndexOf('/')+1)+"</a></td></tr>"
+        				output+="<a href=\""+$(this).attr("to")+"\" target=\"_blank\">"+$(this).attr("to").substring($(this).attr("to").lastIndexOf('/')+1)
+        				+"</a>"
         			}else{
-        				output+="<a href=\""+$(this).attr("to")+"\" target=\"_blank\">"+$(this).attr("to")+"</a></td></tr>"
+        				output+="<a href=\""+$(this).attr("to")+"\" target=\"_blank\">"+$(this).attr("to")
+        				+"</a>"
         			}	
+        			if($(this).children().length>0){
+        				$(this).children().each(function(){
+        					output+="<table>"
+        					if(this.tagName=="addcolumn"){
+        						if((typeof $(this).attr("propiri") !== 'undefined')){
+        	        				output+="<a href=\""+$(this).attr("propiri")+"\" target=\"_blank\">"+$(this).attr("propiri").substring($(this).attr("propiri").lastIndexOf('#')+1)
+        	        				+"</a>:"
+        	        			}
+        						if((typeof $(this).attr("value") !== 'undefined')){
+        						if($(this).attr("value").includes("#")){
+        	        				output+="<a href=\""+$(this).attr("value")+"\" target=\"_blank\">"+$(this).attr("value").substring($(this).attr("value").lastIndexOf('#')+1)
+        	        				+"</a>"
+        	        			}else if($(this).attr("value").includes("/")){
+        	        				output+="<a href=\""+$(this).attr("value")+"\" target=\"_blank\">"+$(this).attr("value").substring($(this).attr("value").lastIndexOf('/')+1)
+        	        				+"</a>"
+        	        			}else{
+        	        				output+="<a href=\""+$(this).attr("value")+"\" target=\"_blank\">"+$(this).attr("value")
+        	        				+"</a>"
+        	        			}
+        						}
+        					}
+        					output+="</table>"
+        				});
+        			}
+        			output+="</td></tr>"
         		}
         	});
         	output+="</table></td>"
