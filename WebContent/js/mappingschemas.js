@@ -95,7 +95,13 @@ function processColumns(columnhead,xml,depth){
         }else{
         	output+="<td align=\"center\"><a href=\""+$(xml).attr("concept")+"\" target=\"_blank\" >"+((typeof $(xml).attr("concept") !== 'undefined')?$(xml).attr("concept").substring($(xml).attr("concept").lastIndexOf('/')+1):"")+"</a></td>"
         }
-        output+="<td align=\"center\">"+((typeof $(xml).attr("query") !== 'undefined')?$(xml).attr("query"):"")+"</td>"
+        output+="<td align=\"center\">"       	
+        if((typeof $(xml).attr("query") !== 'undefined')){
+        	output+=$(xml).attr("query")
+        }else if((typeof $(xml).attr("query") !== 'undefined')){
+        	output+=$(xml).attr("value")
+        }
+        output+="</td>"
         output+="<td align=\"center\">"+((typeof $(xml).attr("endpoint") !== 'undefined')?"<a href=\""+$(xml).attr("endpoint")+"\">"+$(xml).attr("endpoint")+"</a>":"")+"</td>"
         if($(xml).attr("splitcharacter") && $(xml).attr("splitposition")){
 			output+="<td>^("+$(xml).attr("splitcharacter")+")$</td>"
@@ -127,13 +133,17 @@ function mappingSchemaReader(url){
 	output=""
     classes=""
     $.get(url, {}, function (xml){
-       	output="<tr><th>Column</th><th>Type</th><th>Property IRI</th><th>Range</th><th>Concept</th><th>Query</th><th>Endpoint</th><th>Regex</th></tr>"
+       	output="<tr><th>Column</th><th>Type</th><th>Property IRI</th><th>Range</th><th>Concept</th><th>Query or Fixed Value</th><th>Endpoint</th><th>Regex</th></tr>"
     	classes="<a target=\"_blank\" href=\""+$(xml).find('file').attr("class")+"\">"+$(xml).find('file').attr("class")+"</a>"
        	$(xml).find('file').children().each(function(){
             processColumns("",this,1)
         });
        	header="Classes: ["+classes+"]<br/>"
-    	header+="Individual ID: "+((typeof $(xml).attr("indidprefix") !== 'undefined')?columnhead+$(xml).attr("indidprefix"):"")+"%%"+$(xml).find('file').attr("indid")+"%%<br/>"
+        if((typeof $(xml).attr("indid") !== 'undefined')){
+        	header+="Individual ID: "+((typeof $(xml).attr("indidprefix") !== 'undefined')?columnhead+$(xml).attr("indidprefix"):"")+"%%"+$(xml).find('file').attr("indid")+"%%<br/>"
+        }else{
+        	header+="Individual ID: "+((typeof $(xml).attr("indidprefix") !== 'undefined')?columnhead+$(xml).attr("indidprefix"):"")+"%%GENERATED UUID%%<br/>"
+        }
     	header+="Namespace: <a target=\"_blank\" href=\""+$(xml).find('file').attr("namespace")+"\">"+$(xml).find('file').attr("namespace")+"</a><br/>"
     	header+="Value Namespace: <a target=\"_blank\" href=\""+$(xml).find('file').attr("attnamespace")+"\">"+$(xml).find('file').attr("attnamespace")+"</a><br/>"
     	header+="EPSG: <a target=\"_blank\" href=\"http://www.opengis.net/def/crs/EPSG/0/"+$(xml).find('file').attr("epsg")+"\">EPSG:"+$(xml).find('file').attr("epsg")+"</a><br/>"

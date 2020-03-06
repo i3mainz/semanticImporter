@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <data>
-<file class="https://www.wikidata.org/entity/Q697698" indidprefix="wh_hamburg_" indid="gml_id" 
+<file class="https://www.wikidata.org/entity/Q697698"
 namespace="http://gdi-de.org/geodata#"
 attnamespace="http://gdi-de.org/datatype#"
 geoendpoint="http://linkedgeodata.org/sparql" 

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <data>
-<file class="http://www.xplanung.de/xplangml/5/0#BP_Geometrieobjekt" indidprefix="schulen_bremen_" indid="SNR" 
+<file class="http://www.xplanung.de/xplangml/5/0#BP_Geometrieobjekt" indidprefix="xplanung_bp_st_" indid="AKTENNR1" 
 namespace="http://gdi-de.org/geodata#"
 attnamespace="http://gdi-de.org/datatype#"
 geoendpoint="http://linkedgeodata.org/sparql" 
