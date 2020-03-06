@@ -53,6 +53,9 @@ function processColumns(columnhead,xml,depth){
         			if((typeof $(this).attr("propiri") !== 'undefined')){
         				output+="<a href=\""+$(this).attr("propiri")+"\" target=\"_blank\">"+$(this).attr("propiri").substring($(this).attr("propiri").lastIndexOf('#')+1)
         				+"</a>:"
+        			}else if((typeof $(xml).attr("propiri") !== 'undefined')){
+        				output+="<a href=\""+$(xml).attr("propiri")+"\" target=\"_blank\">"+$(xml).attr("propiri").substring($(xml).attr("propiri").lastIndexOf('#')+1)
+        				+"</a>:"
         			}
         			if($(this).attr("to").includes("#")){
         				output+="<a href=\""+$(this).attr("to")+"\" target=\"_blank\">"+$(this).attr("to").substring($(this).attr("to").lastIndexOf('#')+1)
@@ -65,30 +68,26 @@ function processColumns(columnhead,xml,depth){
         				+"</a>"
         			}	
         			if($(this).children().length>0){
-        				$(this).children().each(function(){
-        					output+="<table>"
+     					output+="<br/>"
+        				$(this).children().each(function(){ 
         					if(this.tagName=="addcolumn"){
-        						output+="<tr><td>"
         						if((typeof $(this).attr("propiri") !== 'undefined')){
         	        				output+="<a href=\""+$(this).attr("propiri")+"\" target=\"_blank\">"+$(this).attr("propiri").substring($(this).attr("propiri").lastIndexOf('#')+1)
         	        				+"</a>:"
         	        			}
-        						output+="</td><td>"
         						if((typeof $(this).attr("value") !== 'undefined')){
         						if($(this).attr("value").includes("#")){
         	        				output+="<a href=\""+$(this).attr("value")+"\" target=\"_blank\">"+$(this).attr("value").substring($(this).attr("value").lastIndexOf('#')+1)
-        	        				+"</a>"
+        	        				+"</a><br/>"
         	        			}else if($(this).attr("value").includes("/")){
         	        				output+="<a href=\""+$(this).attr("value")+"\" target=\"_blank\">"+$(this).attr("value").substring($(this).attr("value").lastIndexOf('/')+1)
-        	        				+"</a>"
+        	        				+"</a><br/>"
         	        			}else{
         	        				output+="<a href=\""+$(this).attr("value")+"\" target=\"_blank\">"+$(this).attr("value")
-        	        				+"</a>"
+        	        				+"</a><br/>"
         	        			}
         						}
-        						output+="</td></tr>"
         					}
-        					output+="</table>"
         				});
         			}
         			output+="</td></tr>"
