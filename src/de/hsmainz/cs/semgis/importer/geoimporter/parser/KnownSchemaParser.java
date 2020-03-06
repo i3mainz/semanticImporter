@@ -117,7 +117,7 @@ public class KnownSchemaParser implements ContentHandler {
 
 	private WKTReader wktreader;
 
-	private FileWriter writerWOModel;
+	//private FileWriter writerWOModel;
 
 	private Boolean range = false, domain = false, stringAttributeBool = false;
 
@@ -159,7 +159,7 @@ public class KnownSchemaParser implements ContentHandler {
 		this.provider = provider;
 		this.origin = origin;
 		this.restrictionStack = new Stack<Map<String, String>>();
-		this.writerWOModel = new FileWriter(new File("outriskwoModel.rdf"));
+		//this.writerWOModel = new FileWriter(new File("outriskwoModel.rdf"));
 		startTime = new Date(System.currentTimeMillis());
 	}
 
@@ -280,14 +280,14 @@ public class KnownSchemaParser implements ContentHandler {
 							Literal liter = this.determineLiteralType(attributes.getValue(i));
 							this.currentIndividual.addProperty(
 									model.createDatatypeProperty(uri + "#" + attributes.getQName(i)), liter);
-							try {
+							/*try {
 								writerWOModel.write("<" + this.currentIndividual.getURI() + "> <" + uri + "#"
 										+ attributes.getQName(i) + "> \"" + liter.getValue() + "\"^^"
 										+ liter.getDatatype());
 							} catch (IOException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
-							}
+							}*/
 							if (domain)
 								model.createDatatypeProperty(uri + "#" + attributes.getQName(i))
 										.addDomain(this.currentIndividual.getRDFType());

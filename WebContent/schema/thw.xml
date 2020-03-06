@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <data>
-<file class="https://www.wikidata.org/wiki/Q697698" indidprefix="wh_hamburg_" indid="gml_id" 
+<file class="https://www.wikidata.org/entity/Q697698" indidprefix="wh_hamburg_" indid="gml_id" 
 namespace="http://gdi-de.org/geodata#"
 attnamespace="http://gdi-de.org/datatype#"
 geoendpoint="http://linkedgeodata.org/sparql" 
@@ -32,7 +32,7 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
   
     <column name="Homepage" prop="data" propiri="http://www.wikidata.org/prop/direct/P856" range="http://www.w3.org/2001/XMLSchema#string"/>
 
-    <column name="Bundesland" prop="data" propiri="http://www.wikidata.org/prop/direct/P131" range="http://www.w3.org/2001/XMLSchema#string" concept="https://www.wikidata.org/wiki/Q1221156"/>
+    <column name="Bundesland" prop="data" propiri="http://www.wikidata.org/prop/direct/P131" range="http://www.w3.org/2001/XMLSchema#string" concept="https://www.wikidata.org/entity/Q1221156"/>
     
 </file>
 </data>

@@ -370,8 +370,12 @@ public class DataImporter {
 		if (xc.prop.equals("subclass")) {
 			OntClass cls = null;
 			if (xc.valuemapping != null && xc.valuemapping.containsKey(value)) {
-				cls = model.createClass(xc.valuemapping.get(value).replace(" ", "_"));
-				cls.setLabel(value, "de");
+				for(String clsval:xc.valuemapping.get(value)) {
+					cls = model.createClass(clsval.replace(" ", "_"));
+					cls.setLabel(value, "de");
+				}
+				//cls = model.createClass(xc.valuemapping.get(value).replace(" ", "_"));
+				//cls.setLabel(value, "de");
 			} else {
 				cls = model.createClass(DEFAULTNAMESPACE + URLEncoder.encode(toCamelCase(value).replace(" ", "_")));
 				cls.setLabel(value, "de");

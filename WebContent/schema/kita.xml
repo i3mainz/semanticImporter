@@ -14,6 +14,10 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
 		<polygon size="2" border="1" borderColor="black" fillColor="red"/>
 	</style>
     
+	<classmapping class="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#GovernmentalService"/>
+	
+	<addcolumn propiri="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#serviceType" value="http://inspire.ec.europa.eu/codelist/ServiceTypeValue/childCareService"/>
+	
 	<column name="Name" prop="annotation" propiri="http://www.w3.org/2000/01/rdf-schema#label" range="http://www.w3.org/2001/XMLSchema#string"/> 
     
     <column name="Strasse" prop="data" propiri="http://www.wikidata.org/prop/direct/P669" range="http://www.w3.org/2001/XMLSchema#string"/> 

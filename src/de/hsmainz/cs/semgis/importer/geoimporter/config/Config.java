@@ -5,6 +5,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.ext.DefaultHandler2;
 
 import de.hsmainz.cs.semgis.importer.geoimporter.Style;
+import de.hsmainz.cs.semgis.util.Tuple;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -133,7 +134,10 @@ public class Config extends DefaultHandler2 {
 			  this.lineStringStyle.fillColor=attributes.getValue("fillColor");
 			  break;
 		case "valuemapping":
-			  currentconfig.valuemapping.put(attributes.getValue("from"),attributes.getValue("to"));
+			  if(!currentconfig.valuemapping.containsKey(attributes.getValue("from"))) {
+				  currentconfig.valuemapping.put(attributes.getValue("from"),new LinkedList<>());
+			  }
+			  currentconfig.valuemapping.get(attributes.getValue("from")).add(attributes.getValue("to"));
 			  break;
 		case "propiri":
 			  currentconfig.propertyuri.add(attributes.getValue("value"));

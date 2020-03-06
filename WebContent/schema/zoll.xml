@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <data>
-<file class="https://www.wikidata.org/wiki/Q182290" indid="gml_id" 
+<file class="https://www.wikidata.org/entity/Q182290" indid="gml_id" 
 namespace="http://gdi-de.org/geodata#"
 attnamespace="http://gdi-de.org/datatype#"
 geoendpoint="http://linkedgeodata.org/sparql" 
@@ -36,13 +36,13 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
 
     <column name="Postfach" prop="data" propiri="http://www.wikidata.org/prop/direct/P2918" range="http://www.w3.org/2001/XMLSchema#string"/>    
 
-	<column name="Kreis" prop="obj" concept="https://www.wikidata.org/wiki/Q106658" propiri="http://www.wikidata.org/prop/direct/P131" 
+	<column name="Kreis" prop="obj" concept="https://www.wikidata.org/entity/Q106658" propiri="http://www.wikidata.org/prop/direct/P131" 
 	query="SELECT distinct ?item WHERE{ ?ind wdt:P131 ?item . ?item ?label '%%Kreis%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql"/> 
 	
 	<column name="Gemeinde" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" concept="https://www.wikidata.org/entity/Q262166"
 	query="SELECT ?city WHERE {?city wdt:P31 wd:Q262166 . ?item ?label '%%Gemeinde%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql"/> 
     
-    <column name="Bundesland" prop="data" propiri="http://www.wikidata.org/prop/direct/P131" range="http://www.w3.org/2001/XMLSchema#string" concept="https://www.wikidata.org/wiki/Q1221156"/>
+    <column name="Bundesland" prop="data" propiri="http://www.wikidata.org/prop/direct/P131" range="http://www.w3.org/2001/XMLSchema#string" concept="https://www.wikidata.org/entity/Q1221156"/>
     
 </file>
 </data>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <data>
-<file class="https://www.wikidata.org/wiki/Q56026" indidprefix="wh_hamburg_" indid="gml_id" 
+<file class="https://www.wikidata.org/entity/Q56026" indidprefix="wh_hamburg_" indid="gml_id" 
 namespace="http://gdi-de.org/geodata#"
 attnamespace="http://gdi-de.org/datatype#"
 geoendpoint="http://linkedgeodata.org/sparql" 
@@ -16,31 +16,31 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
     
 	<column name="Name" prop="annotation" propiri="http://www.w3.org/2000/01/rdf-schema#label" range="http://www.w3.org/2001/XMLSchema#string"/> 
 
-	<column name="Kurzname" prop="annotation" propiri="https://www.wikidata.org/wiki/Property:P1813" range="http://www.w3.org/2001/XMLSchema#string"/>     
+	<column name="Kurzname" prop="annotation" propiri="https://www.wikidata.org/entity/Property:P1813" range="http://www.w3.org/2001/XMLSchema#string"/>     
     
     <column name="Strasse" prop="data" propiri="http://www.wikidata.org/prop/direct/P669" range="http://www.w3.org/2001/XMLSchema#string"/> 
 
     <column name="Hn" prop="data" propiri="http://www.wikidata.org/prop/direct/P670" range="http://www.w3.org/2001/XMLSchema#string"/> 
 	
-    <column name="PLZ" prop="data" propiri="https://www.wikidata.org/wiki/Property:P281" range="http://www.w3.org/2001/XMLSchema#integer"/> 
+    <column name="PLZ" prop="data" propiri="https://www.wikidata.org/entity/Property:P281" range="http://www.w3.org/2001/XMLSchema#integer"/> 
     
-    <column name="Telefon" prop="data" propiri="https://www.wikidata.org/wiki/Property:P1329" range="http://www.w3.org/2001/XMLSchema#string"/> 
+    <column name="Telefon" prop="data" propiri="https://www.wikidata.org/entity/Property:P1329" range="http://www.w3.org/2001/XMLSchema#string"/> 
 
-    <column name="Telefax" prop="data" propiri="https://www.wikidata.org/wiki/Property:P2900" range="http://www.w3.org/2001/XMLSchema#string"/>   
+    <column name="Telefax" prop="data" propiri="https://www.wikidata.org/entity/Property:P2900" range="http://www.w3.org/2001/XMLSchema#string"/>   
     
-    <column name="E_Mail" prop="data" propiri="https://www.wikidata.org/wiki/Property:P968" range="http://www.w3.org/2001/XMLSchema#string"/>
+    <column name="E_Mail" prop="data" propiri="https://www.wikidata.org/entity/Property:P968" range="http://www.w3.org/2001/XMLSchema#string"/>
   
-    <column name="Homepage" prop="data" propiri="https://www.wikidata.org/wiki/Property:P856" range="http://www.w3.org/2001/XMLSchema#string"/>
+    <column name="Homepage" prop="data" propiri="https://www.wikidata.org/entity/Property:P856" range="http://www.w3.org/2001/XMLSchema#string"/>
 
-    <column name="Postfach" prop="data" propiri="https://www.wikidata.org/wiki/Property:P2918" range="http://www.w3.org/2001/XMLSchema#string"/>    
+    <column name="Postfach" prop="data" propiri="https://www.wikidata.org/entity/Property:P2918" range="http://www.w3.org/2001/XMLSchema#string"/>    
 
-	<column name="Kreis" prop="obj" concept="https://www.wikidata.org/wiki/Q106658" propiri="http://www.wikidata.org/prop/direct/P131" 
+	<column name="Kreis" prop="obj" concept="https://www.wikidata.org/entity/Q106658" propiri="http://www.wikidata.org/prop/direct/P131" 
 	query="SELECT distinct ?item WHERE{ ?ind wdt:P131 ?item . ?item ?label '%%Kreis%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql"/> 
 	
 	<column name="Gemeinde" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" concept="https://www.wikidata.org/entity/Q262166"
 	query="SELECT ?city WHERE {?city wdt:P31 wd:Q262166 . ?item ?label '%%Gemeinde%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql"/> 
     
-    <column name="Bundesland" prop="data" propiri="https://www.wikidata.org/wiki/Property:P131" range="http://www.w3.org/2001/XMLSchema#string" concept="https://www.wikidata.org/wiki/Q1221156"/>
+    <column name="Bundesland" prop="data" propiri="https://www.wikidata.org/entity/Property:P131" range="http://www.w3.org/2001/XMLSchema#string" concept="https://www.wikidata.org/entity/Q1221156"/>
     
 </file>
 </data>

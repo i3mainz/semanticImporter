@@ -42,10 +42,10 @@ geomatchingclass="http://www.xplanung.de/xplangml/5/0#FP_Plan" nearestMatch="fal
 	</column>
 	
 	<column name="LANDKREIS" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" 
-	query="SELECT distinct ?item WHERE{ ?ind wdt:P131 ?item . ?item ?label '%%Kreis%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql"/> 
+	query="SELECT distinct ?item WHERE{ ?ind wdt:P131 ?item . ?item ?label '%%LANDKREIS%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql"/> 
 	
 	<column name="GEMEINDE" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" concept="https://www.wikidata.org/entity/Q262166"
-	query="SELECT ?city WHERE {?city wdt:P31 wd:Q262166 . ?item ?label '%%Gemeinde%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql"/> 
+	query="SELECT ?city WHERE {?city wdt:P31 wd:Q262166 . ?item ?label '%%GEMEINDE%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql"/> 
    				
 </file>
 </data>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <data>
-<file class="https://www.wikidata.org/wiki/Q2136670" indid="gml_id" 
+<file class="https://www.wikidata.org/entity/Q3914" indid="Schulnr" 
 namespace="http://gdi-de.org/geodata#"
 attnamespace="http://gdi-de.org/datatype#"
 geoendpoint="http://linkedgeodata.org/sparql" 
@@ -13,6 +13,10 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
 		<linestring size="2" border="1" borderColor="black" fillColor="red"/>
 		<polygon size="2" border="1" borderColor="black" fillColor="red"/>
 	</style>
+	
+	<classmapping class="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#GovernmentalService"/>
+	
+	<addcolumn propiri="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#serviceType" value="http://inspire.ec.europa.eu/codelist/ServiceTypeValue/primaryEducation"/>
     
 	<column name="Name" prop="annotation" propiri="http://www.w3.org/2000/01/rdf-schema#label" range="http://www.w3.org/2001/XMLSchema#string"/> 
 
@@ -33,21 +37,88 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
     <column name="Homepage" prop="data" propiri="http://www.wikidata.org/prop/direct/P856" range="http://www.w3.org/2001/XMLSchema#string"/>
 
     <column name="Postfach" prop="data" propiri="http://www.wikidata.org/prop/direct/P2918" range="http://www.w3.org/2001/XMLSchema#string"/> 
+	
+	<column name="Anzahl_Sch" prop="data" propiri="http://www.wikidata.org/prop/direct/P2196" range="http://www.w3.org/2001/XMLSchema#integer"/>
 
-	<column name="RS" prop="data" propiri="http://www.wikidata.org/prop/direct/P1388" range="http://www.w3.org/2001/XMLSchema#string"/> 	
-
-   <column name="Typ" prop="subclass">
-		<valuemapping from="Konsoliarlabor" to="https://www.wikidata.org/wiki/Q2136670"/>
-		<valuemapping from="Nationales Referenzzentrum" to="https://www.wikidata.org/wiki/Q2136670"/>
+	<column name="Anzahl_Kla" prop="data" range="http://www.w3.org/2001/XMLSchema#integer"/>
+	
+	<column name="RS" prop="data" propiri="http://www.wikidata.org/prop/direct/P1388" range="http://www.w3.org/2001/XMLSchema#string"/> 
+	
+    <column name="Schulform" prop="subclass">
+		<valuemapping from="Grundschulen (Jahrgangsstufen 1 bis 6)" to="https://www.wikidata.org/wiki/Q9842"/>
+		<valuemapping from="Grundschule" to="https://www.wikidata.org/wiki/Q9842"/>
+		<valuemapping from="Abendgymnasium" to="https://www.wikidata.org/wiki/Q318869"/>
+		<valuemapping from="Gesamtschule" to="https://www.wikidata.org/wiki/Q33026952"/>
+		<valuemapping from="Gesamtschulen" to="https://www.wikidata.org/wiki/Q33026952"/>
+		<valuemapping from="Gymnasium" to="https://www.wikidata.org/wiki/Q55043"/>
+		<valuemapping from="Gymnasium\s(.)*" to="https://www.wikidata.org/wiki/Q55043" regex="true"/>
+		<valuemapping from="Gymnasien" to="https://www.wikidata.org/wiki/Q55043"/>
+		<valuemapping from="Hauptschule" to="https://www.wikidata.org/wiki/Q675423"/>
+		<valuemapping from="Mittelschule" to="https://www.wikidata.org/wiki/Q1471069"/>
+		<valuemapping from="Realschule" to="https://www.wikidata.org/wiki/Q667471"/>
+		<valuemapping from="Realschulen" to="https://www.wikidata.org/wiki/Q667471"/>
+		<valuemapping from="Realschule plus" to="https://www.wikidata.org/wiki/Q2134838"/>
+		<valuemapping from="Zweiter Bildungsweg" to="https://www.wikidata.org/wiki/Q233503"/>
+		<valuemapping from="Förderschule" to="https://www.wikidata.org/wiki/Q1110689"/>
+		<valuemapping from="Förderschulen" to="https://www.wikidata.org/wiki/Q1110689"/>
+		<valuemapping from="Erweiterte Realschulen" to="https://www.wikidata.org/wiki/Q1362677"/>
+		<valuemapping from="Erweiterte Realschule" to="https://www.wikidata.org/wiki/Q1362677"/>
+		<valuemapping from="Ergänzungsschule" to="https://www.wikidata.org/wiki/Q423208"/>
+		<valuemapping from="Werkrealschule" to="https://www.wikidata.org/wiki/Q1625378"/>
+		<valuemapping from="Weiterbildungskolleg" to="https://www.wikidata.org/wiki/Q16295381"/>
+		<valuemapping from="Waldorfschulen" to="https://www.wikidata.org/wiki/Q14551995"/>
+		<valuemapping from="Freie Waldorfschule" to="https://www.wikidata.org/wiki/Q14551995"/>
+		<valuemapping from="Waldorfschule" to="https://www.wikidata.org/wiki/Q14551995"/>
+		<valuemapping from="Sonderschule" to="https://www.wikidata.org/wiki/Q1110689"/>
+		<valuemapping from="Stadtteilschule" to="https://www.wikidata.org/wiki/Q2328157"/>
+		<valuemapping from="Sprachheilschule" to="https://www.wikidata.org/wiki/Q1352224"/>
+		<valuemapping from="Volksschule" to="https://www.wikidata.org/wiki/Q513984"/>
+		<valuemapping from="Sportschulen" to="https://www.wikidata.org/wiki/Q2312838"/>
+		<valuemapping from="Regionale Schule" to="https://www.wikidata.org/wiki/Q1619284"/>
+		<valuemapping from="Regelschule" to="https://www.wikidata.org/wiki/Q2137311"/>
+		<valuemapping from="Kolleg" to="https://www.wikidata.org/wiki/Q1597339"/>
+		<valuemapping from="Kooperative Gesamtschule" to="https://www.wikidata.org/wiki/Q1469139"/>
+		<valuemapping from="Integrierte Sekundarschule" to="https://www.wikidata.org/wiki/Q1665513"/>
+		<valuemapping from="Gemeinschaftsschule" to="https://www.wikidata.org/wiki/Q1501026"/>
+	</column>
+	
+	<column name="Typ" prop="subclass">
+		<valuemapping from="Zweiter Bildungsweg" to="https://www.wikidata.org/wiki/Q233503"/>
+		<valuemapping from="Berufliche Schulen" to="https://www.wikidata.org/wiki/Q322563"/>
+		<valuemapping from="Grundschule" to="https://www.wikidata.org/wiki/Q9842"/>
+		<valuemapping from="Grundschulen" to="https://www.wikidata.org/wiki/Q9842"/>
+		<valuemapping from="Weiterführedne Schulen" to="https://www.wikidata.org/wiki/Q159334"/>
+		<valuemapping from="Weiterführende Schulen" to="https://www.wikidata.org/wiki/Q159334"/>
+		<valuemapping from="Grundschulen;Weiterführende Schulen" to="https://www.wikidata.org/wiki/Q9842"/>
+		<valuemapping from="Grundschulen;Weiterführende Schulen" to="https://www.wikidata.org/wiki/Q159334"/>
+		<valuemapping from="Grundschulen; Weiterführende Schulen" to="https://www.wikidata.org/wiki/Q9842"/>
+		<valuemapping from="Grundschulen; Weiterführende Schulen" to="https://www.wikidata.org/wiki/Q159334"/>
+		<valuemapping from="Waldorfschulen" to="https://www.wikidata.org/wiki/Q14551995"/>
+		<valuemapping from="Sonderpädagogische Schulen" to="https://www.wikidata.org/wiki/Q1110689"/>
+		<valuemapping from="Berufsbildende Schulen;Sonderpädagogische Schulen" to="https://www.wikidata.org/wiki/Q16463"/>
+		<valuemapping from="Berufsbildende Schulen;Sonderpädagogische Schulen" to="https://www.wikidata.org/wiki/Q1110689"/>
+		<valuemapping from="Berufsbildende Schulen; Sonderpädagogische Schulen" to="https://www.wikidata.org/wiki/Q16463"/>
+		<valuemapping from="Berufsbildende Schulen; Sonderpädagogische Schulen" to="https://www.wikidata.org/wiki/Q1110689"/>
+	</column>
+	
+	<column name="Traeger" prop="subclass" propiri="https://www.wikidata.org/entity/Property:P1454" >
+		<valuemapping from="1" to="https://www.wikidata.org/entity/Q56292968"/>
+		<valuemapping from="2" to="https://www.wikidata.org/entity/Q1454131"/>
 	</column>
 
-	<column name="Kreis" prop="obj" concept="https://www.wikidata.org/wiki/Q106658" propiri="http://www.wikidata.org/prop/direct/P131" 
+	<column name="Verwaltung" prop="obj" concept="https://www.wikidata.org/entity/Q106658" propiri="http://www.wikidata.org/prop/direct/P131" 
+	query="SELECT distinct ?item WHERE{ ?ind wdt:P131 ?item . ?item ?label '%%Verwaltung%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql"/> 
+
+	<column name="Kreis" prop="obj" concept="https://www.wikidata.org/entity/Q106658" propiri="http://www.wikidata.org/prop/direct/P131" 
 	query="SELECT distinct ?item WHERE{ ?ind wdt:P131 ?item . ?item ?label '%%Kreis%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql"/> 
+
+	<column name="Regierungs" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" concept="https://www.wikidata.org/wiki/Q22721"
+	query="SELECT ?city WHERE {?city wdt:P31 wd:Q22721 . ?item ?label '%%Regierungs%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql"/> 
 
 	<column name="Gemeinde" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" concept="https://www.wikidata.org/entity/Q262166"
 	query="SELECT ?city WHERE {?city wdt:P31 wd:Q262166 . ?item ?label '%%Gemeinde%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql"/> 
     
-    <column name="Bundesland" prop="data" propiri="http://www.wikidata.org/prop/direct/P131" range="http://www.w3.org/2001/XMLSchema#string" concept="https://www.wikidata.org/wiki/Q1221156"/>
+    <column name="Bundesland" prop="data" propiri="http://www.wikidata.org/prop/direct/P131" range="http://www.w3.org/2001/XMLSchema#string" concept="https://www.wikidata.org/entity/Q1221156"/>
     
 </file>
 </data>

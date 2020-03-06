@@ -16,26 +16,28 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
 		<polygon size="2" border="1" borderColor="black" fillColor="red"/>
 	</style>
 	
+	<addcolumn propiri="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#serviceType" value="http://inspire.ec.europa.eu/codelist/ServiceTypeValue/primaryEducation"/>
+	
 	<column name="NAM" prop="annotation" propiri="http://www.w3.org/2000/01/rdf-schema#label" range="http://www.w3.org/2001/XMLSchema#string"/> 
 	
 	<column name="Schultraeg" prop="obj" propiri="http://www.w3.org/2000/01/rdf-schema#label" range="http://www.w3.org/2001/XMLSchema#string">
-		<valuemapping from="HB" to="https://www.wikidata.org/wiki/Q24879"/>
-		<valuemapping from="FTHB" to="https://www.wikidata.org/wiki/Q1454131"/>
+		<valuemapping from="HB" to="https://www.wikidata.org/entity/Q24879"/>
+		<valuemapping from="FTHB" to="https://www.wikidata.org/entity/Q1454131"/>
 	</column> 
 	
 	<column name="LblNameKur" prop="data" propiri="http://www.wikidata.org/prop/direct/P1813" range="http://www.w3.org/2001/XMLSchema#string"/> 
 
 	<column name="Ganztagsch" prop="subclass">
-		<valuemapping from="J" to="https://www.wikidata.org/wiki/Q1493752"/>
-		<valuemapping from="N" to="https://www.wikidata.org/wiki/Q3914"/>
+		<valuemapping from="J" to="https://www.wikidata.org/entity/Q1493752"/>
+		<valuemapping from="N" to="https://www.wikidata.org/entity/Q3914"/>
 	</column> 
 	
 	<column name="Schulart_2" prop="subclass">
-		<valuemapping from="Berufsbildende Schule" to="https://www.wikidata.org/wiki/Q322563"/>
-		<valuemapping from="Oberschule" to="https://www.wikidata.org/wiki/Q1668867"/>
-		<valuemapping from="Grundschule" to="https://www.wikidata.org/wiki/Q9842"/>
-		<valuemapping from="Gymnasium" to="https://www.wikidata.org/wiki/Q55043"/>
-		<valuemapping from="Förderzentrum" to="https://www.wikidata.org/wiki/Q1110689"/>
+		<valuemapping from="Berufsbildende Schule" to="https://www.wikidata.org/entity/Q322563"/>
+		<valuemapping from="Oberschule" to="https://www.wikidata.org/entity/Q1668867"/>
+		<valuemapping from="Grundschule" to="https://www.wikidata.org/entity/Q9842"/>
+		<valuemapping from="Gymnasium" to="https://www.wikidata.org/entity/Q55043"/>
+		<valuemapping from="Förderzentrum" to="https://www.wikidata.org/entity/Q1110689"/>
 	</column> 
 	
 	<column name="Strasse" prop="data" propiri="http://www.wikidata.org/prop/direct/P670" range="http://www.w3.org/2001/XMLSchema#string" splitcharacter=" " splitposition="last"/> 

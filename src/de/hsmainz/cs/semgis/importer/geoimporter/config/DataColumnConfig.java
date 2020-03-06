@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import de.hsmainz.cs.semgis.util.Tuple;
+
 public class DataColumnConfig {
 
 	@Override
@@ -56,7 +58,7 @@ public class DataColumnConfig {
 
 	public String splitregex;
 	
-	public Map<String,String> valuemapping;
+	public Map<String,List<String>> valuemapping;
 
 	public String valueprefix=null;
 	

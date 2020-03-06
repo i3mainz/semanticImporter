@@ -8,6 +8,8 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
 	
 	<classmapping value="https://www.wikidata.org/entity/Q3914"/>
 	
+	<addcolumn propiri="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#serviceType" value="http://inspire.ec.europa.eu/codelist/ServiceTypeValue/primaryEducation"/>
+	
 	<metadata publisher="BKG" timestamp="2018-05-30T09:30:10Z" license="https://www.govdata.de/dl-de/by-2-0" />
 	
 	<style>
@@ -23,28 +25,28 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
 	<column name="Schulnumme" prop="data" propiri="http://www.w3.org/2000/01/rdf-schema#label" range="http://www.w3.org/2001/XMLSchema#integer"/> 
 	
 	<column name="Schulform" prop="subclass" >
-		<valuemapping from="2" to="https://www.wikidata.org/wiki/Q9842"/>
-		<valuemapping from="4" to="https://www.wikidata.org/wiki/Q675423"/>
-		<valuemapping from="6" to="https://www.wikidata.org/wiki/Q513984"/>
-		<valuemapping from="8" to="https://www.wikidata.org/wiki/Q1110689"/>
-		<valuemapping from="10" to="https://www.wikidata.org/wiki/Q667471"/>
-		<valuemapping from="14" to="https://www.wikidata.org/wiki/Q159334"/>
-		<valuemapping from="15" to="https://www.wikidata.org/wiki/Q33026952"/>
-		<valuemapping from="16" to="https://www.wikidata.org/wiki/Q1501026"/>
-		<valuemapping from="17" to="https://www.wikidata.org/wiki/Q14551995"/>
-		<valuemapping from="18" to="https://www.wikidata.org/wiki/Q1609854"/>
-		<valuemapping from="20" to="https://www.wikidata.org/wiki/Q55043"/>
-		<valuemapping from="25" to="https://www.wikidata.org/wiki/Q16295381"/>
-		<valuemapping from="30" to="https://www.wikidata.org/wiki/Q828973"/>
-		<valuemapping from="83" to="https://www.wikidata.org/wiki/Q56297242"/>
-		<valuemapping from="85" to="https://www.wikidata.org/wiki/Q1110689"/>
-		<valuemapping from="87" to="https://www.wikidata.org/wiki/Q1110689"/>
-		<valuemapping from="88" to="https://www.wikidata.org/wiki/Q1110689"/>
+		<valuemapping from="2" to="https://www.wikidata.org/entity/Q9842"/>
+		<valuemapping from="4" to="https://www.wikidata.org/entity/Q675423"/>
+		<valuemapping from="6" to="https://www.wikidata.org/entity/Q513984"/>
+		<valuemapping from="8" to="https://www.wikidata.org/entity/Q1110689"/>
+		<valuemapping from="10" to="https://www.wikidata.org/entity/Q667471"/>
+		<valuemapping from="14" to="https://www.wikidata.org/entity/Q159334"/>
+		<valuemapping from="15" to="https://www.wikidata.org/entity/Q33026952"/>
+		<valuemapping from="16" to="https://www.wikidata.org/entity/Q1501026"/>
+		<valuemapping from="17" to="https://www.wikidata.org/entity/Q14551995"/>
+		<valuemapping from="18" to="https://www.wikidata.org/entity/Q1609854"/>
+		<valuemapping from="20" to="https://www.wikidata.org/entity/Q55043"/>
+		<valuemapping from="25" to="https://www.wikidata.org/entity/Q16295381"/>
+		<valuemapping from="30" to="https://www.wikidata.org/entity/Q828973"/>
+		<valuemapping from="83" to="https://www.wikidata.org/entity/Q56297242"/>
+		<valuemapping from="85" to="https://www.wikidata.org/entity/Q1110689"/>
+		<valuemapping from="87" to="https://www.wikidata.org/entity/Q1110689"/>
+		<valuemapping from="88" to="https://www.wikidata.org/entity/Q1110689"/>
 	</column>
 	
-	<column name="Rechtsform" prop="subclass" propiri="https://www.wikidata.org/wiki/Property:P1454" >
-		<valuemapping from="1" to="https://www.wikidata.org/wiki/Q56292968"/>
-		<valuemapping from="2" to="https://www.wikidata.org/wiki/Q1454131"/>
+	<column name="Rechtsform" prop="subclass" propiri="https://www.wikidata.org/entity/Property:P1454" >
+		<valuemapping from="1" to="https://www.wikidata.org/entity/Q56292968"/>
+		<valuemapping from="2" to="https://www.wikidata.org/entity/Q1454131"/>
 	</column>
 	
 	<column name="PLZ" prop="data" propiri="http://www.wikidata.org/prop/direct/P281" range="http://www.w3.org/2001/XMLSchema#integer"/> 
