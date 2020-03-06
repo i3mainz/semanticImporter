@@ -65,8 +65,10 @@ function processColumns(columnhead,xml,depth){
         if($(xml).attr("splitcharacter") && $(xml).attr("splitposition")){
 			output+="<td>^("+$(xml).attr("splitcharacter")+")$</td>"
 		}
-		if($(xml).attr("regex")){
+        else if($(xml).attr("regex")){
 			output+="<td>"+$(xml).attr("regex")+"</td>"
+		}else{
+			output+="<td></td>"
 		}
 		output+="</tr>";
     }else if(xml.tagName=="columncollection"){
@@ -88,7 +90,7 @@ function mappingSchemaReader(url){
 	output=""
     $.get(url, {}, function (xml){
     	header="Class: <a target=\"_blank\" href=\""+$(xml).find('file').attr("class")+"\">"+$(xml).find('file').attr("class")+"</a><br/>"
-    	header+="Individual ID: "+((typeof $(xml).attr("indidprefix") !== 'undefined')?columnhead+$(xml).attr("indidprefix"):"")+""+$(xml).find('file').attr("indid")+"<br/>"
+    	header+="Individual ID: "+((typeof $(xml).attr("indidprefix") !== 'undefined')?columnhead+$(xml).attr("indidprefix"):"")+"%%"+$(xml).find('file').attr("indid")+"%%<br/>"
     	header+="Namespace: <a target=\"_blank\" href=\""+$(xml).find('file').attr("namespace")+"\">"+$(xml).find('file').attr("namespace")+"</a><br/>"
     	header+="Value Namespace: <a target=\"_blank\" href=\""+$(xml).find('file').attr("attnamespace")+"\">"+$(xml).find('file').attr("attnamespace")+"</a><br/>"
     	header+="EPSG: <a target=\"_blank\" href=\"http://www.opengis.net/def/crs/EPSG/0/"+$(xml).find('file').attr("epsg")+"\">EPSG:"+$(xml).find('file').attr("epsg")+"</a><br/>"
