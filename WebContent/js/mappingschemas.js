@@ -136,7 +136,7 @@ function mappingSchemaReader(url){
     classes=""
     $.get(url, {}, function (xml){
        	output="<tr><th>Column</th><th>Type</th><th>Property IRI</th><th>Range</th><th>Concept</th><th>Query or Fixed Value</th><th>Endpoint</th><th>Regex</th></tr>"
-    	classes="<a target=\"_blank\" href=\""+$(xml).find('file').attr("class")+"\">"+$(xml).find('file').attr("class")+"</a>"
+    	classes="<a target=\"_blank\" href=\""+$(xml).find('file').attr("class")+"\">"+$(xml).find('file').attr("class")+"</a>&nbsp;"
        	$(xml).find('file').children().each(function(){
             processColumns("",this,1)
         });
