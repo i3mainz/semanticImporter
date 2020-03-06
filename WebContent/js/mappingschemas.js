@@ -101,7 +101,21 @@ function processColumns(columnhead,xml,depth){
         if((typeof $(xml).attr("query") !== 'undefined')){
         	output+=$(xml).attr("query")
         }else if((typeof $(xml).attr("value") !== 'undefined')){
-        	output+=$(xml).attr("value")
+        	if($(xml).attr("value").includes("http")){
+        		if($(xml).attr("value").includes("#")){
+    				output+="<a href=\""+$(xml).attr("value")+"\" target=\"_blank\">"+$(xml).attr("value").substring($(xml).attr("value").lastIndexOf('#')+1)
+    				+"</a><br/>"
+    			}else if($(xml).attr("value").includes("/")){
+    				output+="<a href=\""+$(xml).attr("value")+"\" target=\"_blank\">"+$(xml).attr("value").substring($(xml).attr("value").lastIndexOf('/')+1)
+    				+"</a><br/>"
+    			}else{
+    				output+="<a href=\""+$(xml).attr("value")+"\" target=\"_blank\">"+$(xml).attr("value")
+    				+"</a><br/>"
+    			}
+        	}else{
+            	output+=$(xml).attr("value")
+        	}
+
         }
         output+="</td>"
         output+="<td align=\"center\">"+((typeof $(xml).attr("endpoint") !== 'undefined')?"<a href=\""+$(xml).attr("endpoint")+"\">"+$(xml).attr("endpoint")+"</a>":"")+"</td>"
