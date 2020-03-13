@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <data>
 <file class="https://www.wikidata.org/entity/Q9259" indidprefix="wh_quedlinburg_"
-namespace="http://gdi-de.org/geodata#"
-attnamespace="http://gdi-de.org/datatype#"
+namespace="http://registry.gdi-de.org/id/de.st.unesco/" 
+attnamespace="http://registry.gdi-de.org/datatype/de.st.unesco/"
 geoendpoint="http://linkedgeodata.org/sparql" 
 geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false" epsg="25833">
 	
@@ -13,6 +13,10 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
 		<linestring size="2" border="1" borderColor="black" fillColor="red"/>
 		<polygon size="2" border="1" borderColor="black" fillColor="red"/>
 	</style>
+	
+	<classmapping class="http://inspire.ec.europa.eu/schemas/ps/4.0#ProtectedSite"/>
+	
+	<addcolumn prop="obj" propiri="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#siteDesignation" value="http://inspire.ec.europa.eu/codelist/UNESCOWorldHeritageDesignationValue/cultural"/>
     
     <column name="in_kraft_g" prop="data" propiri="http://www.wikidata.org/prop/direct/P571" range="http://www.w3.org/2001/XMLSchema#date"/> 
 
