@@ -2,7 +2,7 @@
 <data>
 <file class="https://www.wikidata.org/entity/Q9259" indidprefix="wh_st_"
 namespace="http://registry.gdi-de.org/id/de.st.unesco/" 
-attnamespace="http://registry.gdi-de.org/datatype/de.st.unesco/"
+attnamespace="http://registry.gdi-de.org/id/de.st.unesco/"
 geoendpoint="http://linkedgeodata.org/sparql" 
 geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false" epsg="25833">
 	

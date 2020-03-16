@@ -2,7 +2,7 @@
 <data>
 <file class="https://www.wikidata.org/wiki/Q9259" indidprefix="wh_quedlinburg_"
 namespace="http://registry.gdi-de.org/id/de.nrw.unesco/" 
-attnamespace="http://registry.gdi-de.org/datatype/de.nrw.unesco/"
+attnamespace="http://registry.gdi-de.org/id/de.nrw.unesco/"
 geoendpoint="http://linkedgeodata.org/sparql" 
 geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false" epsg="25833">
 	

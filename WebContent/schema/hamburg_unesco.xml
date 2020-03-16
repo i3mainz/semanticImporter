@@ -2,7 +2,7 @@
 <data>
 <file class="https://www.wikidata.org/entity/Q9259" indidprefix="wh_hamburg_" indid="gml_id" 
 namespace="http://registry.gdi-de.org/id/de.hh.unesco/" 
-attnamespace="http://registry.gdi-de.org/datatype/de.hh.unesco/"
+attnamespace="http://registry.gdi-de.org/id/de.hh.unesco/"
 geoendpoint="http://linkedgeodata.org/sparql" 
 geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false" epsg="25833">
 	

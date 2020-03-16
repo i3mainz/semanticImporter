@@ -2,7 +2,7 @@
 <data>
 <file class="https://www.wikidata.org/entity/Q9259" indidprefix="wh_bauhaus_"
 namespace="http://registry.gdi-de.org/id/de.th.unesco/" 
-attnamespace="http://registry.gdi-de.org/datatype/de.th.unesco/"
+attnamespace="http://registry.gdi-de.org/id/de.th.unesco/"
 geoendpoint="http://linkedgeodata.org/sparql" 
 geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false" epsg="25833">
 	

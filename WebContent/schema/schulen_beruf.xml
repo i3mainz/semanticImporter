@@ -2,7 +2,7 @@
 <data>
 <file class="https://www.wikidata.org/entity/Q322563" indid="Schulnr" 
 namespace="http://registry.gdi-de.org/id/de.bund.bkg.schulen/" 
-attnamespace="http://registry.gdi-de.org/datatype/de.bund.bkg.schulen/"
+attnamespace="http://registry.gdi-de.org/id/de.bund.bkg.schulen/"
 geoendpoint="http://linkedgeodata.org/sparql" 
 geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false" epsg="25833">
 	

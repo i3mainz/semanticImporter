@@ -2,7 +2,7 @@
 <data>
 <file class="https://www.wikidata.org/wiki/Q673079" indid="gml_id" 
 namespace="http://registry.gdi-de.org/id/de.bund.bkg.poi/" 
-attnamespace="http://registry.gdi-de.org/datatype/de.bund.bkg.poi/"
+attnamespace="http://registry.gdi-de.org/id/de.bund.bkg.poi/"
 geoendpoint="http://linkedgeodata.org/sparql" 
 geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false" epsg="25833">
 

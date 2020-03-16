@@ -2,7 +2,7 @@
 <data>
 <file class="http://inspire.ec.europa.eu/schemas/gn/4.0#NamedPlace" 
 indid="inspireId" namespace="http://registry.gdi-de.org/id/de.bund.bkg.inspire.gn250/" 
-attnamespace="http://registry.gdi-de.org/datatype/de.bund.bkg.inspire.gn250/" epsg="4326" interlinkItem="true">
+attnamespace="http://registry.gdi-de.org/id/de.bund.bkg.inspire.gn250/" epsg="4326" interlinkItem="true">
 
 	<column name="inspireId" prop="data" range="http://www.w3.org/2001/XMLSchema#string"/> 
 	
