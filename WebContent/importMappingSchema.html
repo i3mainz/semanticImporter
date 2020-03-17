@@ -61,12 +61,37 @@ function saveTextAsFile(tosave,fileext,filename)
         window.URL.revokeObjectURL(url);  
     }, 1000);
 }
+
+function addColumn(){
+	i=$("#datasettable").find('tbody').children().length
+	table="<tr><td id=\"datasetcol_"+i+"\" style=\"color:green\">Additional column</td>"
+	table+="<td id=\"proptypecol_"+i+"\"><select id=\"proptypecol_"+i+"_select\"><option value=\"data\">DatatypeProperty</option><option value=\"obj\">ObjectProperty</option><option value=\"annotation\">AnnotationProperty</option></select></td>"
+	table+="<td id=\"coluri_"+i+"\">"
+	table+='<div class="ui-widget"><input id="coluri_'+i+'_input" name='+i+'></div>'//"<input type=\"text\" id=\"coluri_"+i+"_input\" name="+i+">
+	table+="<br/>TripleStore:<select id=\"triplestoredropdown_property_"+i+"\">"
+	table+="<option value=\"aaa7\">AAA7</option>"
+	table+="<option value=\"inspire4\">INSPIRE4</option>"
+	table+="<option value=\"https://www.wikidata.org/w/api.php?action=wbsearchentities&&format=json&language=en&uselang=en&type=property&search=\">Wikidata</option>"
+	table+="<option value=\"xerleben2\">XErleben2</option>"
+	table+="<option value=\"xplanung5\">XPlanung5</option>"
+	table+="</select></td>"
+	table+="<td id=\"colrange_"+i+"\"><select><option value=\"xsd:double\">xsd:double</option><option value=\"xsd:integer\">xsd:integer</option><option value=\"xsd:string\">xsd:string</option></select></td>"
+	table+="<td><button id=\"\">Add Value Mapping</button><button id=\"\">Find Concept</button></td>"
+	table+="<td id=\"valuesparql_"+i+"\"><button id=\"colsparql_"+i+"_query\">Set SPARQL Query</button></td>"
+	table+="<td><select><option value=\"http://query.wikidata.org/sparql\">Wikidata</option><option value=\"https://dbpedia.org/sparql\">DBPedia</option></select></td>"
+	table+="<td id=\"valueregex_"+i+"\"><input type=\"text\" id=\"colrange_"+i+"_input\"></td></tr>"
+	$("#datasettable").find('tbody').append(table);
+}
+
 var filedata={}
+var addcolumncounter=0;
+
 function analyzeFile(){
 	    var data = new FormData(); // das ist unser Daten-Objekt ...
 	    data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhängen
 	    data.append('fileformat',document.getElementById('fileformat').value)
 	    $('#loading').show();
+	    addcolumncounter=0;
 	    $.ajax({
 	       url: 'rest/service/analyzeFile', // Wohin soll die Datei geschickt werden?
 	       data: data,          // Das ist unser Datenobjekt.
@@ -78,7 +103,7 @@ function analyzeFile(){
 	       success: function(data) { 
 	    	   console.log(data)
 	    	    var json=data;
-	    	    var table="<tr><th>Column</th><th>Type</th><th>Property IRI</th><th>Range</th><th>Concept</th><th>Query or Fixed Value</th><th>Endpoint</th><th>Regex</th></tr>"
+	    	    var table="<tr><td>Dataset Class: <div class=\"ui-widget\"><input id=\"class_'+i+'_input\" name=\""+i+"\"></div></td><td><button id=\"addcolumn\" onclick=\"addColumn()\">Add Column</button></td></tr><tr><th>Column</th><th>Type</th><th>Property IRI</th><th>Range</th><th>Concept</th><th>Query or Fixed Value</th><th>Endpoint</th><th>Regex</th></tr>"
 	    	    var i=0;
 	    	    for(key in json["properties"]){
 	    	    	if(json["properties"][i]!="the_geom"){
