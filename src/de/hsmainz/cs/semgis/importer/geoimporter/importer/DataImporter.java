@@ -39,6 +39,7 @@ import org.opengis.feature.Property;
 
 import de.hsmainz.cs.semgis.importer.geoimporter.config.Config;
 import de.hsmainz.cs.semgis.importer.geoimporter.config.DataColumnConfig;
+import de.hsmainz.cs.semgis.importer.geoimporter.config.ValueMapping;
 import de.hsmainz.cs.semgis.importer.geoimporter.connector.TripleStoreConnector;
 import de.hsmainz.cs.semgis.importer.geoimporter.connector.TripleStoreConnector.GeographicalResult;
 
@@ -370,8 +371,8 @@ public class DataImporter {
 		if (xc.prop.equals("subclass")) {
 			OntClass cls = null;
 			if (xc.valuemapping != null && xc.valuemapping.containsKey(value)) {
-				for(String clsval:xc.valuemapping.get(value)) {
-					cls = model.createClass(clsval.replace(" ", "_"));
+				for(ValueMapping clsval:xc.valuemapping.get(value)) {				
+					cls = model.createClass(clsval.to.replace(" ", "_"));
 					cls.setLabel(value, "de");
 				}
 				//cls = model.createClass(xc.valuemapping.get(value).replace(" ", "_"));
@@ -392,8 +393,10 @@ public class DataImporter {
 			if (xc.range != null) {
 				pro.addRange(model.createResource(xc.range));
 			}
-			if (xc.valuemapping != null && xc.valuemapping.containsKey(value)) {				
-				ind.addProperty(pro, model.createTypedLiteral(xc.valuemapping.get(value), xc.range));
+			if (xc.valuemapping != null && xc.valuemapping.containsKey(value)) {
+				for(ValueMapping val:xc.valuemapping.get(value)) {
+					ind.addProperty(pro, model.createTypedLiteral(val.to, xc.range));
+				}
 			} else {
 				ind.addProperty(pro, model.createTypedLiteral(value, xc.range));
 			}
@@ -406,7 +409,9 @@ public class DataImporter {
 				pro = model.createAnnotationProperty(propiri.replace(" ", "_"));
 			}
 			if (xc.valuemapping != null && xc.valuemapping.containsKey(value)) {
-				ind.addProperty(pro, model.createTypedLiteral(xc.valuemapping.get(value), xc.range));
+				for(ValueMapping val:xc.valuemapping.get(value)) {
+					ind.addProperty(pro, model.createTypedLiteral(val.to, xc.range));
+				}
 			} else {
 				ind.addProperty(pro, model.createTypedLiteral(value, xc.range));
 			}
@@ -443,8 +448,20 @@ public class DataImporter {
 					obj.addProperty(model.createObjectProperty(xc.unitprop), model.createResource(xc.unit));
 				}
 				if (xc.valuemapping != null && xc.valuemapping.containsKey(value)) {
-					obj.addProperty(model.createDatatypeProperty(xc.valueprop),
-							model.createTypedLiteral(xc.valuemapping.get(value), xc.range));
+					for(ValueMapping val:xc.valuemapping.get(value)) {
+						if(val.propiri!=null) {
+							obj.addProperty(model.createDatatypeProperty(propiri),
+									model.createTypedLiteral(val.to, xc.range));
+						}else {
+							obj.addProperty(model.createDatatypeProperty(xc.valueprop),
+									model.createTypedLiteral(val.to, xc.range));
+						}
+						if(!val.addcolumns.isEmpty()) {
+							for(DataColumnConfig conf:val.addcolumns) {
+								importValue(conf, ind, dataRow, value, propiri);
+							}
+						}
+					}
 				} else {
 					obj.addProperty(model.createDatatypeProperty(xc.valueprop),
 							model.createTypedLiteral(value, xc.range));

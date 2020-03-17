@@ -155,7 +155,7 @@ function mappingSchemaReader(url){
             processColumns("",this,1)
         });
        	header="Classes: ["+classes+"]<br/>"
-        if((typeof $(xml).attr("indid") !== 'undefined')){
+        if((typeof $(xml).find('file').attr("indid") !== 'undefined')){
         	header+="Individual ID: "+((typeof $(xml).attr("indidprefix") !== 'undefined')?columnhead+$(xml).attr("indidprefix"):"")+"%%"+$(xml).find('file').attr("indid")+"%%<br/>"
         }else{
         	header+="Individual ID: "+((typeof $(xml).attr("indidprefix") !== 'undefined')?columnhead+$(xml).attr("indidprefix"):"")+"%%GENERATED UUID%%<br/>"

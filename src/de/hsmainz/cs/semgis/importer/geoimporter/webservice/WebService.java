@@ -7,10 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.net.URI;
 import java.net.URL;
-import java.util.TreeMap;
-import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
@@ -33,21 +30,18 @@ import org.apache.commons.io.IOUtils;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.rdfconnection.RDFConnection;
 import org.apache.jena.rdfconnection.RDFConnectionFactory;
-import org.apache.jena.rdfconnection.RDFConnectionRemoteBuilder;
 import org.apache.sis.storage.DataStoreException;
 import org.geotoolkit.data.AbstractFileFeatureStoreFactory;
 import org.geotoolkit.data.FeatureCollection;
 import org.geotoolkit.data.FeatureStore;
-import org.geotoolkit.data.FeatureStoreFactory;
 import org.geotoolkit.data.csv.CSVFeatureStoreFactory;
 import org.geotoolkit.data.geojson.GeoJSONFeatureStoreFactory;
 import org.geotoolkit.data.query.QueryBuilder;
 import org.geotoolkit.data.session.Session;
+import org.geotoolkit.data.shapefile.ShapefileFeatureStoreFactory;
 import org.geotoolkit.feature.Property;
-import org.geotoolkit.storage.DataStore;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.opengis.feature.Attribute;
 import org.opengis.feature.PropertyType;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -118,7 +112,8 @@ public class WebService {
         System.out.println("current dir = " + dir); 
         System.out.println(fileFormat);
         try {
-        	File file=new File("tempfile.gml");
+			String ext=fileFormat.toUpperCase();
+        	File file=new File("tempfile."+ext);
         	FileUtils.copyInputStreamToFile(uploadedInputStream, file);
         	AbstractFileFeatureStoreFactory fac;
         	switch(fileFormat) {
@@ -128,27 +123,28 @@ public class WebService {
         	case "csv":
         		fac=new CSVFeatureStoreFactory();
         		break;
+        	case "shp":
+        		fac=new ShapefileFeatureStoreFactory();
+        		break;
         	default: 
         		return Response.ok("").build();
-        	}
-        	Map<String,URI> map=new TreeMap<String,URI>();
-        	map.put("url",file.toURI());
-        	FeatureStore dataStore;
-			dataStore = ((AbstractFileFeatureStoreFactory) fac).createDataStore(file.toURI());
+        	}    	
+        	FeatureStore dataStore=fac.createDataStore(file.toURI());
 			Session session=dataStore.createSession(true);
-			FeatureCollection collect = session
-    		     .getFeatureCollection(QueryBuilder.all(dataStore.getNames().iterator().next()));
+			FeatureCollection collect;
+			collect = session.getFeatureCollection(QueryBuilder.all(dataStore.getNames().iterator().next()));	
+			System.out.println("FeatureCollection created!");
 			JSONObject result=new JSONObject();
+			result.put("properties",new JSONArray());
 			for(PropertyType prop:collect.getFeatureType().getProperties(false)) {
-				prop.getName();
-			}
-    		
-			return Response.ok("").type(MediaType.APPLICATION_JSON).build();
+				result.getJSONArray("properties").put(prop.getName());
+			}		
+			return Response.ok(result.toString(2)).type(MediaType.APPLICATION_JSON).build();
 		} catch (IOException | DataStoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			 return Response.ok("").build();	
-		} 	       	
+			 return Response.ok(e.getMessage()).build();	
+		}	       	
 	}
 	
 

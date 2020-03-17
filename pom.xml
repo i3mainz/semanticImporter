@@ -37,9 +37,9 @@
       <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <geotools.version>20-SNAPSHOT</geotools.version>
-        <sis.version>1.0</sis.version>
-        <geotk.version>4.0.0</geotk.version>
-		 <geoapi.version>4.0-M06</geoapi.version>
+ 		<geotk.version>4.0.0</geotk.version>
+		  <sis.version>0.8-jdk7-M1</sis.version>
+		  <geoapi.version>4.0-M05</geoapi.version>
     </properties>
         <dependencies>
 <!-- https://mvnrepository.com/artifact/org.locationtech.jts/jts-core -->
@@ -206,7 +206,7 @@
             <version>${geotk.version}</version>
         </dependency>
        
-      <dependency>
+     <!--  <dependency>
            <groupId>org.opengis</groupId>
             <artifactId>geoapi</artifactId>
             <version>${geoapi.version}</version>
@@ -215,7 +215,7 @@
            <groupId>org.opengis</groupId>
             <artifactId>geoapi</artifactId>
             <version>3.0.1</version>
-        </dependency>
+        </dependency>-->
              <dependency>
             <groupId>org.geotoolkit</groupId>
             <artifactId>geotk-coverage</artifactId>
@@ -251,11 +251,11 @@
             <artifactId>sis-referencing</artifactId>
             <version>${sis.version}</version>
         </dependency>
-         <dependency>
+         <!-- <dependency>
             <groupId>org.apache.sis.core</groupId>
             <artifactId>sis-referencing-by-identifiers</artifactId>
             <version>${sis.version}</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.apache.sis.core</groupId>
             <artifactId>sis-utility</artifactId>

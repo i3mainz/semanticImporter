@@ -58,7 +58,7 @@ public class DataColumnConfig {
 
 	public String splitregex;
 	
-	public Map<String,List<String>> valuemapping;
+	public Map<String,List<ValueMapping>> valuemapping;
 
 	public String valueprefix=null;
 	

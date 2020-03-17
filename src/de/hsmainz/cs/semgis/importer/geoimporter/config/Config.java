@@ -55,11 +55,15 @@ public class Config extends DefaultHandler2 {
 	public Style polygonStyle=new Style();
 	
 	public DataColumnConfig currentconfig;
+	
+	public ValueMapping currentValueMapping=null;
 
 	//If present in shapefiles, shapefile epsg enjoys precendence.
 	public Integer epsg;
 	
 	public Integer collectiondepth=0;
+	
+	public Boolean valueMapping=false;
 	
 	Stack<List<DataColumnConfig>> columnLists=new Stack<List<DataColumnConfig>>();
 
@@ -137,7 +141,12 @@ public class Config extends DefaultHandler2 {
 			  if(!currentconfig.valuemapping.containsKey(attributes.getValue("from"))) {
 				  currentconfig.valuemapping.put(attributes.getValue("from"),new LinkedList<>());
 			  }
-			  currentconfig.valuemapping.get(attributes.getValue("from")).add(attributes.getValue("to"));
+			  valueMapping=true;
+			  this.currentValueMapping=new ValueMapping();
+			  this.currentValueMapping.from=attributes.getValue("from");
+			  this.currentValueMapping.to=attributes.getValue("to");
+			  this.currentValueMapping.propiri=attributes.getValue("propiri");
+			  currentconfig.valuemapping.get(attributes.getValue("from")).add(this.currentValueMapping);
 			  break;
 		case "propiri":
 			  currentconfig.propertyuri.add(attributes.getValue("value"));
@@ -146,9 +155,16 @@ public class Config extends DefaultHandler2 {
 			  additionalClasses.add(attributes.getValue("class"));
 			  break;
 		case "addcolumn":
-			  currentconfig=new DataColumnConfig();
-			  currentconfig.propertyuri.add(attributes.getValue("propiri"));
-			  currentconfig.staticvalue=attributes.getValue("value");
+			  if(valueMapping) {
+				  currentconfig=new DataColumnConfig();
+				  currentconfig.propertyuri.add(attributes.getValue("propiri"));
+				  currentconfig.staticvalue=attributes.getValue("value");
+			  }else {
+				  DataColumnConfig dconfig=new DataColumnConfig();
+				  dconfig.propertyuri.add(attributes.getValue("propiri"));
+				  dconfig.staticvalue=attributes.getValue("value");
+				  this.currentValueMapping.addcolumns.add(dconfig);
+			  }
 		case "column":
 				//id
 				currentconfig=new DataColumnConfig();
@@ -216,6 +232,9 @@ public class Config extends DefaultHandler2 {
 			System.out.println("Before pop: "+this.columnLists.size());
 			this.columnLists.pop();
 			System.out.println("After pop: "+this.columnLists.size());
+		}
+		if(qName.equals("valuemapping")) {
+			valueMapping=false;
 		}
 	}
 		

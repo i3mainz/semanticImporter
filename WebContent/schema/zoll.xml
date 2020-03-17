@@ -42,7 +42,7 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
 
     <column name="Schluessel" prop="data" range="http://www.w3.org/2001/XMLSchema#integer"/>    
 	
-	<column name="Art" prop="obj" superclasscol="Typ" range="http://www.w3.org/2001/XMLSchema#integer"> 
+	<column name="Art" prop="obj" superclasscol="Typ"> 
 		<valuemapping from="Dienstort/Dienstsitz" to="https://www.wikidata.org/wiki/Q1221119"/>
 		<valuemapping from="Zollamt (ohne Zollamt R)" to="https://www.wikidata.org/wiki/Q218550"/>
 		<valuemapping from="Zollamt" to="https://www.wikidata.org/wiki/Q218550"/>
@@ -58,7 +58,7 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
 		<valuemapping from="Oberste Bundesbehörde" to="https://www.wikidata.org/wiki/Q314024"/>
 	</column>
 	
-	<column name="Typ" prop="subclass" range="http://www.w3.org/2001/XMLSchema#integer"> 
+	<column name="Typ" prop="subclass"> 
 		<valuemapping from="Dienstort/Dienstsitz" to="https://www.wikidata.org/wiki/Q1221119"/>
 		<valuemapping from="Zollamt (ohne Zollamt R)" to="https://www.wikidata.org/wiki/Q218550"/>
 		<valuemapping from="Zollamt" to="https://www.wikidata.org/wiki/Q218550"/>
