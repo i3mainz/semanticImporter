@@ -78,16 +78,25 @@ function analyzeFile(){
 	       success: function(data) { 
 	    	   console.log(data)
 	    	    var json=data;
-	    	    var table="<tr><th>Dataset Column</th><th>Column URI</th><th>Column Range</th><th>Value SPARQL Query</th><th>Regular Expression (Optional)</th></tr>"
+	    	    var table="<tr><th>Column</th><th>Type</th><th>Property IRI</th><th>Range</th><th>Concept</th><th>Query or Fixed Value</th><th>Endpoint</th><th>Regex</th></tr>"
 	    	    var i=0;
 	    	    for(key in json["properties"]){
 	    	    	if(json["properties"][i]!="the_geom"){
 	    	    		table+="<tr><td id=\"datasetcol_"+i+"\" style=\"color:red\">"+json["properties"][i]+"</td>"
+	    	    		table+="<td id=\"proptypecol_"+i+"\"><select id=\"proptypecol_"+i+"_select\"><option value=\"data\">DatatypeProperty</option><option value=\"obj\">ObjectProperty</option><option value=\"annotation\">AnnotationProperty</option></select></td>"
 	    	    		table+="<td id=\"coluri_"+i+"\">"
 	    	    		table+='<div class="ui-widget"><input id="coluri_'+i+'_input" name='+i+'></div>'//"<input type=\"text\" id=\"coluri_"+i+"_input\" name="+i+">
-	    	    		table+="TripleStore:<select id=\"triplestoredropdown_property_"+i+"\"><option value=\"https://www.wikidata.org/w/api.php?action=wbsearchentities&&format=json&language=en&uselang=en&type=property&search=\">Wikidata</option></select></td>"
-	    	    		table+="<td id=\"colrange_"+i+"\"><input type=\"text\" id=\"colrange_"+i+"_input\"></td>"
-	    	    		table+="<td id=\"valuesparql_"+i+"\"></td>"
+	    	    		table+="<br/>TripleStore:<select id=\"triplestoredropdown_property_"+i+"\">"
+	        	    	table+="<option value=\"aaa7\">AAA7</option>"
+	    	    		table+="<option value=\"inspire4\">INSPIRE4</option>"
+	    	    		table+="<option value=\"https://www.wikidata.org/w/api.php?action=wbsearchentities&&format=json&language=en&uselang=en&type=property&search=\">Wikidata</option>"
+	        	    	table+="<option value=\"xerleben2\">XErleben2</option>"
+	    	    		table+="<option value=\"xplanung5\">XPlanung5</option>"
+	    	    		table+="</select></td>"
+	    	    		table+="<td id=\"colrange_"+i+"\"><select><option value=\"xsd:double\">xsd:double</option><option value=\"xsd:integer\">xsd:integer</option><option value=\"xsd:string\">xsd:string</option></select></td>"
+	    	    		table+="<td><button id=\"\">Add Value Mapping</button><button id=\"\">Find Concept</button></td>"
+	    	    		table+="<td id=\"valuesparql_"+i+"\"><button id=\"colsparql_"+i+"_query\">Set SPARQL Query</button></td>"
+	    	    		table+="<td><select><option value=\"http://query.wikidata.org/sparql\">Wikidata</option><option value=\"https://dbpedia.org/sparql\">DBPedia</option></select></td>"
 	    	    		table+="<td id=\"valueregex_"+i+"\"><input type=\"text\" id=\"colrange_"+i+"_input\"></td></tr>"
 	    	    	}
 	    	    	i++;
@@ -228,8 +237,11 @@ function toggleAnalysis() {
 	   <p>
 		Select a file : <input type="file" name="file" id="files" size="45" /><br/>
 		Fileformat: 
-		<select id="fileformat"><option value="shp">Shapefile</option>
-		<option value="geojson">GeoJSON</option></select>
+		<select id="fileformat">
+		<option value="geojson">GeoJSON</option>
+		<option value="csv">CSV</option>
+		<option value="shp">Shapefile</option>
+		</select>
 	   </p>
 
 	   <button id="uploadButton" onclick="analyzeFile()">Upload It</button>
