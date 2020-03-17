@@ -31,6 +31,12 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
     <column name="E_Mail" prop="data" propiri="http://www.wikidata.org/prop/direct/P968" range="http://www.w3.org/2001/XMLSchema#string"/>
   
     <column name="Homepage" prop="data" propiri="http://www.wikidata.org/prop/direct/P856" range="http://www.w3.org/2001/XMLSchema#string"/>
+	
+	<column name="Typ" prop="subclass"> 
+		<valuemapping from="Ortsverband" to="https://www.wikidata.org/wiki/Q86189847"/>
+		<valuemapping from="Landesverband" to="https://www.wikidata.org/wiki/Q18744396"/>
+		<valuemapping from="Regionalstelle" to="https://www.wikidata.org/wiki/Q87815084"/>
+	</column>
 
     <column name="Verwaltung" prop="obj" concept="https://www.wikidata.org/entity/Q106658" propiri="http://www.wikidata.org/prop/direct/P131" 
 	query="SELECT distinct ?item WHERE{ ?ind wdt:P131 ?item . ?item ?label '%%Verwaltung%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql"/> 

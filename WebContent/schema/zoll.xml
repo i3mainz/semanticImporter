@@ -15,6 +15,10 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
 	</style>
 	
 	<classmapping class="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#GovernmentalService"/>
+	
+	<column name="Uebergeord" prop="obj" propiri="http://www.wikidata.org/prop/direct/P749">
+		<valuemapping from="Generalzolldirektion" to="https://www.wikidata.org/wiki/Q18287062"/>
+	</column>
     
 	<column name="Name" prop="annotation" propiri="http://www.w3.org/2000/01/rdf-schema#label" range="http://www.w3.org/2001/XMLSchema#string"/> 
 
@@ -35,6 +39,46 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
     <column name="Homepage" prop="data" propiri="http://www.wikidata.org/prop/direct/P856" range="http://www.w3.org/2001/XMLSchema#string"/>
 
     <column name="Postfach" prop="data" propiri="http://www.wikidata.org/prop/direct/P2918" range="http://www.w3.org/2001/XMLSchema#string"/>    
+
+    <column name="Schluessel" prop="data" range="http://www.w3.org/2001/XMLSchema#integer"/>    
+	
+	<column name="Art" prop="obj" superclasscol="Typ" range="http://www.w3.org/2001/XMLSchema#integer"> 
+		<valuemapping from="Dienstort/Dienstsitz" to="https://www.wikidata.org/wiki/Q1221119"/>
+		<valuemapping from="Zollamt (ohne Zollamt R)" to="https://www.wikidata.org/wiki/Q218550"/>
+		<valuemapping from="Zollamt" to="https://www.wikidata.org/wiki/Q218550"/>
+		<valuemapping from="Hauptzollamt (D)" to="https://www.wikidata.org/wiki/Q1354730"/>
+		<valuemapping from="Hauptzollamt" to="https://www.wikidata.org/wiki/Q1354730"/>
+		<valuemapping from="Zollhundeschule" to="https://www.wikidata.org/wiki/Q218662"/>
+		<valuemapping from="Zollfahndungsamt" to="https://www.wikidata.org/wiki/Q218625"/>
+		<valuemapping from="Generalzolldirektion" to="https://www.wikidata.org/wiki/Q18287062"/>
+		<valuemapping from="Abfertigungsstelle" to="https://www.wikidata.org/wiki/Q320023"/>
+		<valuemapping from="Bundeskasse" to="https://www.wikidata.org/wiki/Q1006272"/>
+		<valuemapping from="Zollservicepunkt" to="https://www.wikidata.org/wiki/Q1249759"/>
+		<valuemapping from="Obere Bundesbehörde" to="https://www.wikidata.org/wiki/Q314024"/>
+		<valuemapping from="Oberste Bundesbehörde" to="https://www.wikidata.org/wiki/Q314024"/>
+	</column>
+	
+	<column name="Typ" prop="subclass" range="http://www.w3.org/2001/XMLSchema#integer"> 
+		<valuemapping from="Dienstort/Dienstsitz" to="https://www.wikidata.org/wiki/Q1221119"/>
+		<valuemapping from="Zollamt (ohne Zollamt R)" to="https://www.wikidata.org/wiki/Q218550"/>
+		<valuemapping from="Zollamt" to="https://www.wikidata.org/wiki/Q218550"/>
+		<valuemapping from="Zollamt (D)" to="https://www.wikidata.org/wiki/Q218550"/>
+		<valuemapping from="Zollfahndungsamt" to="https://www.wikidata.org/wiki/Q218625"/>
+		<valuemapping from="Zollfahndungsamt (D)" to="https://www.wikidata.org/wiki/Q218625"/>
+		<valuemapping from="Zollkriminalamt" to="https://www.wikidata.org/wiki/Q218727"/>
+		<valuemapping from="Zollkriminalamt (D)" to="https://www.wikidata.org/wiki/Q218727"/>
+		<valuemapping from="Hauptzollamt" to="https://www.wikidata.org/wiki/Q1354730"/>
+		<valuemapping from="Hauptzollamt (D)" to="https://www.wikidata.org/wiki/Q1354730"/>
+		<valuemapping from="Generalzolldirektion" to="https://www.wikidata.org/wiki/Q18287062"/>
+		<valuemapping from="Generalzolldirektion (D)" to="https://www.wikidata.org/wiki/Q18287062"/>
+		<valuemapping from="Kontrolleinheit" to="https://www.wikidata.org/wiki/Q1564526"/>
+		<valuemapping from="Bundeskasse" to="https://www.wikidata.org/wiki/Q1006272"/>
+		<valuemapping from="Bundesfinanzakademie" to="https://www.wikidata.org/wiki/Q1000095"/>
+		<valuemapping from="Service-Center" to="https://www.wikidata.org/wiki/Q1249759"/>
+		<valuemapping from="Service-Center (D)" to="https://www.wikidata.org/wiki/Q1249759"/>
+		<valuemapping from="Zollservicepunkt" to="https://www.wikidata.org/wiki/Q1249759"/>
+		<valuemapping from="Zollhundeschule" to="https://www.wikidata.org/wiki/Q218662"/>
+	</column>
 
 	<column name="Verwaltung" prop="obj" concept="https://www.wikidata.org/entity/Q106658" propiri="http://www.wikidata.org/prop/direct/P131" 
 	query="SELECT distinct ?item WHERE{ ?ind wdt:P131 ?item . ?item ?label '%%Verwaltung%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql"/> 
