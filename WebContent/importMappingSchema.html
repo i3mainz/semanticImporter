@@ -65,7 +65,7 @@ function saveTextAsFile(tosave,fileext,filename)
 function addColumn(){
 	i=$("#datasettable").find('tbody').children().length
 	table="<tr><td id=\"datasetcol_"+i+"\" style=\"color:green\">Additional column</td>"
-	table+="<td id=\"proptypecol_"+i+"\"><select id=\"proptypecol_"+i+"_select\"><option value=\"data\">DatatypeProperty</option><option value=\"obj\">ObjectProperty</option><option value=\"annotation\">AnnotationProperty</option></select></td>"
+	table+="<td id=\"proptypecol_"+i+"\"><select id=\"proptypecol_"+i+"_select\"><option value=\"data\">DatatypeProperty</option><option value=\"obj\">ObjectProperty</option><option value=\"annotation\">AnnotationProperty</option><option value=\"subclass\">SubClass</option></select></td>"
 	table+="<td id=\"coluri_"+i+"\">"
 	table+='<div class="ui-widget"><input id="coluri_'+i+'_input" name='+i+'></div>'//"<input type=\"text\" id=\"coluri_"+i+"_input\" name="+i+">
 	table+="<br/>TripleStore:<select id=\"triplestoredropdown_property_"+i+"\">"
@@ -128,7 +128,8 @@ function analyzeFile(){
 	    	    }
 	    	    $('#datasettable').html(table)
 	    	    console.log(i)
-	    	    for(j=0;j<i;j++){
+	    	    for(j=1;j<i;j++){
+	    	    	console.log('#triplestoredropdown_property_'+j)
 	    	    	if($('#triplestoredropdown_property_'+j).val().includes("http")){
 		    	    	var url=$('#triplestoredropdown_property_'+j).val()+$("#coluri_"+j+"_input").val()
 	    	    		$("#coluri_"+j+"_input").autocomplete({
