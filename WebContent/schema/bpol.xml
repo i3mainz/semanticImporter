@@ -36,7 +36,11 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
   
     <column name="Homepage" prop="data" propiri="https://www.wikidata.org/entity/Property:P856" range="http://www.w3.org/2001/XMLSchema#string"/>
 
-    <column name="Postfach" prop="data" propiri="https://www.wikidata.org/entity/Property:P2918" range="http://www.w3.org/2001/XMLSchema#string"/>    
+    <column name="Postfach" prop="data" propiri="https://www.wikidata.org/entity/Property:P2918" range="http://www.w3.org/2001/XMLSchema#string"/>
+
+	<column name="Typ" prop="subclass">
+		<valuemapping from="Bundepolizeiakademie" to="https://www.wikidata.org/wiki/Q1006464"/>
+	</column>
 
 	<column name="Verwaltung" prop="obj" concept="https://www.wikidata.org/entity/Q106658" propiri="http://www.wikidata.org/prop/direct/P131" 
 	query="SELECT distinct ?item WHERE{ ?ind wdt:P131 ?item . ?item ?label '%%Verwaltung%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql"/> 

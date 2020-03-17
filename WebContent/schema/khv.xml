@@ -35,7 +35,56 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
     <column name="Homepage" prop="data" propiri="http://www.wikidata.org/prop/direct/P856" range="http://www.w3.org/2001/XMLSchema#string"/>  	
 	
 	<column name="Betten_Ins" prop="data" propiri="http://www.wikidata.org/prop/direct/P6801" range="http://www.w3.org/2001/XMLSchema#integer"/> 
+	
+	<column name="Art_Einric" prop="subclass">
+		<valuemapping from="5" to="https://www.wikidata.org/wiki/Q1009272"/>
+	</column>
+	
+	<column name="Innere" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q11180">
+	</column>
+	
+	<column name="l_Kardio" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q10379">
+	</column>
 
+	<column name="I_Rheuma" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q327657">
+	</column>
+	
+	<column name="I_Angio" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q539717">
+	</column>
+	
+	<column name="I_Endo" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q212809">
+	</column>
+	
+	<column name="I_Gastro" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q120569">
+	</column>
+	
+	<column name="I_Haema" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q103824">
+	</column>
+	
+	<column name="I_Nephro" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q177635">
+	</column>
+	
+	<column name="Neurologie" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q83042">
+	</column>
+	
+	<column name="Kinderhk" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q123028">
+	</column>
+	
+	<column name="Geriatrie" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q10384">
+	</column>
+	
+	<column name="Ortho" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q216685">
+	</column>
+	
+	<column name="Psychiat" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q7867">
+	</column>
+	
+	<column name="Psychother" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q183257">
+	</column>
+	
+	<column name="Kinderpsyc" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q5097917">
+	</column>
+		
 	<column name="Verwaltung" prop="obj" concept="https://www.wikidata.org/entity/Q106658" propiri="http://www.wikidata.org/prop/direct/P131" 
 	query="SELECT distinct ?item WHERE{ ?ind wdt:P131 ?item . ?item ?label '%%Verwaltung%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql"/> 
 

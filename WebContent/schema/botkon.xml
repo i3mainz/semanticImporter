@@ -34,15 +34,23 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
 
     <column name="Postfach" prop="data" propiri="http://www.wikidata.org/prop/direct/P2918" range="http://www.w3.org/2001/XMLSchema#string"/>  
 
-    <column name="Staat" prop="obj" range="https://www.wikidata.org/entity/Q6256">
-		<valuemapping from="Diplomatische Vertretungen" to="https://www.wikidata.org/entity/Q213283"/>
-		<valuemapping from="Konsularische Vertretungen" to="https://www.wikidata.org/entity/Q7843791"/>
-	</column>  
+	<column name="Staat" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" concept="https://www.wikidata.org/entity/Q262166"
+	query="SELECT ?city WHERE {?city wdt:P31 wd:Q6256 . ?item ?label '%%Staat%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql"/> 
 
     <column name="Missionsty" prop="subclass">
 		<valuemapping from="Diplomatische Vertretungen" to="https://www.wikidata.org/entity/Q213283"/>
 		<valuemapping from="Konsularische Vertretungen" to="https://www.wikidata.org/entity/Q7843791"/>
-	</column>  	
+	</column>
+
+    <column name="Missionsar" prop="subclass">
+		<valuemapping from="Botschaft" to="https://www.wikidata.org/wiki/Q3917681"/>
+		<valuemapping from="Generalkonsulat" to="https://www.wikidata.org/wiki/Q372690"/>
+		<valuemapping from="Honorargeneralkonsuln" to="https://www.wikidata.org/wiki/Q23891529"/>
+		<valuemapping from="Honorarkonsuln" to="https://www.wikidata.org/wiki/Q23891529"/>
+		<valuemapping from="Konsulat" to="https://www.wikidata.org/wiki/Q7843791"/>
+		<valuemapping from="Mission" to="https://www.wikidata.org/wiki/Q213283"/>
+		<valuemapping from="Wirtschafts- und Handelsbüro" to="https://www.wikidata.org/wiki/Q16924203"/>
+	</column>  	  	
 
 	<column name="Verwaltung" prop="obj" concept="https://www.wikidata.org/entity/Q106658" propiri="http://www.wikidata.org/prop/direct/P131" 
 	query="SELECT distinct ?item WHERE{ ?ind wdt:P131 ?item . ?item ?label '%%Verwaltung%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql"/> 

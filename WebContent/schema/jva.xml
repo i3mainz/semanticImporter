@@ -41,6 +41,15 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
     <column name="Plaetze" prop="data" propiri="http://www.wikidata.org/prop/direct/P1083" range="http://www.w3.org/2001/XMLSchema#integer"/>  	
 	
 	<column name="RS" prop="data" propiri="http://www.wikidata.org/prop/direct/P1388" range="http://www.w3.org/2001/XMLSchema#string"/> 
+	
+	<column name="Typ" prop="subclass">
+		<valuemapping from="Freigängerheim" to="https://www.wikidata.org/wiki/Q87816162"/>
+		<valuemapping from="Jugendarrestanstalt" to="https://www.wikidata.org/wiki/Q1711250"/>
+		<valuemapping from="Sozialtherapeutische Anstalt" to="https://www.wikidata.org/wiki/Q2305965"/>
+		<valuemapping from="Sicherungsverwahrung" to="https://www.wikidata.org/wiki/Q10354054"/>
+		<valuemapping from="Untersuchungshaftanstalt" to="https://www.wikidata.org/wiki/Q2499118"/>
+		<valuemapping from="Justizvollzugskrankenhaus" to="https://www.wikidata.org/wiki/Q16917"/>
+	</column>
 
 	<column name="Verwaltung" prop="obj" concept="https://www.wikidata.org/entity/Q106658" propiri="http://www.wikidata.org/prop/direct/P131" 
 	query="SELECT distinct ?item WHERE{ ?ind wdt:P131 ?item . ?item ?label '%%Verwaltung%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql"/> 
