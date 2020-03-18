@@ -134,6 +134,12 @@ function valueMappingDialog(collid){
 	dialog.dialog( "open" );
 }
 
+function sparqlDialog(collid){
+	colid=collid;
+	sparqldialog.dialog( "open" );
+}
+
+
 function analyzeFile(){
 	    var data = new FormData(); // das ist unser Daten-Objekt ...
 	    data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhängen
@@ -166,8 +172,8 @@ function analyzeFile(){
 	    	    		table+="</select></td>"
 	    	    		table+="<td id=\"colrange_"+i+"\"><select id=\"colrange_"+i+"_select\"><option value=\"xsd:double\">xsd:double</option><option value=\"xsd:integer\">xsd:integer</option><option value=\"xsd:string\">xsd:string</option></select></td>"
 	    	    		table+="<td><button id=\"\" onClick=\"valueMappingDialog('maptypecol_"+i+"_table')\">Add Value Mapping</button><button id=\"\">Find Concept</button><table border=1 id=\"maptypecol_"+i+"_table\"></table></td>"
-	    	    		table+="<td id=\"valuesparql_"+i+"\"><button id=\"colsparql_"+i+"_query\">Set SPARQL Query</button><input type=\"text\" id=\"+colsparql_"+i+"_queryinp\"/></td>"
-	    	    		table+="<td><select id=\"+colendpoint_"+i+"_select+"\"><option value=\"http://query.wikidata.org/sparql\">Wikidata</option><option value=\"https://dbpedia.org/sparql\">DBPedia</option></select></td>"
+	    	    		table+="<td id=\"valuesparql_"+i+"\"><button id=\"colsparql_"+i+"_query\" onClick=\"sparqlDialog('')\">Set SPARQL Query</button><input type=\"text\" id=\"+colsparql_"+i+"_queryinp\"/></td>"
+	    	    		table+="<td><select id=\"+colendpoint_"+i+"_select\"><option value=\"http://query.wikidata.org/sparql\">Wikidata</option><option value=\"https://dbpedia.org/sparql\">DBPedia</option></select></td>"
 	    	    		table+="<td id=\"valueregex_"+i+"\"><input type=\"text\" id=\"colrange_"+i+"_input\"></td></tr>"
 	    	    	}
 	    	    	i++;
@@ -355,6 +361,18 @@ function addValueMapping(from,to,tdtable) {
     </fieldset>
   </form>
 </div>
+<div id="sparqldialog" title="Create SPARQL Query">
+  <p class="validateTips">All form fields are required.</p>
+ 
+  <form>
+    <fieldset>
+      SPARQL Query:
+      <textarea></textarea>
+      <button>Test Query</button>
+      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+    </fieldset>
+  </form>
+</div>
  	<table id="datasettable" width="100%" border="1">
  	</table>
 	   <p>
@@ -390,10 +408,29 @@ dialog = $( "#dialog-form" ).dialog({
     event.preventDefault();
     addValueMapping($("#from").val(),$("#to").val(),colid);
   });
+  
+  sparqldialog = $( "#sparqldialog" ).dialog({
+	    autoOpen: false,
+	    height: 400,
+	    width: 350,
+	    modal: true,
+	    buttons: {
+	      "Create SPARQL Query": addValueMapping,
+	      Cancel: function() {
+	        dialog.dialog( "close" );
+	      }
+	    },
+	    close: function() {
+	      form[ 0 ].reset();
+	      //allFields.removeClass( "ui-state-error" );
+	    }
+	  });
 
-  $( "#create-user" ).button().on( "click", function() {
-    dialog.dialog( "open" );
-  });
+	  form = dialog.find( "form" ).on( "submit", function( event ) {
+	    event.preventDefault();
+	    addValueMapping($("#from").val(),$("#to").val(),colid);
+	  });
+
 </script> 
 </body>
 </html>
