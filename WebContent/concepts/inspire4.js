@@ -1,5 +1,5 @@
 var inspire4={ "title":"INSPIRE4",
-  "dataproperties": {
+  "data": {
     "Begin lifespan version": "http://semgis.de/inspire4#beginLifespanVersion",
 	"Conventionally located proportion": "http://semgis.de/inspire4#conventionallyLocatedProportion",
 	"Date": "http://semgis.de/inspire4#date",
@@ -204,7 +204,7 @@ var inspire4={ "title":"INSPIRE4",
 	"zoneAbbreviation": "http://www.opengis.net/waterml/2.0#zoneAbbreviation",
 	"zoneOffset": "http://www.opengis.net/waterml/2.0#zoneOffset"
   },
-  "classes": {
+  "subclass": {
     "Shore Segment": "http://inspire.ec.europa.eu/schemas/sr/4.0#ShoreSegment",
 	"Abstract construction": "http://inspire.ec.europa.eu/schemas/bu-base/4.0#AbstractConstruction",
 	"AbstractBuilding": "http://inspire.ec.europa.eu/schemas/bu-base/4.0#AbstractBuilding",
@@ -1334,7 +1334,7 @@ var inspire4={ "title":"INSPIRE4",
 	"Void area": "http://inspire.ec.europa.eu/schemas/el-vec/4.0#VoidArea",
 	"Water pipe": "http://inspire.ec.europa.eu/schemas/us-net-wa/4.0#WaterPipe",
   },
-  "objproperties": {
+  "obj": {
     "AbstractFeature": "http://www.opengis.net/gml/3.2#AbstractFeature",
 	"AbstractFeatureCollection": "http://www.opengis.net/gml/3.2#AbstractFeatureCollection",
 	"AbstractObject": "http://www.opengis.net/gml/3.2#AbstractObject",

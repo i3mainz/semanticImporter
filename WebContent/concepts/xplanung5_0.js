@@ -1,5 +1,5 @@
 var xplanung5={ "title":"XPlanung5",
-  "dataproperties": {
+  "data": {
     "BMZ": "http://www.xplanung.de/xplangml/5/0#BMZ",
 	"BMZ_Ausn": "http://www.xplanung.de/xplangml/5/0#BMZ_Ausn",
 	"GFZ": "http://www.xplanung.de/xplangml/5/0#GFZ",
@@ -571,7 +571,7 @@ var xplanung5={ "title":"XPlanung5",
 	"XPlanAuszug": "http://www.xplanung.de/xplangml/5/0#XPlanAuszug",
 	"XPlanung5": "http://www.xplanung.de/xplangml/5/0#XPlanung5",
   },
-  "objproperties": {
+  "obj": {
     "AbstractFeature": "http://www.opengis.net/gml/3.2#AbstractFeature",
 	"AbstractFeatureCollection": "http://www.opengis.net/gml/3.2#AbstractFeatureCollection",
 	"BM": "http://www.xplanung.de/xplangml/5/0#BM",

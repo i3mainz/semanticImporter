@@ -86,6 +86,37 @@ function addColumn(){
 var filedata={}
 var addcolumncounter=0;
 
+function setAutoComplete(itemid,inputid,proptypeid){
+	$("#"+inputid).autocomplete("destroy");
+	console.log(itemid)
+	console.log(inputid)
+	console.log(proptypeid)
+	if($("#"+itemid).val().includes("http")){
+    	var url=$("#"+itemid).val()+$("#"+inputid).val()
+		$("#"+inputid).autocomplete({
+    	      source: function( request, response ) {
+    	        $.ajax( {
+    	          url: url,
+    	          dataType: "jsonp",
+    	          data: {
+    	            term: request.term
+    	          },
+    	          success: function( data ) {
+    	        	console.log(data)
+    	            response( data );
+    	          }
+    	        } );
+    	      },
+    	      minLength: 2,
+    	      select: function( event, ui ) {
+    	    	$("#"+inputid).val(ui.item.value)
+    	      }
+    	    } );
+	}else{
+		$("#"+inputid).autocomplete({source: Object.keys(window[$("#"+itemid).val()][$("#"+proptypeid).val()]).sort()} );
+	}
+}
+
 function analyzeFile(){
 	    var data = new FormData(); // das ist unser Daten-Objekt ...
 	    data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhängen
@@ -111,7 +142,7 @@ function analyzeFile(){
 	    	    		table+="<td id=\"proptypecol_"+i+"\"><select id=\"proptypecol_"+i+"_select\"><option value=\"data\">DatatypeProperty</option><option value=\"obj\">ObjectProperty</option><option value=\"annotation\">AnnotationProperty</option><option value=\"subclass\">SubClass</option></select></td>"
 	    	    		table+="<td id=\"coluri_"+i+"\">"
 	    	    		table+='<div class="ui-widget"><input id="coluri_'+i+'_input" name='+i+'></div>'//"<input type=\"text\" id=\"coluri_"+i+"_input\" name="+i+">
-	    	    		table+="<br/>TripleStore:<select id=\"triplestoredropdown_property_"+i+"\">"
+	    	    		table+="<br/>TripleStore:<select id=\"triplestoredropdown_property_"+i+"\" onChange=\"setAutoComplete('triplestoredropdown_property_"+i+"','coluri_"+i+"_input','proptypecol_"+i+"_select')\">"
 	        	    	table+="<option value=\"aaa7\">AAA7</option>"
 	    	    		table+="<option value=\"inspire4\">INSPIRE4</option>"
 	    	    		table+="<option value=\"https://www.wikidata.org/w/api.php?action=wbsearchentities&&format=json&language=en&uselang=en&type=property&search=\">Wikidata</option>"
@@ -152,7 +183,7 @@ function analyzeFile(){
 		    	    	      }
 		    	    	    } );
 	    	    	}else{
-	    	    		$("#coluri_"+j+"_input").autocomplete({source: Object.keys(window[$('#triplestoredropdown_property_'+j).val()]["objproperties"])} );
+	    	    		$("#coluri_"+j+"_input").autocomplete({source: Object.keys(window[$('#triplestoredropdown_property_'+j).val()][$('#proptypecol_'+j+'_select').val()]).sort()} );
 	    	    	}
 	    	    }
 	    	    toggleAnalysis()
