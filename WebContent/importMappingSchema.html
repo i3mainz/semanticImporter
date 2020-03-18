@@ -255,7 +255,7 @@ function toggleAnalysis() {
 	}
 
 function mappingProfileToXML(){
-	xmlresult="<?xml version=\"1.0\"?><data>"
+	xmlresult="<?xml version=\"1.0\"?>\n<data>\n"
 	$('#datasettable > tbody  > tr').each(function(index, tr) { 
 		console.log(tr)
 		xmlresult+="<column name=\""+$('#datasetcol_'+index).html()+"\" " 
@@ -265,17 +265,18 @@ function mappingProfileToXML(){
 		xmlresult+="query=\""+$("#colsparql_"+index+"_queryinp").val()+"\" "
 		xmlresult+="endpoint=\""+$("#colendpoint_"+index+"_select").val()+"\" "
 		xmlresult+="regex=\""+$("#colregex_"+index+"_input").val()+"\" "
-		xmlresult+=">"
+		xmlresult+=">\n"
 		if($("#maptypecol_"+index+"_table").children().length>0){
 			$("#maptypecol_"+index+"_table").each(function(index, mapping) {
 				xmlresult+="<valuemapping>"
-				xmlresult+="</valuemapping>"
+				xmlresult+="</valuemapping>\n"
 			});
 		}
-		xmlresult+="</column>"
+		xmlresult+="</column>\n"
 	});
 	console.log(xmlresult)
-	xmlresult+="</data>"
+	xmlresult+="</data>\n"
+	return xmlresult
 }
 
 function addValueMapping(from,to,tdtable) {
