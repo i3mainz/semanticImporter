@@ -9,6 +9,16 @@
 <script src="concepts/xplanung5_0.js"></script>
 <style>
 
+label, input { display:block; }
+    input.text { margin-bottom:12px; width:95%; padding: .4em; }
+    fieldset { padding:0; border:0; margin-top:25px; }
+    h1 { font-size: 1.2em; margin: .6em 0; }
+    div#users-contain { width: 350px; margin: 20px 0; }
+    div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
+    div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
+    .ui-dialog .ui-state-error { padding: .3em; }
+    .validateTips { border: 1px solid transparent; padding: 0.3em; }
+
 .loading { margin: auto; }
 
 .loading span {
@@ -117,6 +127,13 @@ function setAutoComplete(itemid,inputid,proptypeid){
 	}
 }
 
+
+var colid=null
+function valueMappingDialog(collid){
+	colid=collid;
+	dialog.dialog( "open" );
+}
+
 function analyzeFile(){
 	    var data = new FormData(); // das ist unser Daten-Objekt ...
 	    data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhängen
@@ -129,8 +146,6 @@ function analyzeFile(){
 	       type: 'POST',         // HTTP-Methode, hier: POST
 	       processData: false,
 	       contentType: false,
-	       // und wenn alles erfolgreich verlaufen ist, schreibe eine Meldung
-	       // in das Response-Div
 	       success: function(data) { 
 	    	   console.log(data)
 	    	    var json=data;
@@ -149,10 +164,10 @@ function analyzeFile(){
 	        	    	table+="<option value=\"xerleben2\">XErleben2</option>"
 	    	    		table+="<option value=\"xplanung5\">XPlanung5</option>"
 	    	    		table+="</select></td>"
-	    	    		table+="<td id=\"colrange_"+i+"\"><select><option value=\"xsd:double\">xsd:double</option><option value=\"xsd:integer\">xsd:integer</option><option value=\"xsd:string\">xsd:string</option></select></td>"
-	    	    		table+="<td><button id=\"\">Add Value Mapping</button><button id=\"\">Find Concept</button></td>"
-	    	    		table+="<td id=\"valuesparql_"+i+"\"><button id=\"colsparql_"+i+"_query\">Set SPARQL Query</button></td>"
-	    	    		table+="<td><select><option value=\"http://query.wikidata.org/sparql\">Wikidata</option><option value=\"https://dbpedia.org/sparql\">DBPedia</option></select></td>"
+	    	    		table+="<td id=\"colrange_"+i+"\"><select id=\"colrange_"+i+"_select\"><option value=\"xsd:double\">xsd:double</option><option value=\"xsd:integer\">xsd:integer</option><option value=\"xsd:string\">xsd:string</option></select></td>"
+	    	    		table+="<td><button id=\"\" onClick=\"valueMappingDialog('maptypecol_"+i+"_table')\">Add Value Mapping</button><button id=\"\">Find Concept</button><table border=1 id=\"maptypecol_"+i+"_table\"></table></td>"
+	    	    		table+="<td id=\"valuesparql_"+i+"\"><button id=\"colsparql_"+i+"_query\">Set SPARQL Query</button><input type=\"text\" id=\"+colsparql_"+i+"_queryinp\"/></td>"
+	    	    		table+="<td><select id=\"+colendpoint_"+i+"_select+"\"><option value=\"http://query.wikidata.org/sparql\">Wikidata</option><option value=\"https://dbpedia.org/sparql\">DBPedia</option></select></td>"
 	    	    		table+="<td id=\"valueregex_"+i+"\"><input type=\"text\" id=\"colrange_"+i+"_input\"></td></tr>"
 	    	    	}
 	    	    	i++;
@@ -226,6 +241,75 @@ function toggleAnalysis() {
 	    x.style.display = "none";
 	  }
 	}
+
+function mappingProfileToXML(){
+	xmlresult=""
+	$('#datasettable > tbody  > tr').each(function(index, tr) { 
+		console.log(tr)
+		xmlresult+="<column name=\""+$('#datasetcol_'+index).html()+"\" " 
+		xmlresult+="prop=\""+$("#proptypecol_"+index+"_select").val()+"\" "
+		xmlresult+="propiri=\""+$("#coluri_"+index+"_input").val()+"\" "
+		xmlresult+="range=\""+$("#colrange_"+index+"_select").val()+"\" "
+		xmlresult+="query=\""+$("#colsparql_"+index+"_queryinp").val()+"\" "
+		xmlresult+="endpoint=\""+$("#colendpoint_"+index+"_select").val()+"\" "
+		xmlresult+=">"
+		if($("#maptypecol_"+i+"_table").children().length>0){
+			$("#maptypecol_"+i+"_table").each(function(index, mapping) {
+				xmlresult+="<valuemapping "
+			});
+		}
+		$(tr).find('td').each(function (i, td) {
+			console.log(td)
+		});
+		xmlresult+="</column>"
+	});
+	console.log(xmlresult)
+	/*$('#datasettable tr.item').each(function() {
+		$this = $(this);
+		$(this).
+		var value = $this.find("span.value").html();
+		var quantity = $this.find("input.quantity").val();
+	});*/
+}
+
+function addValueMapping(from,to,tdtable) {
+	toadd=""
+	if($('#'+colid).children().length==0){
+		toadd="<tr><th align=\"center\">from</th><th align=\"center\">to</th></tr>"
+		toadd+="<tr><td align=\"center\">"
+		if($("#from").val().includes("http")){
+			toadd+="<a href=\""+$("#from").val()+"\">"+$("#from").val()+"</a></td></tr>"	
+		}else{
+			toadd+="<span>"+$("#from").val()+"</span>"
+		}
+		toadd+="</td><td align=\"center\">"
+		if($("#to").val().includes("http")){
+			toadd+="<a href=\""+$("#to").val()+"\">"+$("#to").val()+"</a></td></tr>"
+		}else{
+			toadd+="<span>"+$("#to").val()+"</span>"
+		}	
+		toadd+="</td></tr>"
+		$('#'+colid).html(toadd);
+	}else{
+		toadd+="<tr><td align=\"center\">"
+			if($("#from").val().includes("http")){
+				toadd+="<a href=\""+$("#from").val()+"\">"+$("#from").val()+"</a></td></tr>"	
+			}else{
+				toadd+="<span>"+$("#from").val()+"</span>"
+			}
+			toadd+="</td><td align=\"center\">"
+			if($("#to").val().includes("http")){
+				toadd+="<a href=\""+$("#to").val()+"\">"+$("#to").val()+"</a></td></tr>"
+			}else{
+				toadd+="<span>"+$("#to").val()+"</span>"
+			}	
+			toadd+="</td></tr>"
+		$('#'+colid+' tr:last').after(toadd);
+	}
+	mappingProfileToXML()
+    dialog.dialog( "close" );
+    return true;
+  }
 </script>
 </head>
 
@@ -254,6 +338,23 @@ function toggleAnalysis() {
  	   </table>
  	</p>
 	</p>
+	
+<div id="dialog-form" title="Create Value Mapping">
+  <p class="validateTips">All form fields are required.</p>
+ 
+  <form>
+    <fieldset>
+      <label for="from">From Value</label>
+      <input type="text" name="from" id="from" value="Berlin" class="text ui-widget-content ui-corner-all">
+      <label for="to">To Concept</label>
+      <input type="text" name="to" id="to" value="http://www.wikidata.org/entity/Q64" class="text ui-widget-content ui-corner-all">
+      <label for="otherpropiri">Other PropIRI</label>
+      <input type="text" name="otherpropiri" id="otherpropiri" value="http://myotheruri.de" class="text ui-widget-content ui-corner-all">  
+      <!-- Allow form submission with keyboard without duplicating the dialog button -->
+      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+    </fieldset>
+  </form>
+</div>
  	<table id="datasettable" width="100%" border="1">
  	</table>
 	   <p>
@@ -267,6 +368,32 @@ function toggleAnalysis() {
 	   </p>
 
 	   <button id="uploadButton" onclick="analyzeFile()">Upload It</button>
- 
+<script>
+dialog = $( "#dialog-form" ).dialog({
+    autoOpen: false,
+    height: 400,
+    width: 350,
+    modal: true,
+    buttons: {
+      "Create Value Mapping": addValueMapping,
+      Cancel: function() {
+        dialog.dialog( "close" );
+      }
+    },
+    close: function() {
+      form[ 0 ].reset();
+      //allFields.removeClass( "ui-state-error" );
+    }
+  });
+
+  form = dialog.find( "form" ).on( "submit", function( event ) {
+    event.preventDefault();
+    addValueMapping($("#from").val(),$("#to").val(),colid);
+  });
+
+  $( "#create-user" ).button().on( "click", function() {
+    dialog.dialog( "open" );
+  });
+</script> 
 </body>
 </html>
