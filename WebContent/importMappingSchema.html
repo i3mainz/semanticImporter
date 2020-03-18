@@ -1,7 +1,9 @@
 <html>
 <head>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="css/yasqe.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="js/yasqe.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="concepts/aaa7.js"></script>
 <script src="concepts/inspire4.js"></script>
@@ -365,9 +367,10 @@ function addValueMapping(from,to,tdtable) {
   <form>
     <fieldset>
       SPARQL Query:
-      <textarea></textarea>
+      <textarea id="sparqltextarea" rows=16 cols=45></textarea>
       <button>Test Query</button>
       <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+      
     </fieldset>
   </form>
 </div>
@@ -410,8 +413,8 @@ dialog = $( "#dialog-form" ).dialog({
   
   sparqldialog = $( "#sparqldialog" ).dialog({
 	    autoOpen: false,
-	    height: 400,
-	    width: 350,
+	    height: 600,
+	    width: 500,
 	    modal: true,
 	    buttons: {
 	      "Create SPARQL Query": addValueMapping,
@@ -429,7 +432,7 @@ dialog = $( "#dialog-form" ).dialog({
 	    event.preventDefault();
 	    addValueMapping($("#from").val(),$("#to").val(),colid);
 	  });
-
+	  var yasqe = YASQE.fromTextArea(document.getElementById("sparqltextarea"));
 </script> 
 </body>
 </html>
