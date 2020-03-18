@@ -93,9 +93,13 @@ function addColumn(){
 	$("#datasettable").find('tbody').append(table);
 }
 
+
+function saveMappingAsXML(){
+	saveTextAsFile(mappingProfileToXML(),".xml","mapping")
+}
+
 var filedata={}
 var addcolumncounter=0;
-
 function setAutoComplete(itemid,inputid,proptypeid){
 	$("#"+inputid).autocomplete("destroy");
 	console.log(itemid)
@@ -174,7 +178,7 @@ function analyzeFile(){
 	    	    		table+="<td><button id=\"\" onClick=\"valueMappingDialog('maptypecol_"+i+"_table')\">Add Value Mapping</button><button id=\"\">Find Concept</button><table border=1 id=\"maptypecol_"+i+"_table\"></table></td>"
 	    	    		table+="<td id=\"valuesparql_"+i+"\"><button id=\"colsparql_"+i+"_query\" onClick=\"sparqlDialog('')\">Set SPARQL Query</button><input type=\"text\" id=\"+colsparql_"+i+"_queryinp\"/></td>"
 	    	    		table+="<td><select id=\"+colendpoint_"+i+"_select\"><option value=\"http://query.wikidata.org/sparql\">Wikidata</option><option value=\"https://dbpedia.org/sparql\">DBPedia</option></select></td>"
-	    	    		table+="<td id=\"valueregex_"+i+"\"><input type=\"text\" id=\"colrange_"+i+"_input\"></td></tr>"
+	    	    		table+="<td id=\"valueregex_"+i+"\"><input type=\"text\" id=\"colregex_"+i+"_input\"></td></tr>"
 	    	    	}
 	    	    	i++;
 	    	    }
@@ -249,7 +253,7 @@ function toggleAnalysis() {
 	}
 
 function mappingProfileToXML(){
-	xmlresult=""
+	xmlresult="<?xml version=\"1.0\"?><data>"
 	$('#datasettable > tbody  > tr').each(function(index, tr) { 
 		console.log(tr)
 		xmlresult+="<column name=\""+$('#datasetcol_'+index).html()+"\" " 
@@ -258,24 +262,18 @@ function mappingProfileToXML(){
 		xmlresult+="range=\""+$("#colrange_"+index+"_select").val()+"\" "
 		xmlresult+="query=\""+$("#colsparql_"+index+"_queryinp").val()+"\" "
 		xmlresult+="endpoint=\""+$("#colendpoint_"+index+"_select").val()+"\" "
+		xmlresult+="regex=\""+$("#colregex_"+index+"_input").val()+"\" "
 		xmlresult+=">"
-		if($("#maptypecol_"+i+"_table").children().length>0){
-			$("#maptypecol_"+i+"_table").each(function(index, mapping) {
-				xmlresult+="<valuemapping "
+		if($("#maptypecol_"+index+"_table").children().length>0){
+			$("#maptypecol_"+index+"_table").each(function(index, mapping) {
+				xmlresult+="<valuemapping>"
+				xmlresult+="</valuemapping>"
 			});
 		}
-		$(tr).find('td').each(function (i, td) {
-			console.log(td)
-		});
 		xmlresult+="</column>"
 	});
 	console.log(xmlresult)
-	/*$('#datasettable tr.item').each(function() {
-		$this = $(this);
-		$(this).
-		var value = $this.find("span.value").html();
-		var quantity = $this.find("input.quantity").val();
-	});*/
+	xmlresult+="</data>"
 }
 
 function addValueMapping(from,to,tdtable) {
@@ -373,6 +371,7 @@ function addValueMapping(from,to,tdtable) {
     </fieldset>
   </form>
 </div>
+<button onClick="saveMappingAsXML()">Save Mapping</button>
  	<table id="datasettable" width="100%" border="1">
  	</table>
 	   <p>
