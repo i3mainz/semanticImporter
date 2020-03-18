@@ -108,7 +108,7 @@ function analyzeFile(){
 	    	    for(key in json["properties"]){
 	    	    	if(json["properties"][i]!="the_geom"){
 	    	    		table+="<tr><td id=\"datasetcol_"+i+"\" style=\"color:red\">"+json["properties"][i]+"</td>"
-	    	    		table+="<td id=\"proptypecol_"+i+"\"><select id=\"proptypecol_"+i+"_select\"><option value=\"data\">DatatypeProperty</option><option value=\"obj\">ObjectProperty</option><option value=\"annotation\">AnnotationProperty</option></select></td>"
+	    	    		table+="<td id=\"proptypecol_"+i+"\"><select id=\"proptypecol_"+i+"_select\"><option value=\"data\">DatatypeProperty</option><option value=\"obj\">ObjectProperty</option><option value=\"annotation\">AnnotationProperty</option><option value=\"subclass\">SubClass</option></select></td>"
 	    	    		table+="<td id=\"coluri_"+i+"\">"
 	    	    		table+='<div class="ui-widget"><input id="coluri_'+i+'_input" name='+i+'></div>'//"<input type=\"text\" id=\"coluri_"+i+"_input\" name="+i+">
 	    	    		table+="<br/>TripleStore:<select id=\"triplestoredropdown_property_"+i+"\">"
@@ -152,43 +152,8 @@ function analyzeFile(){
 		    	    	      }
 		    	    	    } );
 	    	    	}else{
-	    	    		$("#coluri_"+j+"_input").autocomplete({
-		    	    	      source: window[$('#triplestoredropdown_property_'+j).val()]["objproperties"],
-		    	    	      minLength: 2,
-		    	    	      select: function( event, ui ) {
-		    	    	    	$("#coluri_"+j+"_input").val(ui.item.value)
-		    	    	      }
-		    	    	    } );
+	    	    		$("#coluri_"+j+"_input").autocomplete({source: Object.keys(window[$('#triplestoredropdown_property_'+j).val()]["objproperties"])} );
 	    	    	}
-	    	    	
-	    	    	/*
-    	    		$('#coluri_'+j+'_input').keyup(function(e) {
-  	    			  console.log("OnKeyUp")
-  	    			  queryString=$('#triplestoredropdown_property_'+$(this).prop('name')).val()+$(this).val()
-  	    			  console.log(queryString)
-  	    			  $.ajax({
-							url: queryString,
-
-							// The name of the callback parameter, as specified by the YQL service
-							jsonp: "callback",
-
-							// Tell jQuery we're expecting JSONP
-							dataType: "jsonp",
-
-							// Tell YQL what we want and that we want JSON
-							data: {
-  						//q: "select title,abstract,url from search.news where query=\"cat\"",
-  						//format: "json"
-							},
-
-							// Work with the response
-							success: function( result ) {
-								console.log("Success!")
-								console.log(result["search"][0]["label"])
-								$('#'+qid).text(result["search"][0]["label"]+" ("+qid+")")   
-							}
-						});
-  	    		    });*/
 	    	    }
 	    	    toggleAnalysis()
 	       }
