@@ -28,7 +28,6 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 import de.hsmainz.cs.semgis.importer.geoimporter.config.Config;
-import de.hsmainz.cs.semgis.importer.geoimporter.importer.DataImporter;
 import de.hsmainz.cs.semgis.importer.geoimporter.parser.KnownSchemaParser;
 
 public class Main {

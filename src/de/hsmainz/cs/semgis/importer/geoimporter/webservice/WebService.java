@@ -8,6 +8,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.URL;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
@@ -39,6 +41,8 @@ import org.geotoolkit.data.geojson.GeoJSONFeatureStoreFactory;
 import org.geotoolkit.data.query.QueryBuilder;
 import org.geotoolkit.data.session.Session;
 import org.geotoolkit.data.shapefile.ShapefileFeatureStoreFactory;
+import org.geotoolkit.data.wfs.WFSFeatureStoreFactory;
+import org.geotoolkit.data.wfs.WebFeatureClient;
 import org.geotoolkit.feature.Property;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -55,6 +59,8 @@ import de.hsmainz.cs.semgis.importer.geoimporter.Main;
 import de.hsmainz.cs.semgis.importer.geoimporter.config.Config;
 import de.hsmainz.cs.semgis.importer.geoimporter.importer.GMLImporter;
 import de.hsmainz.cs.semgis.importer.geoimporter.parser.GeoJSONParser;
+import de.hsmainz.cs.semgis.importer.geoimporter.user.User;
+import de.hsmainz.cs.semgis.importer.geoimporter.user.UserManagementConnection;
 import de.hsmainz.cs.semgis.importer.schemaconverter.XSD2OWL;
 import de.hsmainz.cs.semgis.importer.schemaconverter.XSD2OWL.XMLTypes;
 
@@ -74,6 +80,7 @@ public class WebService {
 			@DefaultValue("") @QueryParam("provider") String provider,
 			@DefaultValue("") @QueryParam("license") String license,
 			@DefaultValue("") @QueryParam("origin") String origin,
+			@DefaultValue("") @QueryParam("authtoken") String authtoken,
 			@DefaultValue("") @QueryParam("triplestore") String triplestore,
 			@DefaultValue("") @QueryParam("triplestoregraph") String triplestoregraph,
 			@DefaultValue("") @QueryParam("triplestoreuser") String triplestoreuser,
@@ -107,7 +114,9 @@ public class WebService {
 	@Path("/analyzeFile")
     public Response analyzeFile(@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail,
-			@FormDataParam("fileformat") String fileFormat) { 
+			@FormDataParam("fileformat") String fileFormat,
+			@FormDataParam("serviceurl") String serviceurl,
+			@DefaultValue("") @QueryParam("authtoken") String authtoken) { 
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
         System.out.println(fileFormat);
@@ -116,21 +125,34 @@ public class WebService {
         	File file=new File("tempfile."+ext);
         	FileUtils.copyInputStreamToFile(uploadedInputStream, file);
         	AbstractFileFeatureStoreFactory fac;
+        	FeatureStore dataStore=null;
+        	Session session;
         	switch(fileFormat) {
         	case "geojson":
         		fac=new GeoJSONFeatureStoreFactory();
+            	dataStore=fac.createDataStore(file.toURI());
+            	session=dataStore.createSession(true);
         		break;
         	case "csv":
         		fac=new CSVFeatureStoreFactory();
+            	dataStore=fac.createDataStore(file.toURI());
+            	session=dataStore.createSession(true);
         		break;
         	case "shp":
         		fac=new ShapefileFeatureStoreFactory();
+            	dataStore=fac.createDataStore(file.toURI());
+    			session=dataStore.createSession(true);
+        		break;
+        	case "wfs":
+        		WFSFeatureStoreFactory fac2=new WFSFeatureStoreFactory();
+        		Map<String,String> map=new TreeMap<String,String>();
+        		map.put("url",serviceurl);
+        		WebFeatureClient test = fac2.create(map);
+    			session=test.createSession(true);
         		break;
         	default: 
         		return Response.ok("").build();
         	}    	
-        	FeatureStore dataStore=fac.createDataStore(file.toURI());
-			Session session=dataStore.createSession(true);
 			FeatureCollection collect;
 			collect = session.getFeatureCollection(QueryBuilder.all(dataStore.getNames().iterator().next()));	
 			System.out.println("FeatureCollection created!");
@@ -159,6 +181,7 @@ public class WebService {
 			@DefaultValue("") @QueryParam("provider") String provider,
 			@DefaultValue("") @QueryParam("license") String license,
 			@DefaultValue("") @QueryParam("origin") String origin,
+			@DefaultValue("") @QueryParam("authtoken") String authtoken,
 			@DefaultValue("") @QueryParam("triplestore") String triplestore,
 			@DefaultValue("") @QueryParam("triplestoregraph") String triplestoregraph,
 			@DefaultValue("") @QueryParam("triplestoreuser") String triplestoreuser,
@@ -196,7 +219,8 @@ public class WebService {
 			@QueryParam("format") String format, 
 			@QueryParam("namespace") String namespace, 
 			@QueryParam("classname") String classname, 
-			@QueryParam("indid") String indid,			
+			@QueryParam("indid") String indid,
+			@DefaultValue("") @QueryParam("authtoken") String authtoken,
 			@DefaultValue("") @QueryParam("triplestore") String triplestore,
 			@DefaultValue("") @QueryParam("triplestoregraph") String triplestoregraph,
 			@DefaultValue("") @QueryParam("triplestoreuser") String triplestoreuser,
@@ -233,7 +257,8 @@ public class WebService {
 	@Path("/convertExistingSchema")
     public Response convertGeoJSON(@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail,
-			@QueryParam("mappingschema") String schemaurl) { 
+			@QueryParam("mappingschema") String schemaurl,
+			@DefaultValue("") @QueryParam("authtoken") String authtoken) { 
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
         try {
@@ -277,6 +302,20 @@ public class WebService {
         	}
         }
         return Response.ok(result.toString()).type(MediaType.APPLICATION_JSON).build();
+	}
+	
+	@POST
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/login")
+    public Response login(@QueryParam("username") String username,@QueryParam("password") String password) { 
+		final String dir = System.getProperty("user.dir");
+        System.out.println("current dir = " + dir); 
+        User user=UserManagementConnection.getInstance().login(username, password);
+        if(user!=null) {
+        	return Response.ok(user.authToken).type(MediaType.TEXT_PLAIN).build();
+        }
+        return Response.ok("").type(MediaType.TEXT_PLAIN).build();
 	}
 	
 	@POST
