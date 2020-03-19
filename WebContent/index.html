@@ -1,6 +1,9 @@
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <style>
 .loading { margin: auto; }
 
@@ -37,50 +40,27 @@
   height: 32px;
 }
 </style>
-<script>
-function saveTextAsFile(tosave,fileext,filename)
-{
-    var a = document.createElement('a');
-    a.style = "display: none";  
-    var blob= new Blob([tosave], {type:'text/plain'});
-    var url = window.URL.createObjectURL(blob);
-    var filename = filename+fileext;
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(function(){
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);  
-    }, 1000);
-}
-
-function convert() {
-    var data = new FormData(); // das ist unser Daten-Objekt ...
-    data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhngen
-    $('#loading').show();
-    $.ajax({
-       url: 'rest/service/convert?namespace='+encodeURIComponent($('#namespace').val())+"&indid="+encodeURIComponent($('#indid').val())+"&classname="+encodeURIComponent($('#classname').val()), // Wohin soll die Datei geschickt werden?
-       data: data,          // Das ist unser Datenobjekt.
-       type: 'POST',         // HTTP-Methode, hier: POST
-       processData: false,
-       contentType: false,
-       // und wenn alles erfolgreich verlaufen ist, schreibe eine Meldung
-       // in das Response-Div
-       success: function(data) { 
-    	    $('#loading').hide();
-    	   saveTextAsFile(data,".ttl","result");
-       }
-    });
- }
-</script>
 </head>
 
 <body>
 <div id="spinner">
   <img src="ajax-loader.gif" alt="Loading" id="loading" style="display: none"/>
 </div>
-
+	<span id="loginspan"></span>
+<div id="logindialog" title="Login">
+  <p class="validateTips">All form fields are required.</p>
+ 
+  <form>
+    <fieldset>
+      <label for="username">Username:</label>
+      <input type="text" name="username" id="username" value="" class="text ui-widget-content ui-corner-all">
+      <label for="password">Password:</label>
+      <input type="text" name="password" id="password" value="" class="text ui-widget-content ui-corner-all">
+      <!-- Allow form submission with keyboard without duplicating the dialog button -->
+      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+    </fieldset>
+  </form>
+</div>
 	<h1>Welcome to the Data Importer</h1>
  
  What do you want to do?
@@ -91,5 +71,6 @@ function convert() {
  <li><a href="importMappingSchema.html">Import geographic file and create Mapping Schema</a></li>
  <li><a href="xsdschematoowl.html">Convert XSD Schema to OWL</a></li>
  </ul> 
+<script src="js/utils.js"></script>
 </body>
 </html>

@@ -9,6 +9,7 @@
 <script src="concepts/inspire4.js"></script>
 <script src="concepts/xerleben2.js"></script>
 <script src="concepts/xplanung5_0.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <style>
 
 label, input { display:block; }
@@ -150,6 +151,7 @@ function analyzeFile(){
 	    var data = new FormData(); // das ist unser Daten-Objekt ...
 	    data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhängen
 	    data.append('fileformat',document.getElementById('fileformat').value)
+	   	data.append('serviceurl',document.getElementById('serviceurl').value)
 	    $('#loading').show();
 	    addcolumncounter=0;
 	    $.ajax({
@@ -324,7 +326,7 @@ function addValueMapping(from,to,tdtable) {
 <div id="spinner">
   <img src="ajax-loader.gif" alt="Loading" id="loading" style="display: none"/>
 </div>
-
+	<span id="loginspan"></span>
 	<h1>Upload your file for content analysis:</h1>
 
 	<p id="metadata" style="display:none">
@@ -345,6 +347,21 @@ function addValueMapping(from,to,tdtable) {
  	   </table>
  	</p>
 	</p>
+
+<div id="logindialog" title="Login">
+  <p class="validateTips">All form fields are required.</p>
+ 
+  <form>
+    <fieldset>
+      <label for="username">Username:</label>
+      <input type="text" name="username" id="username" value="" class="text ui-widget-content ui-corner-all">
+      <label for="password">Password:</label>
+      <input type="text" name="password" id="password" value="" class="text ui-widget-content ui-corner-all">
+      <!-- Allow form submission with keyboard without duplicating the dialog button -->
+      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+    </fieldset>
+  </form>
+</div>
 	
 <div id="dialog-form" title="Create Value Mapping">
   <p class="validateTips">All form fields are required.</p>
@@ -380,15 +397,18 @@ function addValueMapping(from,to,tdtable) {
  	</table>
 	   <p>
 		Select a file : <input type="file" name="file" id="files" size="45" /><br/>
+		Or provide a WFS URL: <input type="text" name="serviceurl" id="serviceurl" size="45" /><br/>
 		Fileformat: 
 		<select id="fileformat">
 		<option value="geojson">GeoJSON</option>
 		<option value="csv">CSV</option>
 		<option value="shp">Shapefile</option>
+		<option value="wfs">WFS</option>
 		</select>
 	   </p>
 
 	   <button id="uploadButton" onclick="analyzeFile()">Upload It</button>
+<script src="js/utils.js"></script>
 <script>
 dialog = $( "#dialog-form" ).dialog({
     autoOpen: false,

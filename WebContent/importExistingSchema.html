@@ -1,7 +1,10 @@
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="js/mappingschemas.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <style>
 .loading { margin: auto; }
 
@@ -130,7 +133,21 @@ function mappingSchemaToTable(){
 <div id="spinner">
   <img src="ajax-loader.gif" alt="Loading" id="loading" style="display: none"/>
 </div>
-
+	<span id="loginspan"></span>
+<div id="logindialog" title="Login">
+  <p class="validateTips">All form fields are required.</p>
+ 
+  <form>
+    <fieldset>
+      <label for="username">Username:</label>
+      <input type="text" name="username" id="username" value="" class="text ui-widget-content ui-corner-all">
+      <label for="password">Password:</label>
+      <input type="text" name="password" id="password" value="" class="text ui-widget-content ui-corner-all">
+      <!-- Allow form submission with keyboard without duplicating the dialog button -->
+      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+    </fieldset>
+  </form>
+</div>
 	<h1>Upload your file for content analysis:</h1>
 	
 	<p id="metadata" style="display:none">
@@ -161,6 +178,7 @@ function mappingSchemaToTable(){
 	   </p>
 
 	   <button id="uploadButton" onclick="analyzeFile()">Upload It</button>
+<script src="js/utils.js"></script>
 <script>
 result=""
 for(mapping in mappingschemas){
