@@ -46,10 +46,10 @@ function processColumns(columnhead,xml,depth){
         output+="<td align=\"center\"><a href=\""+$(xml).attr("propiri")+"\" target=\"_blank\" >"+((typeof $(xml).attr("propiri") !== 'undefined')?$(xml).attr("propiri").substring($(xml).attr("propiri").lastIndexOf('/')+1):"")+"</a></td>"
         output+="<td align=\"center\"><a target=\"_blank\" href=\""+$(xml).attr("range")+"\">"+((typeof $(xml).attr("range") !== 'undefined')?$(xml).attr("range").substring($(xml).attr("range").lastIndexOf('#')+1):"")+"</a></td>"
 		if($(xml).children().length>0 && ($(xml).attr("prop")=="subclass" || $(xml).attr("prop")=="obj")){
-        	output+="<td><table width=\"100%\" border=1><tr><th>from</th><th>to</th></tr>"
+        	output+="<td align=center><table width=\"100%\" border=1><tr><th>from</th><th>to</th></tr>"
         	$(xml).children().each(function(){
         		if(this.tagName=="valuemapping"){
-        			output+="<tr><td>"+$(this).attr("from")+"</td><td>"
+        			output+="<tr><td align=center>"+$(this).attr("from")+"</td><td>"
         			if((typeof $(this).attr("propiri") !== 'undefined')){
         				output+="<a href=\""+$(this).attr("propiri")+"\" target=\"_blank\">"+$(this).attr("propiri").substring($(this).attr("propiri").lastIndexOf('#')+1)
         				+"</a>:"
@@ -120,12 +120,12 @@ function processColumns(columnhead,xml,depth){
         output+="</td>"
         output+="<td align=\"center\">"+((typeof $(xml).attr("endpoint") !== 'undefined')?"<a href=\""+$(xml).attr("endpoint")+"\">"+$(xml).attr("endpoint")+"</a>":"")+"</td>"
         if($(xml).attr("splitcharacter") && $(xml).attr("splitposition")){
-			output+="<td>^("+$(xml).attr("splitcharacter")+")$</td>"
+			output+="<td align=center>^("+$(xml).attr("splitcharacter")+")$</td>"
 		}
         else if($(xml).attr("regex")){
-			output+="<td>"+$(xml).attr("regex")+"</td>"
+			output+="<td align=center>"+$(xml).attr("regex")+"</td>"
 		}else{
-			output+="<td></td>"
+			output+="<td align=center></td>"
 		}
 		output+="</tr>";
     }else if(xml.tagName=="columncollection"){
@@ -133,9 +133,9 @@ function processColumns(columnhead,xml,depth){
     	output+="<tr><td align=\"center\" style=\"color:red\">"+((typeof $(xml).attr("name") !== 'undefined')?columnhead+$(xml).attr("name"):"Additional column")+"</td>"
     	output+="<td align=\"center\">obj</td>"
         output+="<td align=\"center\"><a href=\""+$(xml).attr("propiri")+"\" target=\"_blank\" >"+((typeof $(xml).attr("propiri") !== 'undefined')?$(xml).attr("propiri").substring($(xml).attr("propiri").lastIndexOf('/')+1):"")+"</a></td>"
-        output+="<td></td>"
+        output+="<td align=center></td>"
         output+="<td align=\"center\"><a href=\""+$(xml).attr("class")+"\" target=\"_blank\" >"+((typeof $(xml).attr("concept") !== 'undefined')?$(xml).attr("concept").substring($(xml).attr("concept").lastIndexOf('/')+1):"")+"</a></td>"
-        output+="<td></td><td></td></tr>"        
+        output+="<tdalign=center></td><td align=center></td></tr>"        
     	columnhead+=$(xml).attr("name")+"<span style=\"color:black\">.</span>"
         $(xml).children().each(function(){
                processColumns(columnhead,this,depth+1)
@@ -149,7 +149,7 @@ function mappingSchemaReader(url){
 	output=""
     classes=""
     $.get(url, {}, function (xml){
-       	output="<tr><th>Column</th><th>Type</th><th>Property IRI</th><th>Range</th><th>Concept</th><th>Query or Fixed Value</th><th>Endpoint</th><th>Regex</th></tr>"
+       	output="<tr><th align=center>Column</th><th align=center>Type</th><th align=center>Property IRI</th><th align=center>Range</th><th align=center>Concept</th><th align=center>Query or Fixed Value</th><th align=center>Endpoint</th><th align=center>Regex</th></tr>"
     	classes="<a target=\"_blank\" href=\""+$(xml).find('file').attr("class")+"\">"+$(xml).find('file').attr("class")+"</a>&nbsp;"
        	$(xml).find('file').children().each(function(){
             processColumns("",this,1)

@@ -1,8 +1,10 @@
 <html>
 <head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <style>
 .loading { margin: auto; }
@@ -53,16 +55,20 @@
   <form>
     <fieldset>
       <label for="username">Username:</label>
-      <input type="text" name="username" id="username" value="" class="text ui-widget-content ui-corner-all">
+      <input type="text" name="username" id="username" value="" class="text ui-widget-content ui-corner-all"><br/>
       <label for="password">Password:</label>
-      <input type="text" name="password" id="password" value="" class="text ui-widget-content ui-corner-all">
+      <input type="text" name="password" id="password" value="" class="text ui-widget-content ui-corner-all"><br/>
       <!-- Allow form submission with keyboard without duplicating the dialog button -->
       <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
     </fieldset>
   </form>
 </div>
-	<h1>Welcome to the Data Importer</h1>
- 
+<div class="page-header">
+<h1>Welcome to the Data Importer</h1>
+</div>
+<div class="container" role="main">
+<div class="row">
+  <div class="col-sm-12" id="queryresult" class="table-wrapper-scroll-y"> 
  What do you want to do?
  <ul>
  <li><a href="importGML.html">Import GML file with known Schema</a></li>
@@ -71,6 +77,7 @@
  <li><a href="importMappingSchema.html">Import geographic file and create Mapping Schema</a></li>
  <li><a href="xsdschematoowl.html">Convert XSD Schema to OWL</a></li>
  </ul> 
+ </div></div></div>
 <script src="js/utils.js"></script>
 </body>
 </html>

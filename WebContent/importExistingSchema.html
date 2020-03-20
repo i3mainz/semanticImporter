@@ -1,8 +1,10 @@
 <html>
 <head>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="js/mappingschemas.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <style>
@@ -75,10 +77,10 @@ function analyzeFile(){
 	       success: function(data) { 
 	    	    var json=JSON.parse(data);
 	    	    filedata=json
-	    	    var table="<tr><th>Dataset Column</th><th>Column URI</th><th>Column Range</th><th>Value SPARQL Query</th><th>Regular Expression (Optional)</th></tr>"
+	    	    var table="<tr><th align=center>Dataset Column</th><th align=center>Column URI</th><th align=center>Column Range</th><th align=center>Value SPARQL Query</th><th align=center>Regular Expression (Optional)</th></tr>"
 	    	    var i=1;
 	    	    for(key in data){
-	    	    	table+="<tr><td id=\"datasetcol_"+i+"\">"+key+"</td><td id=\"coluri_"+i+"\"></td><td id=\"colrange_"+i+"\">"+data[key]+"</td><td id=\"valuesparql_"+i+"\"></td><td id=\"valueregex_"+i+"\"></td></tr>"
+	    	    	table+="<tr><td align=center id=\"datasetcol_"+i+"\">"+key+"</td><td align=center id=\"coluri_"+i+"\"></td><td align=center id=\"colrange_"+i+"\">"+data[key]+"</td><td align=center id=\"valuesparql_"+i+"\"></td><td align=center id=\"valueregex_"+i+"\"></td></tr>"
 	    	    	i++;
 	    	    }
 	    	    $('#datasettable').html(table)
@@ -140,9 +142,9 @@ function mappingSchemaToTable(){
   <form>
     <fieldset>
       <label for="username">Username:</label>
-      <input type="text" name="username" id="username" value="" class="text ui-widget-content ui-corner-all">
+      <input type="text" name="username" id="username" value="" class="text ui-widget-content ui-corner-all"><br/>
       <label for="password">Password:</label>
-      <input type="text" name="password" id="password" value="" class="text ui-widget-content ui-corner-all">
+      <input type="text" name="password" id="password" value="" class="text ui-widget-content ui-corner-all"><br/>
       <!-- Allow form submission with keyboard without duplicating the dialog button -->
       <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
     </fieldset>

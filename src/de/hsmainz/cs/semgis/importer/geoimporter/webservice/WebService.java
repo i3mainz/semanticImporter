@@ -308,7 +308,7 @@ public class WebService {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/login")
-    public Response login(@QueryParam("username") String username,@QueryParam("password") String password) { 
+    public Response login(@FormDataParam("username") String username,@FormDataParam("password") String password) { 
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
         User user=UserManagementConnection.getInstance().login(username, password);

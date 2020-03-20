@@ -24,9 +24,9 @@ import org.xml.sax.ext.DefaultHandler2;
 
 public class UserManagementConnection {
 	
-	private Map<String,User> userNameToPasswordHash;
+	private static Map<String,User> userNameToPasswordHash;
 	
-	private Map<String,User> uuidToUser;
+	private static Map<String,User> uuidToUser;
 	
 	private static UserManagementConnection instance;
 	
@@ -96,6 +96,7 @@ public class UserManagementConnection {
 	
 	public User login(String username,String password){
 		System.out.println("UserNameToPasswordHash: "+userNameToPasswordHash.toString());
+		System.out.println("Username: "+username+" Password: "+password);
 		if(!this.userNameToPasswordHash.containsKey(username)){
 			System.out.println("Not logged in: Username "+username+" does not exist! ");
 			return null;//"usernamenotex_false";
@@ -112,6 +113,7 @@ public class UserManagementConnection {
 	
 	public Boolean loginAuthToken(String authToken){
 		System.out.println("UserNameToPasswordHash: "+userNameToPasswordHash.toString());
+		System.out.println("Authtoken: "+authToken);
 		if(!this.uuidToUser.containsKey(authToken)){
 			System.out.println("Not logged in: Auth Token is invalid! ");
 			return false;//"usernamenotex_false";
