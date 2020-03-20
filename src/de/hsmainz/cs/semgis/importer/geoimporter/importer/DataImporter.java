@@ -164,6 +164,7 @@ public class DataImporter {
 				}
 				for(OntClass cls:additionalClasses) {
 					currentind.addRDFType(cls);
+					cls.addSuperClass(featurecl);
 				}
 				// Import geometry column.
 				importGeometry(currentind, feature.getDefaultGeometryProperty());

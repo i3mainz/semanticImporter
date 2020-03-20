@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
@@ -41,11 +42,50 @@ import de.hsmainz.cs.semgis.importer.geoimporter.parser.KnownSchemaParser;
 
 public class Main {
 
+	
+	static Map<String,String> fileToConf=new TreeMap<>();
+	
+	public Main() {
+
+		fileToConf.put("importdata/POI/BFW.shp","config/bfw.xml");
+		fileToConf.put("importdata/POI/BPOL.shp","config/bpol.xml");
+		fileToConf.put("importdata/POI/BotKon.shp","config/botkon.xml");
+		fileToConf.put("importdata/POI/BBeh_plus.shp","config/bbeh.xml");
+		fileToConf.put("importdata/POI/Gerichte.shp","config/gerichte.xml");
+		fileToConf.put("importdata/POI/HS.shp","config/hs.xml");
+		fileToConf.put("importdata/POI/JVA.shp","config/jva.xml");
+		fileToConf.put("importdata/POI/Kfz.shp","config/kfz.xml");
+		fileToConf.put("importdata/POI/KHV_plus.shp","config/khv.xml");
+		fileToConf.put("importdata/POI/KITA.shp","config/kita.xml");
+		fileToConf.put("importdata/POI/LBeh.shp","config/lbeh.xml");
+		fileToConf.put("importdata/POI/LPOL.shp","config/lpol.xml");
+		fileToConf.put("importdata/POI/RefKon.shp","config/refkon.xml");
+		fileToConf.put("importdata/POI/RHV.shp","config/rhv.xml");
+		fileToConf.put("importdata/POI/Schulen_allg.shp","config/schulen_allg.xml");
+		fileToConf.put("importdata/POI/Schulen_beruf.shp","config/schulen_beruf.xml");
+		fileToConf.put("importdata/POI/StA.shp","config/sta.xml");
+		fileToConf.put("importdata/POI/THW.shp","config/thw.xml");
+		fileToConf.put("importdata/POI/UNOrg.shp","config/unorg.xml");
+		fileToConf.put("importdata/POI/Zoll.shp","config/zoll.xml");
+		fileToConf.put("schools/schulen_nrw.shp","config/nrw_schulen.xml");
+		fileToConf.put("schools/brandenburg_schule.shp","config/brandenburg_schulen.xml");
+		fileToConf.put("xplanung/41001g.shp","config/xplanung_st_bp_plan.xml");
+		fileToConf.put("xplanung/42001g.shp","config/xplanung_st_fp_plan.xml");
+		/*fileToConf.put("unesco/41001g.shp","config/aachen_unesco.xml");
+		fileToConf.put("unesco/42001g.shp","config/bauhaus_unesco.xml");
+		fileToConf.put("unesco/41001g.shp","config/hamburg_unesco.xml");
+		fileToConf.put("unesco/42001g.shp","config/sachsenanhalt_unesco.xml");*/
+	}
+	
+	
 	public static void main(String[] args) throws SAXException, IOException, ParserConfigurationException, DataStoreException {
 		Main main=new Main();
-		String shpfile="importdata/POI/BFW.shp";
-		String configfile="config/bfw.xml";
-		main.start(shpfile,shpfile.substring(shpfile.lastIndexOf('/')+1,shpfile.lastIndexOf('.'))+"_result.ttl",configfile,false);
+		for(String key:fileToConf.keySet()) {
+			String shpfile=key;//"importdata/POI/BFW.shp";
+			String configfile=fileToConf.get(key);//"config/bfw.xml";
+			main.start(shpfile,"result/"+shpfile.substring(shpfile.lastIndexOf('/')+1,shpfile.lastIndexOf('.'))+"_result.ttl",configfile,false);
+		}
+
 	}
 	
 	
