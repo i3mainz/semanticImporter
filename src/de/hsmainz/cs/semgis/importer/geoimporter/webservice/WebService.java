@@ -280,7 +280,7 @@ public class WebService {
 			    }
 			  };
 			return Response.ok(stream).type("text/ttl").build();
-		} catch (IOException | SAXException e) {
+		} catch (IOException | SAXException | DataStoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return Response.ok("Conversion failed").build();

@@ -13,6 +13,14 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.sis.storage.DataStoreException;
+import org.geotoolkit.data.AbstractFileFeatureStoreFactory;
+import org.geotoolkit.data.FeatureCollection;
+import org.geotoolkit.data.FeatureStore;
+import org.geotoolkit.data.query.QueryBuilder;
+import org.geotoolkit.data.session.Session;
+import org.geotoolkit.data.shapefile.ShapefileFeatureStoreFactory;
+import org.geotoolkit.referencing.CRS;
 /*import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
 import org.geotools.data.FeatureSource;
@@ -28,14 +36,15 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 import de.hsmainz.cs.semgis.importer.geoimporter.config.Config;
+import de.hsmainz.cs.semgis.importer.geoimporter.importer.DataImporter;
 import de.hsmainz.cs.semgis.importer.geoimporter.parser.KnownSchemaParser;
 
 public class Main {
 
-	public static void main(String[] args) throws SAXException, IOException, ParserConfigurationException {
+	public static void main(String[] args) throws SAXException, IOException, ParserConfigurationException, DataStoreException {
 		Main main=new Main();
-		String shpfile="importdata/geographicalnames.shp";
-		String configfile="config/geographicalnames.xml";
+		String shpfile="importdata/POI/BFW.shp";
+		String configfile="config/bfw.xml";
 		main.start(shpfile,shpfile.substring(shpfile.lastIndexOf('/')+1,shpfile.lastIndexOf('.'))+"_result.ttl",configfile,false);
 	}
 	
@@ -50,7 +59,7 @@ public class Main {
 		System.out.println("Finished the conversion");
 	}
 
-	public void start(String shpfile,String outputPath, String configfile,Boolean schemaGiven) throws SAXException, IOException, ParserConfigurationException {
+	public void start(String shpfile,String outputPath, String configfile,Boolean schemaGiven) throws SAXException, IOException, ParserConfigurationException, DataStoreException {
 		Config config=new Config();
 		if(schemaGiven) {
 			importKnownSchema(shpfile,outputPath);
@@ -61,7 +70,7 @@ public class Main {
 		}
 	}
 	
-	public void processFeatures(String featurefile, String outputPath, Config config) throws IOException {
+	public void processFeatures(String featurefile, String outputPath, Config config) throws IOException, DataStoreException {
 		
 		//Open a shape file and import with geotools.
 		System.setProperty("file.encoding","UTF-8");
@@ -69,19 +78,19 @@ public class Main {
 		Map<String, Object> map = new HashMap<>();
 		map.put("url", file.toURI().toURL());
 		map.put("charset","UTF-8");
-
-		/*DataStore dataStore = DataStoreFinder.getDataStore(map);
-		System.out.println(dataStore);
-		String typeName = dataStore.getTypeNames()[0];
-		FeatureSource<SimpleFeatureType, SimpleFeature> source =
-				dataStore.getFeatureSource(typeName);
-		Filter filter = Filter.INCLUDE; // ECQL.toFilter("BBOX(THE_GEOM, 10,20,30,40)")
-		FeatureCollection<SimpleFeatureType, SimpleFeature> collection = source.getFeatures(filter);
-
+		AbstractFileFeatureStoreFactory fac=new ShapefileFeatureStoreFactory();
+		FeatureStore dataStore=null;
+    	Session session;
+    	dataStore=fac.createDataStore(file.toURI());
+		session=dataStore.createSession(true);
+		FeatureCollection collection;
+		collection = session.getFeatureCollection(QueryBuilder.all(dataStore.getNames().iterator().next()));	
 		//Try to determine the epsg code and the geometry type, if not present, exit the config.
-		Integer epsgCode = null;
+		
+		/*Integer epsgCode = null;
+		collection.
 		try {
-			epsgCode = CRS.lookupEpsgCode(collection.getSchema().getCoordinateReferenceSystem(), true);
+			epsgCode = collection.getFeatureType().getCoordinateReferenceSystem()., true);
 		} catch (FactoryException e) {
 			e.printStackTrace();
 		}
@@ -91,13 +100,14 @@ public class Main {
 		}
 		if (null == epsgCode)
 			throw new RuntimeException("The epsg code could not be determined. Please provide the information in the profile.xml");
+	*/	
 		
-		String geomType = collection.getSchema().getGeometryDescriptor().getType().getName().toString();
+		String geomType = collection.getFeatureType().getGeometryDescriptor().getType().getName().toString();
 
 
 		//Import the data
-		DataImporter dataImporter = new DataImporter(config, epsgCode, geomType);
-		dataImporter.importToOwl(outputPath, collection,featurefile);*/
+		DataImporter dataImporter = new DataImporter(config, 0, geomType);
+		dataImporter.importToOwl(outputPath, collection,featurefile);
 	}
 	
 }

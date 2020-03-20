@@ -56,7 +56,7 @@ public class Config extends DefaultHandler2 {
 	
 	public DataColumnConfig currentconfig;
 	
-	public ValueMapping currentValueMapping=null;
+	public ValueMapping currentValueMapping=new ValueMapping();
 
 	//If present in shapefiles, shapefile epsg enjoys precendence.
 	public Integer epsg;
@@ -138,7 +138,7 @@ public class Config extends DefaultHandler2 {
 			  this.lineStringStyle.fillColor=attributes.getValue("fillColor");
 			  break;
 		case "valuemapping":
-			  if(!currentconfig.valuemapping.containsKey(attributes.getValue("from"))) {
+			  if(currentconfig.valuemapping!=null && !currentconfig.valuemapping.containsKey(attributes.getValue("from"))) {
 				  currentconfig.valuemapping.put(attributes.getValue("from"),new LinkedList<>());
 			  }
 			  valueMapping=true;
@@ -161,17 +161,22 @@ public class Config extends DefaultHandler2 {
 				  currentconfig.staticvalue=attributes.getValue("value");
 			  }else {
 				  DataColumnConfig dconfig=new DataColumnConfig();
-				  dconfig.propertyuri.add(attributes.getValue("propiri"));
+				  if(attributes.getValue("propiri")!=null)
+					  dconfig.propertyuri.add(attributes.getValue("propiri"));
 				  dconfig.staticvalue=attributes.getValue("value");
+				  if(this.currentValueMapping==null) {
+					  this.currentValueMapping=new ValueMapping();
+				  }
 				  this.currentValueMapping.addcolumns.add(dconfig);
 			  }
+			  break;
 		case "column":
 				//id
 				currentconfig=new DataColumnConfig();
 				//TODO read via getAttrValue()
 				  System.out.println(this.columnLists.size());
-				  
-				if(!resultmap.containsKey(attributes.getValue("name"))) {
+				System.out.println(resultmap);
+				if(attributes.getValue("name")!=null && !resultmap.containsKey(attributes.getValue("name"))) {
 					resultmap.put(attributes.getValue("name"),new LinkedList<DataColumnConfig>());
 				}
 				if(columnLists.isEmpty()) {
@@ -195,7 +200,8 @@ public class Config extends DefaultHandler2 {
 				currentconfig.range=attributes.getValue("range");
 				currentconfig.isind=attributes.getValue("isind");
 				currentconfig.language=attributes.getValue("language");
-				currentconfig.propertyuri.add(attributes.getValue("propiri"));
+				if(attributes.getValue("propiri")!=null)
+					currentconfig.propertyuri.add(attributes.getValue("propiri"));
 				currentconfig.keepdataprop=attributes.getValue("keepdataprop");
 				currentconfig.valueprefix=attributes.getValue("valueprefix");
 				currentconfig.valuesuffix=attributes.getValue("valuesuffix");

@@ -3,6 +3,8 @@ package de.hsmainz.cs.semgis.importer.geoimporter.config;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import de.hsmainz.cs.semgis.util.Tuple;
 
@@ -38,7 +40,7 @@ public class DataColumnConfig {
 	
 	public String concept;	// -> objtype
 	public String prop;	// -> proptype
-	public Set<String> propertyuri;
+	public Set<String> propertyuri=new TreeSet<String>();
 	
 	public String unit; // -> unittype
 	public String unitprop;
@@ -58,7 +60,7 @@ public class DataColumnConfig {
 
 	public String splitregex;
 	
-	public Map<String,List<ValueMapping>> valuemapping;
+	public Map<String,List<ValueMapping>> valuemapping=new TreeMap<>();
 
 	public String valueprefix=null;
 	

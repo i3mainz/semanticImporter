@@ -33,8 +33,8 @@ public class UserManagementConnection {
 	private static String USERS="users.xml";
 	
 	private UserManagementConnection(){
-		this.userNameToPasswordHash=new TreeMap<String,User>();
-		this.uuidToUser=new TreeMap<String,User>();
+		userNameToPasswordHash=new TreeMap<String,User>();
+		uuidToUser=new TreeMap<String,User>();
 		try {
 			this.readUsers();
 		} catch (ParserConfigurationException | SAXException e) {
@@ -63,33 +63,33 @@ public class UserManagementConnection {
 	}
 	
 	public String addUser(String userToAdd,String userToAddPasswordHash,String userlevel) throws XMLStreamException, IOException{
-		if(this.userNameToPasswordHash.containsKey(userToAdd)){
+		if(userNameToPasswordHash.containsKey(userToAdd)){
 			return "User already exists";
 		}
 		User user=new User();
 		user.setName(userToAdd);
 		user.setPasswordHash(this.getHashedPassword(userToAddPasswordHash));
 		user.setUserlevel(UserType.valueOf(userlevel));
-		this.userNameToPasswordHash.put(userToAdd, user);
+		userNameToPasswordHash.put(userToAdd, user);
 		this.toXML();
 		return "User successfully added";
 	}
 	
 	public String updateUser(String userToAdd,String userToAddPasswordHash,String userlevel) throws XMLStreamException, IOException{
-		if(!this.userNameToPasswordHash.containsKey(userToAdd)){
+		if(!userNameToPasswordHash.containsKey(userToAdd)){
 			return "User does not exist";
 		}
 		User user=new User();
 		user.setName(userToAdd);
 		user.setPasswordHash(this.getHashedPassword(userToAddPasswordHash));
 		user.setUserlevel(UserType.valueOf(userlevel));
-		this.userNameToPasswordHash.put(userToAdd, user);
+		userNameToPasswordHash.put(userToAdd, user);
 		this.toXML();
 		return "User successfully edited";
 	}
 	
 	public String deleteUser(String userToAdd,String userToAddPasswordHash,Integer userlevel) throws XMLStreamException, IOException{
-		this.userNameToPasswordHash.remove(userToAdd);
+		userNameToPasswordHash.remove(userToAdd);
 		this.toXML();
 		return "User successfully deleted";
 	}
@@ -97,15 +97,15 @@ public class UserManagementConnection {
 	public User login(String username,String password){
 		System.out.println("UserNameToPasswordHash: "+userNameToPasswordHash.toString());
 		System.out.println("Username: "+username+" Password: "+password);
-		if(!this.userNameToPasswordHash.containsKey(username)){
+		if(!userNameToPasswordHash.containsKey(username)){
 			System.out.println("Not logged in: Username "+username+" does not exist! ");
 			return null;//"usernamenotex_false";
 		}
-		if(this.getHashedPassword(password).equals(this.userNameToPasswordHash.get(username).getPasswordHash())){
-			System.out.println("Logged in: "+this.userNameToPasswordHash.get(username).toString());
-			User user=this.userNameToPasswordHash.get(username);
+		if(this.getHashedPassword(password).equals(userNameToPasswordHash.get(username).getPasswordHash())){
+			System.out.println("Logged in: "+userNameToPasswordHash.get(username).toString());
+			User user=userNameToPasswordHash.get(username);
 			user.setUuid(UUID.randomUUID().toString());
-			return this.userNameToPasswordHash.get(username);//"loginsuccessful_true";
+			return userNameToPasswordHash.get(username);//"loginsuccessful_true";
 		}
 		System.out.println("Not logged in: Login failed! ");
 		return null;//"loginfailed_false";
@@ -114,7 +114,7 @@ public class UserManagementConnection {
 	public Boolean loginAuthToken(String authToken){
 		System.out.println("UserNameToPasswordHash: "+userNameToPasswordHash.toString());
 		System.out.println("Authtoken: "+authToken);
-		if(!this.uuidToUser.containsKey(authToken)){
+		if(!uuidToUser.containsKey(authToken)){
 			System.out.println("Not logged in: Auth Token is invalid! ");
 			return false;//"usernamenotex_false";
 		}
@@ -131,7 +131,7 @@ public class UserManagementConnection {
 	private void readUsers() throws ParserConfigurationException, SAXException{
 		SAXParser parser=SAXParserFactory.newInstance().newSAXParser();
 		try {
-			parser.parse(USERS, new UserHandler(this.userNameToPasswordHash,this.uuidToUser));
+			parser.parse(USERS, new UserHandler(userNameToPasswordHash,uuidToUser));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -143,8 +143,8 @@ public class UserManagementConnection {
 		if(userNameToPasswordHash.isEmpty()){
 			return "<tr><td>No user available!</td></tr>";
 		}
-		for(String user:this.userNameToPasswordHash.keySet()){
-			User usr=this.userNameToPasswordHash.get(user);
+		for(String user:userNameToPasswordHash.keySet()){
+			User usr=userNameToPasswordHash.get(user);
 			result.append(usr.getName());
 			result.append(",");
 			result.append(usr.getUserlevel()+";");

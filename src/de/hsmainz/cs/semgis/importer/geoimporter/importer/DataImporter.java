@@ -18,8 +18,8 @@ import java.util.regex.Pattern;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
 
 import org.apache.commons.lang3.text.StrSubstitutor;
 import org.apache.jena.ontology.AnnotationProperty;
@@ -79,7 +79,7 @@ public class DataImporter {
 			rootClass.addSuperClass(addc);			
 		}
 		this.epsgCode = epsgCode;
-		this.geomClass = model.createClass("http://www.opengis.net/ont/sf#" + geomType);
+		this.geomClass = model.createClass("http://www.opengis.net/ont/sf#" + geomType.replace("http://geotoolkit.org:",""));
 		startTime=new Date(System.currentTimeMillis());
 	}
 
@@ -124,7 +124,7 @@ public class DataImporter {
 				if (first) {
 					StringBuilder builder = new StringBuilder();
 					for (String propName : dataRow.keySet()) {
-						builder.append(propName + ";");
+						builder.append(propName.replace("http://geotoolkit.org:","") + ";");
 					}
 					AnnotationProperty annpro = model.createAnnotationProperty("http://semgis.de/geodata#propOrder");
 					rootClass.addProperty(annpro, builder.toString());
@@ -174,7 +174,7 @@ public class DataImporter {
 					String columnName = key;
 					for (DataColumnConfig curconf:conflist) {
 						if (config.resultmap.containsKey(columnName)) {						
-							parseDataColumnConfigs(curconf, currentind, dataRow, dataRow.get(key), 1);
+							parseDataColumnConfigs(curconf, currentind, dataRow, dataRow.get("http://geotoolkit.org:"+key), 1);
 						}else if(curconf.staticvalue!=null) {
 							parseDataColumnConfigs(curconf, currentind, dataRow, curconf.staticvalue, 1);
 						}
@@ -189,6 +189,10 @@ public class DataImporter {
 	
 	public void parseDataColumnConfigs(DataColumnConfig curconf,Individual currentind,
 			Map<String, String> dataRow,String value, Integer depth) {
+			System.out.println(value);
+			System.out.println(dataRow);
+			if(value!=null)
+				value=value.replace("http://geotoolkit.org:","");
 			System.out.println("ParseDataColumnConfigs in depth "+depth);
 			System.out.println(curconf.name+" - "+curconf.isCollection+" "+curconf.subconfigs);
 			if(curconf.isCollection) {
@@ -366,8 +370,10 @@ public class DataImporter {
 	 *            the value to insert
 	 */
 	private void importValue(DataColumnConfig xc, Individual ind, Map<String, String> dataRow, String value,String propiri) {
+		System.out.println("ImportValue: "+value);
 		if (value == null || value.isEmpty())
 			return;
+		value=value.replace("http://geotoolkit.org:","");
 		if (xc.prop.equals("subclass")) {
 			OntClass cls = null;
 			if (xc.valuemapping != null && xc.valuemapping.containsKey(value)) {
@@ -387,8 +393,10 @@ public class DataImporter {
 			DatatypeProperty pro;
 			if (xc.propertyuri == null) {
 				pro = model.createDatatypeProperty(DEFAULTNAMESPACE + "has" + toCamelCase(xc.name));
+				pro.setLabel(xc.name,"en");
 			} else {
 				pro = model.createDatatypeProperty(propiri.replace(" ", "_"));
+				pro.setLabel(xc.name,"en");
 			}
 			if (xc.range != null) {
 				pro.addRange(model.createResource(xc.range));
@@ -405,8 +413,10 @@ public class DataImporter {
 			AnnotationProperty pro;
 			if (xc.propertyuri == null) {
 				pro = model.createAnnotationProperty(DEFAULTNAMESPACE + "has" + toCamelCase(xc.name.replace(" ", "_")));
+				pro.setLabel(xc.name,"en");
 			} else {
 				pro = model.createAnnotationProperty(propiri.replace(" ", "_"));
+				pro.setLabel(xc.name,"en");
 			}
 			if (xc.valuemapping != null && xc.valuemapping.containsKey(value)) {
 				for(ValueMapping val:xc.valuemapping.get(value)) {
@@ -419,8 +429,10 @@ public class DataImporter {
 			ObjectProperty pro;
 			if (xc.propertyuri == null) {
 				pro = model.createObjectProperty(DEFAULTNAMESPACE + "has" + toCamelCase(xc.name.replace(" ", "_")));
+				pro.setLabel(xc.name,"en");
 			} else {
 				pro = model.createObjectProperty(propiri.replace(" ", "_"));
+				pro.setLabel(xc.name,"en");
 			}
 			if (xc.range != null) {
 				pro.addRange(model.createClass(xc.range));
@@ -431,7 +443,7 @@ public class DataImporter {
 				Resource obj = model
 						.createResource(res);
 				ind.addProperty(pro, obj);
-				if(xc.keepdataprop.equals("true")) {
+				if(xc.keepdataprop!=null && xc.keepdataprop.equals("true")) {
 					if(res!=null)
 						System.out.println("sameAsCount: "+sameAsCount++);
 					ind.addProperty(RDFS.label,value);
@@ -450,7 +462,9 @@ public class DataImporter {
 				if (xc.valuemapping != null && xc.valuemapping.containsKey(value)) {
 					for(ValueMapping val:xc.valuemapping.get(value)) {
 						if(val.propiri!=null) {
-							obj.addProperty(model.createDatatypeProperty(propiri),
+							DatatypeProperty prop=model.createDatatypeProperty(propiri);
+							prop.setLabel(xc.name,"en");
+							obj.addProperty(prop,
 									model.createTypedLiteral(val.to, xc.range));
 						}else {
 							obj.addProperty(model.createDatatypeProperty(xc.valueprop),

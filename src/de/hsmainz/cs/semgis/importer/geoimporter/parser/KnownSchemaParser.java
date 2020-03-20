@@ -1,7 +1,5 @@
 package de.hsmainz.cs.semgis.importer.geoimporter.parser;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
