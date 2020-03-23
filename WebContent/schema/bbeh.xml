@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <data>
-<file class="https://www.wikidata.org/wiki/Q314024" 
+<file class="https://www.wikidata.org/entity/Q314024" 
 namespace="http://registry.gdi-de.org/id/de.bund.bkg.poi/" 
 attnamespace="http://registry.gdi-de.org/id/de.bund.bkg.poi/"
 geoendpoint="http://linkedgeodata.org/sparql" 
@@ -39,85 +39,85 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
     <column name="Postfach" prop="data" propiri="http://www.wikidata.org/prop/direct/P2918" range="http://www.w3.org/2001/XMLSchema#string"/>    
 	
 	<column name="Klasse" prop="subclass">
-		<valuemapping from="Zollverwaltung" to="https://www.wikidata.org/wiki/Q182290"/>
-		<valuemapping from="Forschungseinrichtung" to="https://www.wikidata.org/wiki/Q31855"/>
-		<valuemapping from="Sozialverwaltung" to="https://www.wikidata.org/wiki/Q59307863"/>
-		<valuemapping from="Eingetragener Verein" to="https://www.wikidata.org/wiki/Q9299236"/>
-		<valuemapping from="Verfassungsorgan" to="https://www.wikidata.org/wiki/Q895914"/>
+		<valuemapping from="Zollverwaltung" to="https://www.wikidata.org/entity/Q182290"/>
+		<valuemapping from="Forschungseinrichtung" to="https://www.wikidata.org/entity/Q31855"/>
+		<valuemapping from="Sozialverwaltung" to="https://www.wikidata.org/entity/Q59307863"/>
+		<valuemapping from="Eingetragener Verein" to="https://www.wikidata.org/entity/Q9299236"/>
+		<valuemapping from="Verfassungsorgan" to="https://www.wikidata.org/entity/Q895914"/>
 	</column>  
 	
 	<column name="Typ" prop="subclass">
-		<valuemapping from="Untere Bundesbehörde" to="https://www.wikidata.org/wiki/Q314024"/>
-		<valuemapping from="Untere Bundesbehörde (A)" to="https://www.wikidata.org/wiki/Q314024"/>
-		<valuemapping from="Mittlere Bundesbehörde" to="https://www.wikidata.org/wiki/Q314024"/>
-		<valuemapping from="Mittlere Bundesbehörde (A)" to="https://www.wikidata.org/wiki/Q314024"/>
-		<valuemapping from="Obere Bundesbehörde" to="https://www.wikidata.org/wiki/Q314024"/>
-		<valuemapping from="Obere Bundesbehörde (A)" to="https://www.wikidata.org/wiki/Q314024"/>
-		<valuemapping from="Oberste Bundesbehörde" to="https://www.wikidata.org/wiki/Q314024"/>
-		<valuemapping from="Oberste Bundesbehörde (A)" to="https://www.wikidata.org/wiki/Q314024"/>
-		<valuemapping from="Körperschaft des öffentlichen Rechts" to="https://www.wikidata.org/wiki/Q15734684"/>
-		<valuemapping from="Körperschaft des öffentlichen Rechts (A)" to="https://www.wikidata.org/wiki/Q15734684"/>
-		<valuemapping from="Eingetragener Verein" to="https://www.wikidata.org/wiki/Q9299236"/>
-		<valuemapping from="Bundesgericht" to="https://www.wikidata.org/wiki/Q580200"/>
-		<valuemapping from="Beauftragte(r)" to="https://www.wikidata.org/wiki/Q813392"/>
-		<valuemapping from="Beauftragte(r) (A)" to="https://www.wikidata.org/wiki/Q813392"/>
-		<valuemapping from="Gesellschaft mit beschränkter Haftung" to="https://www.wikidata.org/wiki/Q460178"/>
-		<valuemapping from="Verfassungsorgan" to="https://www.wikidata.org/wiki/Q895914"/>
-		<valuemapping from="Rechtsfähige Anstalt des öffentlichen Rechts" to="https://www.wikidata.org/wiki/Q67207116"/>
-		<valuemapping from="Rechtsfähige Anstalt des öffentlichen Rechts (A)" to="https://www.wikidata.org/wiki/Q67207116"/>
+		<valuemapping from="Untere Bundesbehörde" to="https://www.wikidata.org/entity/Q314024"/>
+		<valuemapping from="Untere Bundesbehörde (A)" to="https://www.wikidata.org/entity/Q314024"/>
+		<valuemapping from="Mittlere Bundesbehörde" to="https://www.wikidata.org/entity/Q314024"/>
+		<valuemapping from="Mittlere Bundesbehörde (A)" to="https://www.wikidata.org/entity/Q314024"/>
+		<valuemapping from="Obere Bundesbehörde" to="https://www.wikidata.org/entity/Q314024"/>
+		<valuemapping from="Obere Bundesbehörde (A)" to="https://www.wikidata.org/entity/Q314024"/>
+		<valuemapping from="Oberste Bundesbehörde" to="https://www.wikidata.org/entity/Q314024"/>
+		<valuemapping from="Oberste Bundesbehörde (A)" to="https://www.wikidata.org/entity/Q314024"/>
+		<valuemapping from="Körperschaft des öffentlichen Rechts" to="https://www.wikidata.org/entity/Q15734684"/>
+		<valuemapping from="Körperschaft des öffentlichen Rechts (A)" to="https://www.wikidata.org/entity/Q15734684"/>
+		<valuemapping from="Eingetragener Verein" to="https://www.wikidata.org/entity/Q9299236"/>
+		<valuemapping from="Bundesgericht" to="https://www.wikidata.org/entity/Q580200"/>
+		<valuemapping from="Beauftragte(r)" to="https://www.wikidata.org/entity/Q813392"/>
+		<valuemapping from="Beauftragte(r) (A)" to="https://www.wikidata.org/entity/Q813392"/>
+		<valuemapping from="Gesellschaft mit beschränkter Haftung" to="https://www.wikidata.org/entity/Q460178"/>
+		<valuemapping from="Verfassungsorgan" to="https://www.wikidata.org/entity/Q895914"/>
+		<valuemapping from="Rechtsfähige Anstalt des öffentlichen Rechts" to="https://www.wikidata.org/entity/Q67207116"/>
+		<valuemapping from="Rechtsfähige Anstalt des öffentlichen Rechts (A)" to="https://www.wikidata.org/entity/Q67207116"/>
 	</column>  
 
 	<column name="Behoerde" prop="subclass">
-		<valuemapping from="AA" to="https://www.wikidata.org/wiki/Q56034"/>
-		<valuemapping from="BKAmt" to="https://www.wikidata.org/wiki/Q317027"/>
-		<valuemapping from="BND" to="https://www.wikidata.org/wiki/Q272969"/>
-		<valuemapping from="Bundeskasse" to="https://www.wikidata.org/wiki/Q1006272"/>
-		<valuemapping from="Zoll" to="https://www.wikidata.org/wiki/Q1009333"/>
-		<valuemapping from="THW" to="https://www.wikidata.org/wiki/Q697698"/>
-		<valuemapping from="RKI" to="https://www.wikidata.org/wiki/Q679041"/>
-		<valuemapping from="LBA" to="https://www.wikidata.org/wiki/Q1875599"/>
-		<valuemapping from="JKI" to="https://www.wikidata.org/wiki/Q832099"/>
-		<valuemapping from="KBA" to="https://www.wikidata.org/wiki/Q1423161"/>
-		<valuemapping from="GDWS" to="https://www.wikidata.org/wiki/Q12305647"/>
-		<valuemapping from="FLI" to="https://www.wikidata.org/wiki/Q1457808"/>
-		<valuemapping from="EBA" to="https://www.wikidata.org/wiki/Q261760"/>
-		<valuemapping from="DWD" to="https://www.wikidata.org/wiki/Q325859"/>
-		<valuemapping from="DAI" to="https://www.wikidata.org/wiki/Q695302"/>
-		<valuemapping from="BwDLZ" to="https://www.wikidata.org/wiki/Q1009250"/>
-		<valuemapping from="BVL" to="https://www.wikidata.org/wiki/Q18124763"/>
-		<valuemapping from="BVA" to="https://www.wikidata.org/wiki/Q1009218"/>
-		<valuemapping from="BStU" to="https://www.wikidata.org/wiki/Q639860"/>
-		<valuemapping from="Bpol" to="https://www.wikidata.org/wiki/Q56026"/>
-		<valuemapping from="BNetzA" to="https://www.wikidata.org/wiki/Q269138"/>
+		<valuemapping from="AA" to="https://www.wikidata.org/entity/Q56034"/>
+		<valuemapping from="BKAmt" to="https://www.wikidata.org/entity/Q317027"/>
+		<valuemapping from="BND" to="https://www.wikidata.org/entity/Q272969"/>
+		<valuemapping from="Bundeskasse" to="https://www.wikidata.org/entity/Q1006272"/>
+		<valuemapping from="Zoll" to="https://www.wikidata.org/entity/Q1009333"/>
+		<valuemapping from="THW" to="https://www.wikidata.org/entity/Q697698"/>
+		<valuemapping from="RKI" to="https://www.wikidata.org/entity/Q679041"/>
+		<valuemapping from="LBA" to="https://www.wikidata.org/entity/Q1875599"/>
+		<valuemapping from="JKI" to="https://www.wikidata.org/entity/Q832099"/>
+		<valuemapping from="KBA" to="https://www.wikidata.org/entity/Q1423161"/>
+		<valuemapping from="GDWS" to="https://www.wikidata.org/entity/Q12305647"/>
+		<valuemapping from="FLI" to="https://www.wikidata.org/entity/Q1457808"/>
+		<valuemapping from="EBA" to="https://www.wikidata.org/entity/Q261760"/>
+		<valuemapping from="DWD" to="https://www.wikidata.org/entity/Q325859"/>
+		<valuemapping from="DAI" to="https://www.wikidata.org/entity/Q695302"/>
+		<valuemapping from="BwDLZ" to="https://www.wikidata.org/entity/Q1009250"/>
+		<valuemapping from="BVL" to="https://www.wikidata.org/entity/Q18124763"/>
+		<valuemapping from="BVA" to="https://www.wikidata.org/entity/Q1009218"/>
+		<valuemapping from="BStU" to="https://www.wikidata.org/entity/Q639860"/>
+		<valuemapping from="Bpol" to="https://www.wikidata.org/entity/Q56026"/>
+		<valuemapping from="BNetzA" to="https://www.wikidata.org/entity/Q269138"/>
 	</column>    
 	
 	<column name="Ressort" prop="obj">
-		<valuemapping from="Bundesregierung" to="https://www.wikidata.org/wiki/Q1006644"/>
-		<valuemapping from="Bundesrat" to="https://www.wikidata.org/wiki/Q146138"/>
-		<valuemapping from="Bundespräsident" to="https://www.wikidata.org/wiki/Q25223"/>
-		<valuemapping from="Bundespräsidialamt" to="https://www.wikidata.org/wiki/Q470470"/>
-		<valuemapping from="Bundeskanzlerin" to="https://www.wikidata.org/wiki/Q317027"/>
-		<valuemapping from="Bundesrechnungshof" to="https://www.wikidata.org/wiki/Q56033"/>
-		<valuemapping from="Deutsche Bundesbank" to="https://www.wikidata.org/wiki/Q162222"/>
-		<valuemapping from="Deutscher Bundestag" to="https://www.wikidata.org/wiki/Q154797"/>
-		<valuemapping from="Auswärtiges Amt" to="https://www.wikidata.org/wiki/Q56034"/>
-		<valuemapping from="Bundeskanzleramt" to="https://www.wikidata.org/wiki/Q317027"/>
-		<valuemapping from="Presse- und Informationsamt der Bundesregierung" to="https://www.wikidata.org/wiki/Q17416722"/>
-		<valuemapping from="Der Bundesbeauftragte für den Datenschutz und die Informationsfreiheit" to="https://www.wikidata.org/wiki/Q1005821"/>
-		<valuemapping from="Der Beauftragte der Bundesregierung für Kultur und Medien" to="https://www.wikidata.org/wiki/Q813386"/>
-		<valuemapping from="Bundesministerium der Finanzen" to="https://www.wikidata.org/wiki/Q499118"/>
-		<valuemapping from="Bundesministerium für Gesundheit" to="https://www.wikidata.org/wiki/Q491566"/>
-		<valuemapping from="Bundesministerium für Wirtschaft und Energie" to="https://www.wikidata.org/wiki/Q488589"/>
-		<valuemapping from="Bundesministerium für Familie, Senioren, Frauen und Jugend" to="https://www.wikidata.org/wiki/Q166020"/>
-		<valuemapping from="Bundesministerium für Arbeit und Soziales" to="https://www.wikidata.org/wiki/Q491578"/>
-		<valuemapping from="Bundesministerium der Justiz und für Verbraucherschutz" to="https://www.wikidata.org/wiki/Q498251"/>
-		<valuemapping from="Bundesministerium des Innern, für Bau und Heimat" to="https://www.wikidata.org/wiki/Q502698"/>
-		<valuemapping from="Bundesministerium für Ernährung und Landwirtschaft" to="https://www.wikidata.org/wiki/Q699656"/>
-		<valuemapping from="Bundesministerium für Bildung und Forschung" to="https://www.wikidata.org/wiki/Q492234"/>
-		<valuemapping from="Bundesministerium für Umwelt, Naturschutz und nukleare Sicherheit" to="https://www.wikidata.org/wiki/Q493344"/>
-		<valuemapping from="Bundesministerium für wirtschaftliche Zusammenarbeit und Entwicklung" to="https://www.wikidata.org/wiki/Q684357"/>
-		<valuemapping from="Bundesministerium der Verteidigung" to="https://www.wikidata.org/wiki/Q493353"/>
-		<valuemapping from="Bundesministerium für Verkehr und digitalte Infrastruktur" to="https://www.wikidata.org/wiki/Q491637"/>
+		<valuemapping from="Bundesregierung" to="https://www.wikidata.org/entity/Q1006644"/>
+		<valuemapping from="Bundesrat" to="https://www.wikidata.org/entity/Q146138"/>
+		<valuemapping from="Bundespräsident" to="https://www.wikidata.org/entity/Q25223"/>
+		<valuemapping from="Bundespräsidialamt" to="https://www.wikidata.org/entity/Q470470"/>
+		<valuemapping from="Bundeskanzlerin" to="https://www.wikidata.org/entity/Q317027"/>
+		<valuemapping from="Bundesrechnungshof" to="https://www.wikidata.org/entity/Q56033"/>
+		<valuemapping from="Deutsche Bundesbank" to="https://www.wikidata.org/entity/Q162222"/>
+		<valuemapping from="Deutscher Bundestag" to="https://www.wikidata.org/entity/Q154797"/>
+		<valuemapping from="Auswärtiges Amt" to="https://www.wikidata.org/entity/Q56034"/>
+		<valuemapping from="Bundeskanzleramt" to="https://www.wikidata.org/entity/Q317027"/>
+		<valuemapping from="Presse- und Informationsamt der Bundesregierung" to="https://www.wikidata.org/entity/Q17416722"/>
+		<valuemapping from="Der Bundesbeauftragte für den Datenschutz und die Informationsfreiheit" to="https://www.wikidata.org/entity/Q1005821"/>
+		<valuemapping from="Der Beauftragte der Bundesregierung für Kultur und Medien" to="https://www.wikidata.org/entity/Q813386"/>
+		<valuemapping from="Bundesministerium der Finanzen" to="https://www.wikidata.org/entity/Q499118"/>
+		<valuemapping from="Bundesministerium für Gesundheit" to="https://www.wikidata.org/entity/Q491566"/>
+		<valuemapping from="Bundesministerium für Wirtschaft und Energie" to="https://www.wikidata.org/entity/Q488589"/>
+		<valuemapping from="Bundesministerium für Familie, Senioren, Frauen und Jugend" to="https://www.wikidata.org/entity/Q166020"/>
+		<valuemapping from="Bundesministerium für Arbeit und Soziales" to="https://www.wikidata.org/entity/Q491578"/>
+		<valuemapping from="Bundesministerium der Justiz und für Verbraucherschutz" to="https://www.wikidata.org/entity/Q498251"/>
+		<valuemapping from="Bundesministerium des Innern, für Bau und Heimat" to="https://www.wikidata.org/entity/Q502698"/>
+		<valuemapping from="Bundesministerium für Ernährung und Landwirtschaft" to="https://www.wikidata.org/entity/Q699656"/>
+		<valuemapping from="Bundesministerium für Bildung und Forschung" to="https://www.wikidata.org/entity/Q492234"/>
+		<valuemapping from="Bundesministerium für Umwelt, Naturschutz und nukleare Sicherheit" to="https://www.wikidata.org/entity/Q493344"/>
+		<valuemapping from="Bundesministerium für wirtschaftliche Zusammenarbeit und Entwicklung" to="https://www.wikidata.org/entity/Q684357"/>
+		<valuemapping from="Bundesministerium der Verteidigung" to="https://www.wikidata.org/entity/Q493353"/>
+		<valuemapping from="Bundesministerium für Verkehr und digitalte Infrastruktur" to="https://www.wikidata.org/entity/Q491637"/>
 	</column>
 	
 
@@ -127,7 +127,7 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
 	<column name="Gemeinde" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" concept="https://www.wikidata.org/entity/Q262166"
 	query="SELECT ?city WHERE {?city wdt:P31 wd:Q262166 . ?item ?label '%%Gemeinde%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql"/> 
     
-    <column name="Bundesland" prop="data" propiri="http://www.wikidata.org/prop/direct/P131" range="http://www.w3.org/2001/XMLSchema#string" concept="https://www.wikidata.org/wiki/Q1221156"/>
+    <column name="Bundesland" prop="data" propiri="http://www.wikidata.org/prop/direct/P131" range="http://www.w3.org/2001/XMLSchema#string" concept="https://www.wikidata.org/entity/Q1221156"/>
     
 </file>
 </data>
