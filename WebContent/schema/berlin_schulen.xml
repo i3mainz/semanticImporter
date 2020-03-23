@@ -16,7 +16,7 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
 		<polygon size="2" border="1" borderColor="black" fillColor="red"/>
 	</style>
 	
-	<addcolumn prop="obj" propiri="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#serviceType" value="http://inspire.ec.europa.eu/codelist/ServiceTypeValue/education"/>
+	<addcolumn prop="obj" concept="http://inspire.ec.europa.eu/schemas/us/4.0#ServiceTypeValue" propiri="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#serviceType" value="http://inspire.ec.europa.eu/codelist/ServiceTypeValue/education"/>
 	
 	<column name="NAME" prop="annotation" propiri="http://www.w3.org/2000/01/rdf-schema#label" range="http://www.w3.org/2001/XMLSchema#string"/> 
 	

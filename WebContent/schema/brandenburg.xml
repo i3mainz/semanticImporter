@@ -1,10 +1,6 @@
 <?xml version="1.0"?>
 <data>
-<file class="https://www.wikidata.org/entity/Q3914" indid="schul_nr" 
-namespace="http://registry.gdi-de.org/id/de.bb.schulen/"
-attnamespace="http://registry.gdi-de.org/id/de.bb.schulen/"
-geoendpoint="http://linkedgeodata.org/sparql" 
-geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false" epsg="25833">
+<file class="https://www.wikidata.org/entity/Q3914" indid="schul_nr" namespace="http://www.geomer.de/geodata/" geoendpoint="http://linkedgeodata.org/sparql" geomatchingclass="http://linkedgeodata.org/ontology/School" epsg="25833">
 	
 	<metadata publisher="BKG" timestamp="2018-05-30T09:30:10Z" license="https://www.govdata.de/dl-de/by-2-0" />
 	
@@ -14,20 +10,26 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
 		<polygon size="2" border="1" borderColor="black" fillColor="red"/>
 	</style>
 	
-	<classmapping class="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#GovernmentalService"/>
-	
-	<addcolumn prop="obj" concept="http://inspire.ec.europa.eu/schemas/us/4.0#ServiceTypeValue" propiri="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#serviceType" value="http://inspire.ec.europa.eu/codelist/ServiceTypeValue/education"/>
-	
 	<column name="schulname" prop="annotation" propiri="http://www.w3.org/2000/01/rdf-schema#label" range="http://www.w3.org/2001/XMLSchema#string"/> 
+	
+	<column name="plz" prop="data" propiri="http://www.wikidata.org/prop/direct/P281" range="http://www.w3.org/2001/XMLSchema#integer"/> 
+
+	<column name="telefonnum" prop="data" propiri="http://www.wikidata.org/prop/direct/P1329" range="http://www.w3.org/2001/XMLSchema#integer"/> 
+	
+	<column name="schulamtname" prop="data" propiri="http://www.w3.org/2000/01/rdf-schema#comment" range="https://www.wikidata.org/entity/Q1477917"/>
+	
+	<column name="schultraeg" prop="data" range="http://www.w3.org/2001/XMLSchema#string">
+		<valuemapping from="p" to="https://www.wikidata.org/entity/Q3248417"/>
+	</column> 
 	
 	<column name="schulform" prop="subclass" range="https://www.wikidata.org/entity/Q1265661">
 		<valuemapping from="Fachschule" to="https://www.wikidata.org/entity/Q1391465"/>
 		<valuemapping from="OSZ" to="https://www.wikidata.org/entity/Q1650577"/>
-		<valuemapping from="Grundschule" to="https://www.wikidata.org/entity/Q9842"/>
-		<valuemapping from="Oberschule" to="https://www.wikidata.org/entity/Q9826"/>
-		<valuemapping from="Gymnasium" to="https://www.wikidata.org/entity/Q55043"/>
-		<valuemapping from="Waldorfschule" to="https://www.wikidata.org/entity/Q14551995"/>
-	</column>
+		<valuemapping from ="Grundschule" to="https://www.wikidata.org/wiki/Q9842"/>
+		<valuemapping from ="Oberschule" to="https://www.wikidata.org/wiki/Q9826"/>
+		<valuemapping from="Gymnasium" to="https://www.wikidata.org/wiki/Q55043"/>
+		<valuemapping from="Waldorfschule" to="https://www.wikidata.org/wiki/Q14551995"/>		
+	</column> 
 	
 	<column name="besonderhe" prop="annotation" propiri="http://www.w3.org/2000/01/rdf-schema#comment" range="http://www.w3.org/2001/XMLSchema#string"/> 
 	
@@ -38,14 +40,6 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
 	<column name="strasse_ha" prop="data" propiri="http://www.wikidata.org/prop/direct/P670" range="http://www.w3.org/2001/XMLSchema#string" splitcharacter=" " splitposition="last"/> 
 	
 	<column name="strasse_ha" prop="data" propiri="http://www.wikidata.org/prop/direct/P669" range="http://www.w3.org/2001/XMLSchema#string" splitcharacter=" " splitposition="untillast"/> 
-	
-	<column name="plz" prop="data" propiri="http://www.wikidata.org/prop/direct/P281" range="http://www.w3.org/2001/XMLSchema#integer"/> 
-
-	<column name="telefonnum" prop="data" propiri="http://www.wikidata.org/prop/direct/P1329" range="http://www.w3.org/2001/XMLSchema#integer"/> 
-
-	<column name="schulamtname" prop="data" propiri="http://www.w3.org/2000/01/rdf-schema#comment" range="https://www.wikidata.org/entity/Q1477917"/> 
-	
-	<column name="schultraeg" valuemapping="p:https://www.wikidata.org/entity/Q3248417" prop="data" range="http://www.w3.org/2001/XMLSchema#string"/> 
 	
 	<column name="kreis" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" 
 	query="SELECT distinct ?item WHERE{ ?ind wdt:P131 ?item . ?item ?label '%%kreis%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql"/> 

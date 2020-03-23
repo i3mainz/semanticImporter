@@ -16,7 +16,7 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
 	
 	<classmapping class="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#GovernmentalService"/>
 	
-	<addcolumn prop="obj" propiri="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#serviceType" value="http://inspire.ec.europa.eu/codelist/ServiceTypeValue/policeService"/>
+	<addcolumn prop="obj" propiri="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#serviceType" concept="http://inspire.ec.europa.eu/schemas/us/4.0#ServiceTypeValue" value="http://inspire.ec.europa.eu/codelist/ServiceTypeValue/policeService"/>
     
 	<column name="Name" prop="annotation" propiri="http://www.w3.org/2000/01/rdf-schema#label" range="http://www.w3.org/2001/XMLSchema#string"/> 
 
@@ -40,6 +40,9 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
 
 	<column name="Typ" prop="subclass">
 		<valuemapping from="Bundepolizeiakademie" to="https://www.wikidata.org/wiki/Q1006464"/>
+		<valuemapping from="Wache" to="https://www.wikidata.org/wiki/Q861951"/>
+		<valuemapping from="Dienstort" to="https://www.wikidata.org/wiki/Q1221119"/>
+		<valuemapping from="Leitstelle" to="https://www.wikidata.org/wiki/Q510646"/>
 	</column>
 
 	<column name="Verwaltung" prop="obj" concept="https://www.wikidata.org/entity/Q106658" propiri="http://www.wikidata.org/prop/direct/P131" 

@@ -16,7 +16,7 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
 	
 	<classmapping class="http://inspire.ec.europa.eu/schemas/ps/4.0#ProtectedSite"/>
 	
-	<addcolumn prop="obj" propiri="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#siteDesignation" value="http://inspire.ec.europa.eu/codelist/UNESCOWorldHeritageDesignationValue/cultural"/>
+	<addcolumn prop="obj" concept="http://inspire.ec.europa.eu/schemas/ps/4.0#UNESCOWorldHeritageDesignationValue" propiri="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#siteDesignation" value="http://inspire.ec.europa.eu/codelist/UNESCOWorldHeritageDesignationValue/cultural"/>
 	
 	<column name="AREA" prop="data" propiri="http://www.wikidata.org/prop/direct/P2046" range="http://www.w3.org/2001/XMLSchema#double"/> 
 	

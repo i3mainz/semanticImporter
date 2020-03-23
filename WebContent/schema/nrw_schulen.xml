@@ -8,7 +8,7 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
 	
 	<classmapping value="https://www.wikidata.org/entity/Q3914"/>
 	
-	<addcolumn prop="obj" propiri="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#serviceType" value="http://inspire.ec.europa.eu/codelist/ServiceTypeValue/education"/>
+	<addcolumn prop="obj" concept="http://inspire.ec.europa.eu/schemas/us/4.0#ServiceTypeValue" propiri="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#serviceType" value="http://inspire.ec.europa.eu/codelist/ServiceTypeValue/education"/>
 	
 	<metadata publisher="BKG" timestamp="2018-05-30T09:30:10Z" license="https://www.govdata.de/dl-de/by-2-0" />
 	
