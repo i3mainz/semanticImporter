@@ -11,6 +11,4 @@ public class ValueMapping {
 	
 	public String propiri;
 	
-	public List<DataColumnConfig> addcolumns=new LinkedList<>();
-	
 }

@@ -67,14 +67,14 @@ public class Main {
 		fileToConf.put("importdata/POI/THW.shp","config/thw.xml");
 		fileToConf.put("importdata/POI/UNOrg.shp","config/unorg.xml");
 		fileToConf.put("importdata/POI/Zoll.shp","config/zoll.xml");
-		fileToConf.put("schools/schulen_nrw.shp","config/nrw_schulen.xml");
-		fileToConf.put("schools/brandenburg_schule.shp","config/brandenburg_schulen.xml");
-		fileToConf.put("xplanung/41001g.shp","config/xplanung_st_bp_plan.xml");
-		fileToConf.put("xplanung/42001g.shp","config/xplanung_st_fp_plan.xml");
-		/*fileToConf.put("unesco/41001g.shp","config/aachen_unesco.xml");
+		fileToConf.put("importdata/schools/schulen_nrw.shp","config/nrw_schulen.xml");
+		fileToConf.put("importdata/schools/brandenburg_schule.shp","config/brandenburg_schulen.xml");
+		fileToConf.put("importdata/xplanung/41001g.shp","config/xplanung_st_bp_plan.xml");
+		fileToConf.put("importdata/xplanung/42001g.shp","config/xplanung_st_fp_plan.xml");
+		fileToConf.put("unesco/41001g.shp","config/aachen_unesco.xml");
 		fileToConf.put("unesco/42001g.shp","config/bauhaus_unesco.xml");
 		fileToConf.put("unesco/41001g.shp","config/hamburg_unesco.xml");
-		fileToConf.put("unesco/42001g.shp","config/sachsenanhalt_unesco.xml");*/
+		fileToConf.put("unesco/42001g.shp","config/sachsenanhalt_unesco.xml");
 	}
 	
 	

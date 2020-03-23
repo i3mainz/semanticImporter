@@ -66,6 +66,8 @@ public class Config extends DefaultHandler2 {
 	public Boolean valueMapping=false;
 	
 	Stack<List<DataColumnConfig>> columnLists=new Stack<List<DataColumnConfig>>();
+	
+	public List<DataColumnConfig> addcolumns=new LinkedList<>();
 
 
 
@@ -159,15 +161,19 @@ public class Config extends DefaultHandler2 {
 				  currentconfig=new DataColumnConfig();
 				  currentconfig.propertyuri.add(attributes.getValue("propiri"));
 				  currentconfig.staticvalue=attributes.getValue("value");
+				  currentconfig.prop=attributes.getValue("prop");
+				  currentconfig.concept=attributes.getValue("concept");
 			  }else {
 				  DataColumnConfig dconfig=new DataColumnConfig();
 				  if(attributes.getValue("propiri")!=null)
 					  dconfig.propertyuri.add(attributes.getValue("propiri"));
 				  dconfig.staticvalue=attributes.getValue("value");
+				  dconfig.prop=attributes.getValue("prop");
+				  dconfig.concept=attributes.getValue("concept");
 				  if(this.currentValueMapping==null) {
 					  this.currentValueMapping=new ValueMapping();
 				  }
-				  this.currentValueMapping.addcolumns.add(dconfig);
+				  this.addcolumns.add(dconfig);
 			  }
 			  break;
 		case "column":
@@ -217,15 +223,12 @@ public class Config extends DefaultHandler2 {
 				currentconfig.splitposition=attributes.getValue("splitposition");
 				currentconfig.splitregex=attributes.getValue("splitregex");
 				currentconfig.separationCharacter=attributes.getValue("splitcharacter");
-				
 				String induri = getAttrValue(attributes, "indname", namespace + currentconfig.name);
 				if(attnamespace!=null) {
 					currentconfig.indname= induri.startsWith("http")? induri : namespace + induri;	//TODO proper isRelativeUri test
 				}else {
 					currentconfig.indname= induri.startsWith("http")? induri : attnamespace + induri;	//TODO proper isRelativeUri test
-				}
-
-				
+				}				
 				currentconfig.valueprop=getAttrValue(attributes, "valueprop", "http://qudt.org/schema/qudt#value"); 
 				currentconfig.unitprop=getAttrValue(attributes, "unitprop", "http://qudt.org/schema/qudt#unit"); 
 		}
