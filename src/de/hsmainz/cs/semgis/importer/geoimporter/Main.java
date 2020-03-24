@@ -52,7 +52,7 @@ public class Main {
 	
 	public Main() {
 
-		fileToConf.put("importdata/POI/BFW.shp","config/bfw.xml");
+		/*fileToConf.put("importdata/POI/BFW.shp","config/bfw.xml");
 		fileToConf.put("importdata/POI/BPOL.shp","config/bpol.xml");
 		fileToConf.put("importdata/POI/BotKon.shp","config/botkon.xml");
 		fileToConf.put("importdata/POI/BBeh_plus.shp","config/bbeh.xml");
@@ -74,12 +74,12 @@ public class Main {
 		fileToConf.put("importdata/schools/schulen_nrw.shp","config/nrw_schulen.xml");
 		fileToConf.put("importdata/schools/brandenburg_schule.shp","config/brandenburg_schulen.xml");
 		fileToConf.put("importdata/xplanung/41001g.shp","config/xplanung_st_bp_plan.xml");
-		fileToConf.put("importdata/xplanung/42001g.shp","config/xplanung_st_fp_plan.xml");
-		/*fileToConf.put("unesco/41001g.shp","config/aachen_unesco.xml");
-		fileToConf.put("unesco/42001g.shp","config/bauhaus_unesco.xml");
+		fileToConf.put("importdata/xplanung/42001g.shp","config/xplanung_st_fp_plan.xml");*/
+		fileToConf.put("importdata/unesco/Welterbe_HB.shp","config/bremen_unesco.xml");
+		/*fileToConf.put("unesco/42001g.shp","config/bauhaus_unesco.xml");
 		fileToConf.put("unesco/41001g.shp","config/hamburg_unesco.xml");
-		fileToConf.put("unesco/42001g.shp","config/sachsenanhalt_unesco.xml");*/
-		fileToConf.put("importdata/POI/KITA.shp","config/kita.xml");
+		fileToConf.put("unesco/42001g.shp","config/sachsenanhalt_unesco.xml");
+		fileToConf.put("importdata/POI/KITA.shp","config/kita.xml");*/
 	}
 	
 	
@@ -111,7 +111,7 @@ public class Main {
 		}else {
 			SAXParserFactory.newInstance().newSAXParser().parse(new File(configfile), config);
 			//System.out.println(config.toString())
-			this.processFeatures(shpfile, outputPath, config,shpfile.substring(0,shpfile.lastIndexOf('/')+1),null);
+			this.processFeatures(shpfile, outputPath, config,shpfile.substring(shpfile.lastIndexOf('.')+1),null);
 		}
 	}
 	
