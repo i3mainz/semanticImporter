@@ -30,10 +30,6 @@ public class Config extends DefaultHandler2 {
 	
 	public String indidsuffix;	
 	
-	public String geomatchingclass;
-	
-	public String geoendpoint;
-	
 	public String namespace;
 	
 	public String attnamespace;
@@ -68,7 +64,8 @@ public class Config extends DefaultHandler2 {
 	Stack<List<DataColumnConfig>> columnLists=new Stack<List<DataColumnConfig>>();
 	
 	public List<DataColumnConfig> addcolumns=new LinkedList<>();
-
+	
+	public List<GeoMatching> geomatchings=new LinkedList<>();
 
 
 	public static String getAttrValue(Attributes attr, String qName, String defaultVal)
@@ -89,8 +86,6 @@ public class Config extends DefaultHandler2 {
 				indidsuffix=attributes.getValue("indidsuffix");
 				namespace=attributes.getValue("namespace");
 				attnamespace=attributes.getValue("attnamespace");
-				geomatchingclass=attributes.getValue("geomatchingclass");
-				geoendpoint=attributes.getValue("geoendpoint");
 				epsg = Integer.valueOf(attributes.getValue("epsg"));
 				break;
 		case "columncollection":
@@ -149,6 +144,16 @@ public class Config extends DefaultHandler2 {
 			  this.currentValueMapping.to=attributes.getValue("to");
 			  this.currentValueMapping.propiri=attributes.getValue("propiri");
 			  currentconfig.valuemapping.get(attributes.getValue("from")).add(this.currentValueMapping);
+			  break;
+		case "geomatching":
+			  GeoMatching match=new GeoMatching();
+			  match.geoendpoint=attributes.getValue("geoendpoint");
+			  match.geoquery=attributes.getValue("geoquery");
+			  match.geomatchingclass=attributes.getValue("geomatchingclass");
+			  match.level1=Boolean.valueOf(attributes.getValue("level1"));
+			  match.level1Query=attributes.getValue("level1");
+			  match.level1endpoint=attributes.getValue("level1endpoint");
+			  this.geomatchings.add(match);
 			  break;
 		case "propiri":
 			  currentconfig.propertyuri.add(attributes.getValue("value"));
