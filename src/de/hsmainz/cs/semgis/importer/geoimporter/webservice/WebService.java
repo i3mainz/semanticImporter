@@ -255,22 +255,25 @@ public class WebService {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces({"text/ttl"})
 	@Path("/convertExistingSchema")
-    public Response convertGeoJSON(@FormDataParam("file") InputStream uploadedInputStream,
+    public Response convertExistingSchema(@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail,
-			@QueryParam("mappingschema") String schemaurl,
+			@FormDataParam("format") String fileFormat,
+			@FormDataParam("mappingprofile") String schemaurl,
 			@DefaultValue("") @QueryParam("authtoken") String authtoken) { 
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
         try {
-			String theString = IOUtils.toString(uploadedInputStream, "UTF-8");
-        	FileUtils.copyInputStreamToFile(uploadedInputStream, new File("tempfile.gml"));
+        	System.out.println("File Format: "+fileFormat);
+			File file=new File("tempfile."+fileFormat);
+			String serviceurl="";
+        	FileUtils.copyInputStreamToFile(uploadedInputStream, file);
 			Config config=new Config();
+			System.out.println("Schema URL: "+schemaurl);
 			XMLReader myReader = XMLReaderFactory.createXMLReader();
 			myReader.setContentHandler(config);
 			myReader.parse(new InputSource(new URL(schemaurl).openStream()));
 			Main main=new Main();
-			main.processFeatures("tempfile.gml", "result.ttl", config);
-			OntModel result=null;
+			OntModel result=main.processFeatures("tempfile."+fileFormat, "result.ttl", config,fileFormat,serviceurl);
 			StreamingOutput stream = new StreamingOutput() {
 			    @Override
 			    public void write(OutputStream os) throws IOException,

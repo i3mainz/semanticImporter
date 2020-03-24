@@ -39,6 +39,7 @@ import org.opengis.feature.Property;
 
 import de.hsmainz.cs.semgis.importer.geoimporter.config.Config;
 import de.hsmainz.cs.semgis.importer.geoimporter.config.DataColumnConfig;
+import de.hsmainz.cs.semgis.importer.geoimporter.config.GeoMatching;
 import de.hsmainz.cs.semgis.importer.geoimporter.config.ValueMapping;
 import de.hsmainz.cs.semgis.importer.geoimporter.connector.TripleStoreConnector;
 import de.hsmainz.cs.semgis.importer.geoimporter.connector.TripleStoreConnector.GeographicalResult;
@@ -50,12 +51,12 @@ public class DataImporter {
 	public static final String DEFAULTNAMESPACE = "http://www.semgis.de/geodata/";
 
 	private final Config config;
-	private final OntModel model;
+	public final OntModel model;
 	private OntClass rootClass;
 	private List<OntClass> additionalClasses=new LinkedList<OntClass>();
 	private final OntClass geomClass;
 	private final OntClass featurecl;
-	private final Integer epsgCode;
+	private Integer epsgCode;
 	private Date startTime;
 	private Integer sameAsCount=0;
 	GregorianCalendar gc = new GregorianCalendar(TimeZone.getTimeZone("CEST"));
@@ -79,6 +80,8 @@ public class DataImporter {
 			rootClass.addSuperClass(addc);			
 		}
 		this.epsgCode = epsgCode;
+		if(config.epsg!=0 && epsgCode==0)
+			this.epsgCode=Integer.valueOf(config.epsg);
 		this.geomClass = model.createClass("http://www.opengis.net/ont/sf#" + geomType.replace("http://geotoolkit.org:",""));
 		this.geomClass.addSuperClass(geometry);
 		startTime=new Date(System.currentTimeMillis());
@@ -137,7 +140,7 @@ public class DataImporter {
 				// Import root individual.
 				Individual currentind;
 				if(config.indid==null) {
-					currentind=rootClass.createIndividual(config.namespace+counter);
+					currentind=rootClass.createIndividual(config.namespace+UUID.randomUUID());
 				}else if(config.indid.contains(";")) {
 					String[] ids=config.indid.split(";");
 					StringBuilder val=new StringBuilder();
@@ -226,7 +229,7 @@ public class DataImporter {
 					this.parseDataColumnConfigs(subconf,subind,dataRow,dataRow.get(subconf.name), depth+1);
 				}
 			}else {
-				if (curconf.separationCharacter != null && curconf.splitposition != null) {
+				if (curconf.separationCharacter != null && curconf.splitposition != null && value!=null) {
 					String[] spl = value.split(curconf.separationCharacter);
 					Integer position = 0;
 					String toadd = "";
@@ -237,7 +240,8 @@ public class DataImporter {
 						for (int i = 0; i < spl.length - 1; i++) {
 							toadd += spl[i]+curconf.separationCharacter;
 						}
-						toadd=toadd.substring(0,toadd.length()-curconf.separationCharacter.length());
+						if(toadd.length()-curconf.separationCharacter.length()>0)
+							toadd=toadd.substring(0,toadd.length()-curconf.separationCharacter.length());
 					} else {
 						position = Integer.valueOf(curconf.splitposition);
 						toadd = spl[position];
@@ -357,34 +361,42 @@ public class DataImporter {
 		// - Currently the classType has been restricted to
 		// 'http://linkedgeodata.org/ontology/Hospital' which does not match
 		// the requirement to import arbitrary building data.
-		Geometry geomObj = (Geometry) geom.getValue();
-		Coordinate coord = geomObj.getCentroid().getCoordinate();
-		List<GeographicalResult> result = dbConnector.getConceptsGeoGraphicallyNearToWithAddress(coord.y, coord.x, 0.0d,
-				config.geoendpoint, config.geomatchingclass);
-		String firstInd = null;
-		Individual firstObj = null;
-		if (result != null) {
-			for (GeographicalResult item : result) {
-				if (null == firstInd)
-					firstInd = item.ind;
+		for(GeoMatching matching:config.geomatchings) {
+			if(matching.geoendpoint!=null && matching.geoquery!=null) {
+				Geometry geomObj = (Geometry) geom.getValue();
+				Coordinate coord = geomObj.getCentroid().getCoordinate();
+				List<GeographicalResult> result = dbConnector.getConceptsGeoGraphicallyNearToWithAddress(coord.y, coord.x, 0.0d,
+						matching.geoendpoint, matching.geomatchingclass);
+				String firstInd = null;
+				Individual firstObj = null;
+				if (result != null) {
+					for (GeographicalResult item : result) {
+						if (null == firstInd)
+							firstInd = item.ind;
 
-				if (firstInd == item.ind) {
-					OntClass cls = model.createClass(item.classType);
-					firstObj = cls.createIndividual(item.ind);
-					firstObj.addLabel(item.label);
-					ind.addProperty(OWL.sameAs, firstObj);
-					firstObj.addProperty(OWL.sameAs, ind);
+						if (firstInd == item.ind) {
+							OntClass cls = model.createClass(item.classType);
+							firstObj = cls.createIndividual(item.ind);
+							firstObj.addLabel(item.label);
+							ind.addProperty(OWL.sameAs, firstObj);
+							firstObj.addProperty(OWL.sameAs, ind);
+						}
+					}
+					if (null == firstInd) {
+						System.out.println("No matching object found matching geo for " + ind.getURI());
+					} else {
+						if(matching.level1) {
+						// Add level 1 information for hospitals from linkedgeodata.org.
+						dbConnector.createOntologyFromInd(matching.level1endpoint, firstObj, model, "LinkedGeoData",
+								DEFAULTNAMESPACE);
+						}
+					}
 				}
-			}
-			if (null == firstInd) {
-				System.out.println("No matching object found matching geo for " + ind.getURI());
-			} else {
-				// Add level 1 information for hospitals from linkedgeodata.org.
-				dbConnector.createOntologyFromInd("http://linkedgeodata.org/sparql", firstObj, model, "LinkedGeoData",
-						DEFAULTNAMESPACE);
-			}
+				}
 		}
+
 		}
+		
 	}
 
 	/**
@@ -417,12 +429,14 @@ public class DataImporter {
 				}
 				//cls = model.createClass(xc.valuemapping.get(value).replace(" ", "_"));
 				//cls.setLabel(value, "de");
-			} else {
+			} else if(!value.isEmpty()) {
 				cls = model.createClass(config.namespace+ URLEncoder.encode(toCamelCase(value).replace(" ", "_")));
 				cls.setLabel(value, "de");
 			}
-			rootClass.addSubClass(cls);
-			ind.addOntClass(cls);
+			if(cls!=null) {
+				rootClass.addSubClass(cls);
+				ind.addOntClass(cls);
+			}
 		} else if (xc.prop.equals("data")) {
 			DatatypeProperty pro;
 			if (propiri == null) {
@@ -485,8 +499,8 @@ public class DataImporter {
 					ind.addProperty(RDFS.label,value);
 				}				
 				// TODO: structure not here
-				dbConnector.createWDOntologyFromInd("https://query.wikidata.org/sparql", obj, model, "Wikidata",
-						DEFAULTNAMESPACE);
+				/*dbConnector.createWDOntologyFromInd("https://query.wikidata.org/sparql", obj, model, "Wikidata",
+						DEFAULTNAMESPACE);*/
 			} else if(xc.concept!=null) {
 				OntClass cls = model.createClass(xc.concept);
 				Individual obj;

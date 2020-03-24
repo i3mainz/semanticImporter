@@ -64,7 +64,6 @@ var filedata={}
 function analyzeFile(){
 	    var data = new FormData(); // das ist unser Daten-Objekt ...
 	    data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhängen
-	    data.append('fileformat',document.getElementById('fileformat').value)
 	    $('#loading').show();
 	    $.ajax({
 	       url: 'rest/service/analyzeFile', // Wohin soll die Datei geschickt werden?
@@ -92,7 +91,8 @@ function analyzeFile(){
 function convert() {
     var data = new FormData(); // das ist unser Daten-Objekt ...
     data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhngen
-    data.append('mappingprofile',document.getElementById('mappingschema').value)
+    data.append('format',$('#fileformat').val())
+    data.append('mappingprofile',window.location.href.substring(0,window.location.href.lastIndexOf("/")+1)+document.getElementById('mappingschema').value)
     $('#loading').show();
     $.ajax({
        url: 'rest/service/convertExistingSchema', // Wohin soll die Datei geschickt werden?
@@ -179,7 +179,7 @@ function mappingSchemaToTable(){
 
 	   </p>
 
-	   <button id="uploadButton" onclick="analyzeFile()">Upload It</button>
+	   <button id="uploadButton" onclick="convert()">Upload It</button>
 <script src="js/utils.js"></script>
 <script>
 result=""

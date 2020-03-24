@@ -6,7 +6,7 @@ attnamespace="http://registry.gdi-de.org/id/de.hh.schulen/"
 geoendpoint="http://linkedgeodata.org/sparql" 
 geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false" epsg="25833">
 	
-	<classmapping value="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#GovernmentalService"/>
+	<classmapping class="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#GovernmentalService"/>
 	
 	<metadata publisher="BKG" timestamp="2018-05-30T09:30:10Z" license="https://www.govdata.de/dl-de/by-2-0" />
 	

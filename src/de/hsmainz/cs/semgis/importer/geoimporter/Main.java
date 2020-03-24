@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.ws.rs.core.Response;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -18,9 +19,13 @@ import org.apache.sis.storage.DataStoreException;
 import org.geotoolkit.data.AbstractFileFeatureStoreFactory;
 import org.geotoolkit.data.FeatureCollection;
 import org.geotoolkit.data.FeatureStore;
+import org.geotoolkit.data.csv.CSVFeatureStoreFactory;
+import org.geotoolkit.data.geojson.GeoJSONFeatureStoreFactory;
 import org.geotoolkit.data.query.QueryBuilder;
 import org.geotoolkit.data.session.Session;
 import org.geotoolkit.data.shapefile.ShapefileFeatureStoreFactory;
+import org.geotoolkit.data.wfs.WFSFeatureStoreFactory;
+import org.geotoolkit.data.wfs.WebFeatureClient;
 import org.geotoolkit.referencing.CRS;
 /*import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
@@ -43,7 +48,7 @@ import de.hsmainz.cs.semgis.importer.geoimporter.parser.KnownSchemaParser;
 public class Main {
 
 	
-	static Map<String,String> fileToConf=new TreeMap<>();
+	static Map<String,String> fileToConf=new HashMap<>();
 	
 	public Main() {
 
@@ -56,7 +61,6 @@ public class Main {
 		fileToConf.put("importdata/POI/JVA.shp","config/jva.xml");
 		fileToConf.put("importdata/POI/Kfz.shp","config/kfz.xml");
 		fileToConf.put("importdata/POI/KHV_plus.shp","config/khv.xml");
-		fileToConf.put("importdata/POI/KITA.shp","config/kita.xml");
 		fileToConf.put("importdata/POI/LBeh.shp","config/lbeh.xml");
 		fileToConf.put("importdata/POI/LPOL.shp","config/lpol.xml");
 		fileToConf.put("importdata/POI/RefKon.shp","config/refkon.xml");
@@ -71,10 +75,11 @@ public class Main {
 		fileToConf.put("importdata/schools/brandenburg_schule.shp","config/brandenburg_schulen.xml");
 		fileToConf.put("importdata/xplanung/41001g.shp","config/xplanung_st_bp_plan.xml");
 		fileToConf.put("importdata/xplanung/42001g.shp","config/xplanung_st_fp_plan.xml");
-		fileToConf.put("unesco/41001g.shp","config/aachen_unesco.xml");
+		/*fileToConf.put("unesco/41001g.shp","config/aachen_unesco.xml");
 		fileToConf.put("unesco/42001g.shp","config/bauhaus_unesco.xml");
 		fileToConf.put("unesco/41001g.shp","config/hamburg_unesco.xml");
-		fileToConf.put("unesco/42001g.shp","config/sachsenanhalt_unesco.xml");
+		fileToConf.put("unesco/42001g.shp","config/sachsenanhalt_unesco.xml");*/
+		fileToConf.put("importdata/POI/KITA.shp","config/kita.xml");
 	}
 	
 	
@@ -105,12 +110,12 @@ public class Main {
 			importKnownSchema(shpfile,outputPath);
 		}else {
 			SAXParserFactory.newInstance().newSAXParser().parse(new File(configfile), config);
-			//System.out.println(config.toString());
-			this.processFeatures(shpfile, outputPath, config);
+			//System.out.println(config.toString())
+			this.processFeatures(shpfile, outputPath, config,shpfile.substring(0,shpfile.lastIndexOf('/')+1),null);
 		}
 	}
 	
-	public void processFeatures(String featurefile, String outputPath, Config config) throws IOException, DataStoreException {
+	public OntModel processFeatures(String featurefile, String outputPath, Config config,String fileFormat,String serviceurl) throws IOException, DataStoreException {
 		
 		//Open a shape file and import with geotools.
 		System.setProperty("file.encoding","UTF-8");
@@ -118,13 +123,44 @@ public class Main {
 		Map<String, Object> map = new HashMap<>();
 		map.put("url", file.toURI().toURL());
 		map.put("charset","UTF-8");
-		AbstractFileFeatureStoreFactory fac=new ShapefileFeatureStoreFactory();
+		AbstractFileFeatureStoreFactory fac;
+    	FeatureStore dataStore=null;
+    	Session session;
+    	switch(fileFormat) {
+    	case "geojson":
+    		fac=new GeoJSONFeatureStoreFactory();
+        	dataStore=fac.createDataStore(file.toURI());
+        	session=dataStore.createSession(true);
+    		break;
+    	case "csv":
+    		fac=new CSVFeatureStoreFactory();
+        	dataStore=fac.createDataStore(file.toURI());
+        	session=dataStore.createSession(true);
+    		break;
+    	case "shp":
+    		fac=new ShapefileFeatureStoreFactory();
+        	dataStore=fac.createDataStore(file.toURI());
+			session=dataStore.createSession(true);
+    		break;
+    	case "wfs":
+    		WFSFeatureStoreFactory fac2=new WFSFeatureStoreFactory();
+    		Map<String,String> mapp=new TreeMap<String,String>();
+    		map.put("url",serviceurl);
+    		WebFeatureClient test = fac2.create(mapp);
+			session=test.createSession(true);
+    		break;
+    	default: 
+    		return null;
+    	}    	
+		FeatureCollection collection;
+		collection = session.getFeatureCollection(QueryBuilder.all(dataStore.getNames().iterator().next()));	
+		/*AbstractFileFeatureStoreFactory fac=new ShapefileFeatureStoreFactory();
 		FeatureStore dataStore=null;
     	Session session;
     	dataStore=fac.createDataStore(file.toURI());
 		session=dataStore.createSession(true);
 		FeatureCollection collection;
-		collection = session.getFeatureCollection(QueryBuilder.all(dataStore.getNames().iterator().next()));	
+		collection = session.getFeatureCollection(QueryBuilder.all(dataStore.getNames().iterator().next()));	*/
 		//Try to determine the epsg code and the geometry type, if not present, exit the config.
 		
 		/*Integer epsgCode = null;
@@ -148,6 +184,7 @@ public class Main {
 		//Import the data
 		DataImporter dataImporter = new DataImporter(config, 0, geomType);
 		dataImporter.importToOwl(outputPath, collection,featurefile);
+		return dataImporter.model;
 	}
 	
 }
