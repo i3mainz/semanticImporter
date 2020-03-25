@@ -62,9 +62,9 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
 	query="SELECT distinct ?city WHERE {?city wdt:P31 wd:Q22721 . ?city ?label '%%Regierungs%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="https://query.wikidata.org/sparql"/> 
 
 	<column name="Gemeinde" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" concept="https://www.wikidata.org/entity/Q262166"
-	query="SELECT distinct ?city WHERE {?city wdt:P31 wd:Q262166 . ?city ?label '%%Gemeinde%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="https://query.wikidata.org/sparql"/> 	
+	query="SELECT distinct ?city WHERE {?city wdt:P31 wd:Q262166 . ?city ?label '%%Gemeinde%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="https://query.wikidata.org/sparql"/> 
 	
-    <column name="Bundesland" prop="data" propiri="http://www.wikidata.org/prop/direct/P131" range="http://www.w3.org/2001/XMLSchema#string" concept="https://www.wikidata.org/entity/Q1221156"
+    <column name="Bundesland" prop="obj" propiri="http://www.wikidata.org/prop/direct/P17" range="http://www.w3.org/2001/XMLSchema#string" concept="https://www.wikidata.org/entity/Q1221156"
 	query="SELECT distinct ?city WHERE {?city wdt:P31 wd:Q1221156 . ?city ?label '%%Bundesland%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="https://query.wikidata.org/sparql"/>
  
 </file>
