@@ -56,12 +56,12 @@ public class DataImporter {
 	private List<OntClass> additionalClasses=new LinkedList<OntClass>();
 	private final OntClass geomClass;
 	private final OntClass featurecl;
-	private Integer epsgCode;
+	private String epsgCode;
 	private Date startTime;
 	private Integer sameAsCount=0;
 	GregorianCalendar gc = new GregorianCalendar(TimeZone.getTimeZone("CEST"));
 
-	public DataImporter(Config config, Integer epsgCode, String geomType) {
+	public DataImporter(Config config, String epsgCode, String geomType) {
 		this.config = config;
 		this.sameAsCount=0;
 		this.model = ModelFactory.createOntologyModel();
@@ -80,8 +80,9 @@ public class DataImporter {
 			rootClass.addSuperClass(addc);			
 		}
 		this.epsgCode = epsgCode;
-		if(config.epsg!=0 && epsgCode==0)
-			this.epsgCode=Integer.valueOf(config.epsg);
+		if(!"0".equals(config.epsg) && "0".equals(epsgCode))
+			this.epsgCode=config.epsg.toString();
+		System.out.println("EPSG: "+this.epsgCode);
 		this.geomClass = model.createClass("http://www.opengis.net/ont/sf#" + geomType.replace("http://geotoolkit.org:",""));
 		this.geomClass.addSuperClass(geometry);
 		startTime=new Date(System.currentTimeMillis());
@@ -119,6 +120,7 @@ public class DataImporter {
 				for (Property prop : feature.getProperties()) {
 					String value = null != prop.getValue() ? prop.getValue().toString() : null;
 					dataRow.put(prop.getName().toString(), value);
+					dataRow.put(prop.getName().toString().replace("http://geotoolkit.org:",""), value);
 				}
 				if(config.rootClass.contains("%%")) {
 					String s = new StrSubstitutor(dataRow, "%%", "%%").replace(config.rootClass);
@@ -187,7 +189,7 @@ public class DataImporter {
 					} 
 					if(config.addcolumns!=null && !config.addcolumns.isEmpty()) {
 						for (DataColumnConfig curconf:config.addcolumns) {
-							System.out.println("ADDING COLUMN: "+curconf.staticvalue);
+							//System.out.println("ADDING COLUMN: "+curconf.staticvalue);
 							if(curconf.staticvalue!=null)
 								parseDataColumnConfigs(curconf, currentind, dataRow, curconf.staticvalue, 1);
 						}
@@ -211,7 +213,7 @@ public class DataImporter {
 			if(curconf.staticvalue!=null) {
 				if(!curconf.propertyuri.isEmpty()) {
 					for(String iri:curconf.propertyuri) {
-						System.out.println("PROPERTYURI+STATICVALUE: "+iri+" - "+value);
+						//System.out.println("PROPERTYURI+STATICVALUE: "+iri+" - "+value);
 						importValue(curconf, currentind, dataRow, value,iri);
 					}
 				}else {
@@ -419,7 +421,7 @@ public class DataImporter {
 			return;
 		value=value.replace("http://geotoolkit.org:","");
 	
-		System.out.println("DATAROW: "+xc);
+		//System.out.println("DATAROW: "+xc);
 		if (xc.prop.equals("subclass")) {
 			OntClass cls = null;
 			if (xc.valuemapping != null && !xc.valuemapping.isEmpty() && xc.valuemapping.containsKey(value)) {
@@ -474,7 +476,7 @@ public class DataImporter {
 				ind.addProperty(pro, model.createTypedLiteral(value, xc.range));
 			}
 		} else if (xc.prop.equals("obj")) {
-			System.out.println("Creating Object Property!");
+			//System.out.println("Creating Object Property!");
 			ObjectProperty pro;
 			if (propiri == null) {
 				pro = model.createObjectProperty(DEFAULTNAMESPACE + "has" + toCamelCase(xc.name.replace(" ", "_")));
@@ -490,9 +492,26 @@ public class DataImporter {
 			pro.addDomain(rootClass);
 			if (xc.queryString != null) {
 				String res = dbConnector.executeSPARQLQuery(xc.queryString, xc.endpoint, dataRow);
-				Resource obj = model
-						.createResource(res);
-				ind.addProperty(pro, obj);
+				if(res!=null) {
+					if(xc.concept!=null) {
+						OntClass ccls=model.createClass(xc.concept);
+						Individual obj=ccls.createIndividual(res);
+						ind.addProperty(pro, obj);
+						obj.addLabel(value,"en");
+					}else {
+						DatatypeProperty prop;
+						if (propiri == null) {
+							prop = model.createDatatypeProperty(DEFAULTNAMESPACE + "has" + toCamelCase(xc.name));
+							prop.setLabel(xc.name,"en");
+						} else {
+							prop = model.createDatatypeProperty(propiri.replace(" ", "_"));
+							prop.setLabel(xc.name,"en");
+						}
+						//Resource obj = model
+								//.createResource(res);
+							ind.addProperty(prop, value);
+					}
+				}
 				if(xc.keepdataprop!=null && xc.keepdataprop.equals("true")) {
 					if(res!=null)
 						System.out.println("sameAsCount: "+sameAsCount++);
@@ -505,7 +524,7 @@ public class DataImporter {
 				OntClass cls = model.createClass(xc.concept);
 				Individual obj;
 				if(xc.staticvalue!=null && xc.staticvalue.contains("http")) {
-					System.out.println("Has Concept and Static Value: "+xc.concept+" - "+xc.staticvalue);
+					//System.out.println("Has Concept and Static Value: "+xc.concept+" - "+xc.staticvalue);
 					obj = cls.createIndividual(xc.staticvalue);
 				}else {
 					String s = new StrSubstitutor(dataRow, "%%", "%%").replace(xc.indname);

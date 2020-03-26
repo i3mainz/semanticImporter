@@ -57,15 +57,16 @@ public class TripleStoreConnector {
         try
         {
             String queryString  = new StrSubstitutor(properties, "%%", "%%").replace(queryFormatString);
-            //System.out.println("Property Query: "+queryString);
+            //System.out.println("Property Query: "+endpoint+" - "+queryString);
             //String url = URLEncoder.encode(endpoint, StandardCharsets.UTF_8.toString());
             qexec = QueryExecutionFactory.sparqlService(endpoint, prefixList + queryString);
 		    org.apache.jena.query.ResultSet results = qexec.execSelect();
             QuerySolution resultSet = results.next();
             String columnName = resultSet.varNames().next().toString();
+            //System.out.println(columnName+" "+resultSet.get(columnName).toString());
 			return resultSet.get(columnName).toString();
 		} catch (Exception ex) {
-			System.out.println(ex.getMessage());
+			//ex.printStackTrace();
 			return null;
 		} finally {
             if (null != qexec) 

@@ -26,6 +26,7 @@ import org.geotoolkit.data.session.Session;
 import org.geotoolkit.data.shapefile.ShapefileFeatureStoreFactory;
 import org.geotoolkit.data.wfs.WFSFeatureStoreFactory;
 import org.geotoolkit.data.wfs.WebFeatureClient;
+import org.geotoolkit.geometry.jts.JTS;
 import org.geotoolkit.referencing.CRS;
 /*import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
@@ -52,7 +53,7 @@ public class Main {
 	
 	public Main() {
 
-		/*fileToConf.put("importdata/POI/BFW.shp","config/bfw.xml");
+		fileToConf.put("importdata/POI/BFW.shp","config/bfw.xml");
 		fileToConf.put("importdata/POI/BPOL.shp","config/bpol.xml");
 		fileToConf.put("importdata/POI/BotKon.shp","config/botkon.xml");
 		fileToConf.put("importdata/POI/BBeh_plus.shp","config/bbeh.xml");
@@ -71,11 +72,11 @@ public class Main {
 		fileToConf.put("importdata/POI/THW.shp","config/thw.xml");
 		fileToConf.put("importdata/POI/UNOrg.shp","config/unorg.xml");
 		fileToConf.put("importdata/POI/Zoll.shp","config/zoll.xml");
-		fileToConf.put("importdata/schools/schulen_nrw.shp","config/nrw_schulen.xml");
+		/*fileToConf.put("importdata/schools/schulen_nrw.shp","config/nrw_schulen.xml");
 		fileToConf.put("importdata/schools/brandenburg_schule.shp","config/brandenburg_schulen.xml");
 		fileToConf.put("importdata/xplanung/41001g.shp","config/xplanung_st_bp_plan.xml");
-		fileToConf.put("importdata/xplanung/42001g.shp","config/xplanung_st_fp_plan.xml");*/
-		fileToConf.put("importdata/unesco/Welterbe_HB.shp","config/bremen_unesco.xml");
+		fileToConf.put("importdata/xplanung/42001g.shp","config/xplanung_st_fp_plan.xml");
+		fileToConf.put("importdata/unesco/Welterbe_HB.shp","config/bremen_unesco.xml");*/
 		/*fileToConf.put("unesco/42001g.shp","config/bauhaus_unesco.xml");
 		fileToConf.put("unesco/41001g.shp","config/hamburg_unesco.xml");
 		fileToConf.put("unesco/42001g.shp","config/sachsenanhalt_unesco.xml");
@@ -153,36 +154,16 @@ public class Main {
     		return null;
     	}    	
 		FeatureCollection collection;
-		collection = session.getFeatureCollection(QueryBuilder.all(dataStore.getNames().iterator().next()));	
-		/*AbstractFileFeatureStoreFactory fac=new ShapefileFeatureStoreFactory();
-		FeatureStore dataStore=null;
-    	Session session;
-    	dataStore=fac.createDataStore(file.toURI());
-		session=dataStore.createSession(true);
-		FeatureCollection collection;
-		collection = session.getFeatureCollection(QueryBuilder.all(dataStore.getNames().iterator().next()));	*/
-		//Try to determine the epsg code and the geometry type, if not present, exit the config.
-		
-		/*Integer epsgCode = null;
-		collection.
-		try {
-			epsgCode = collection.getFeatureType().getCoordinateReferenceSystem()., true);
-		} catch (FactoryException e) {
-			e.printStackTrace();
-		}
-		finally {
-			if (null == epsgCode)
-				epsgCode = config.epsg;
-		}
-		if (null == epsgCode)
-			throw new RuntimeException("The epsg code could not be determined. Please provide the information in the profile.xml");
-	*/	
-		
+		collection = session.getFeatureCollection(QueryBuilder.all(dataStore.getNames().iterator().next()));
+		String epsgCode="0";
+		if(!collection.getEnvelope().getCoordinateReferenceSystem().getIdentifiers().isEmpty()) {
+			epsgCode=collection.getEnvelope().getCoordinateReferenceSystem().getIdentifiers().iterator().next().getCode();
+		}	
 		String geomType = collection.getFeatureType().getGeometryDescriptor().getType().getName().toString();
 
 
 		//Import the data
-		DataImporter dataImporter = new DataImporter(config, 0, geomType);
+		DataImporter dataImporter = new DataImporter(config, epsgCode, geomType);
 		dataImporter.importToOwl(outputPath, collection,featurefile);
 		return dataImporter.model;
 	}
