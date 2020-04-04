@@ -129,14 +129,16 @@ public class DataImporter {
 				}
 				//System.out.println("ADDCOLUMNS: "+config.addcolumns);
 				if (first) {
-					StringBuilder builder = new StringBuilder();
-					for (String propName : dataRow.keySet()) {
-						builder.append(propName.replace("http://geotoolkit.org:","") + ";");
-					}
-					AnnotationProperty annpro = model.createAnnotationProperty("http://semgis.de/geodata#propOrder");
-					rootClass.addProperty(annpro, builder.toString());
-					rootClass.addProperty(model.createAnnotationProperty("http://semgis.de/geodata#standard"),
+					if(!config.nometadata) {
+						StringBuilder builder = new StringBuilder();
+						for (String propName : dataRow.keySet()) {
+							builder.append(propName.replace("http://geotoolkit.org:","") + ";");
+						}			
+						AnnotationProperty annpro = model.createAnnotationProperty("http://semgis.de/geodata#propOrder");
+						rootClass.addProperty(annpro, builder.toString());
+						rootClass.addProperty(model.createAnnotationProperty("http://semgis.de/geodata#standard"),
 							filename.substring(filename.lastIndexOf('/') + 1));
+					}
 					first = false;
 				}
 				// Import root individual.
@@ -441,13 +443,36 @@ public class DataImporter {
 			if (xc.valuemapping != null && !xc.valuemapping.isEmpty() && xc.valuemapping.containsKey(value)) {
 				for(ValueMapping clsval:xc.valuemapping.get(value)) {				
 					cls = model.createClass(clsval.to.replace(" ", "_"));
-					cls.setLabel(value, "de");
+					if(config.classlabellang!=null) {
+						cls.setLabel(value, config.classlabellang);
+					}else if(xc.language!=null){
+						cls.setLabel(value, xc.language);
+					}else {
+						cls.setLabel(value, "en");
+					}					
 				}
 				//cls = model.createClass(xc.valuemapping.get(value).replace(" ", "_"));
 				//cls.setLabel(value, "de");
 			} else if(!value.isEmpty()) {
-				cls = model.createClass(config.namespace+ URLEncoder.encode(toCamelCase(value).replace(" ", "_")));
-				cls.setLabel(value, "de");
+				if(xc.namespace!=null) {
+					cls = model.createClass(xc.namespace+ URLEncoder.encode(toCamelCase(value).replace(" ", "_")));
+					if(config.classlabellang!=null) {
+						cls.setLabel(value, config.classlabellang);
+					}else if(xc.language!=null){
+						cls.setLabel(value, xc.language);
+					}else {
+						cls.setLabel(value, "en");
+					}
+				}else {
+					cls = model.createClass(config.namespace+ URLEncoder.encode(toCamelCase(value).replace(" ", "_")));
+					if(config.classlabellang!=null) {
+						cls.setLabel(value, config.classlabellang);
+					}else if(xc.language!=null){
+						cls.setLabel(value, xc.language);
+					}else {
+						cls.setLabel(value, "en");
+					}
+				}
 			}
 			if(cls!=null) {
 				rootClass.addSubClass(cls);
@@ -457,10 +482,22 @@ public class DataImporter {
 			DatatypeProperty pro;
 			if (propiri == null) {
 				pro = model.createDatatypeProperty(DEFAULTNAMESPACE + "has" + toCamelCase(xc.name));
-				pro.setLabel(xc.name,"en");
+				if(config.proplabellang!=null) {
+					pro.setLabel(xc.name, config.proplabellang);
+				}else if(xc.language!=null){
+					pro.setLabel(xc.name, xc.language);
+				}else {
+					pro.setLabel(xc.name, "en");
+				}
 			} else {
 				pro = model.createDatatypeProperty(propiri.replace(" ", "_"));
-				pro.setLabel(xc.name,"en");
+				if(config.proplabellang!=null) {
+					pro.setLabel(xc.name, config.proplabellang);
+				}else if(xc.language!=null){
+					pro.setLabel(xc.name, xc.language);
+				}else {
+					pro.setLabel(xc.name, "en");
+				}
 			}
 			if (xc.range != null) {
 				pro.addRange(model.createResource(xc.range));
@@ -477,10 +514,22 @@ public class DataImporter {
 			AnnotationProperty pro;
 			if (propiri == null) {
 				pro = model.createAnnotationProperty(DEFAULTNAMESPACE + "has" + toCamelCase(xc.name.replace(" ", "_")));
-				pro.setLabel(xc.name,"en");
+				if(config.proplabellang!=null) {
+					pro.setLabel(xc.name, config.proplabellang);
+				}else if(xc.language!=null){
+					pro.setLabel(xc.name, xc.language);
+				}else {
+					pro.setLabel(xc.name, "en");
+				}
 			} else {
 				pro = model.createAnnotationProperty(propiri.replace(" ", "_"));
-				pro.setLabel(xc.name,"en");
+				if(config.proplabellang!=null) {
+					pro.setLabel(xc.name, config.proplabellang);
+				}else if(xc.language!=null){
+					pro.setLabel(xc.name, xc.language);
+				}else {
+					pro.setLabel(xc.name, "en");
+				}
 			}
 			if (xc.valuemapping != null && xc.valuemapping.containsKey(value)) {
 				for(ValueMapping val:xc.valuemapping.get(value)) {
@@ -494,11 +543,24 @@ public class DataImporter {
 			ObjectProperty pro;
 			if (propiri == null) {
 				pro = model.createObjectProperty(DEFAULTNAMESPACE + "has" + toCamelCase(xc.name.replace(" ", "_")));
-				pro.setLabel(xc.name,"en");
+				if(config.proplabellang!=null) {
+					pro.setLabel(xc.name, config.proplabellang);
+				}else if(xc.language!=null){
+					pro.setLabel(xc.name, xc.language);
+				}else {
+					pro.setLabel(xc.name, "en");
+				}
 			} else {
 				pro = model.createObjectProperty(propiri.replace(" ", "_"));
-				if(xc.name!=null)
-					pro.setLabel(xc.name,"en");
+				if(xc.name!=null) {
+					if(config.proplabellang!=null) {
+						pro.setLabel(xc.name, config.proplabellang);
+					}else if(xc.language!=null){
+						pro.setLabel(xc.name, xc.language);
+					}else {
+						pro.setLabel(xc.name, "en");
+					}
+				}
 			}
 			if (xc.range != null) {
 				pro.addRange(model.createClass(xc.range));
@@ -511,15 +573,33 @@ public class DataImporter {
 						OntClass ccls=model.createClass(xc.concept);
 						Individual obj=ccls.createIndividual(res);
 						ind.addProperty(pro, obj);
-						obj.addLabel(value,"en");
+						if(config.proplabellang!=null) {
+							obj.setLabel(value, config.proplabellang);
+						}else if(xc.language!=null){
+							obj.setLabel(value, xc.language);
+						}else {
+							obj.setLabel(value, "en");
+						}
 					}else {
 						DatatypeProperty prop;
 						if (propiri == null) {
 							prop = model.createDatatypeProperty(DEFAULTNAMESPACE + "has" + toCamelCase(xc.name));
-							prop.setLabel(xc.name,"en");
+							if(config.proplabellang!=null) {
+								prop.setLabel(xc.name, config.proplabellang);
+							}else if(xc.language!=null){
+								prop.setLabel(xc.name, xc.language);
+							}else {
+								prop.setLabel(xc.name, "en");
+							}
 						} else {
 							prop = model.createDatatypeProperty(propiri.replace(" ", "_"));
-							prop.setLabel(xc.name,"en");
+							if(config.proplabellang!=null) {
+								prop.setLabel(xc.name, config.proplabellang);
+							}else if(xc.language!=null){
+								prop.setLabel(xc.name, xc.language);
+							}else {
+								prop.setLabel(xc.name, "en");
+							}
 						}
 						//Resource obj = model
 								//.createResource(res);
@@ -552,7 +632,13 @@ public class DataImporter {
 					for(ValueMapping val:xc.valuemapping.get(value)) {
 						if(val.propiri!=null) {
 							DatatypeProperty prop=model.createDatatypeProperty(propiri);
-							prop.setLabel(xc.name,"en");
+							if(config.proplabellang!=null) {
+								prop.setLabel(xc.name, config.proplabellang);
+							}else if(xc.language!=null){
+								prop.setLabel(xc.name, xc.language);
+							}else {
+								prop.setLabel(xc.name, "en");
+							}
 							obj.addProperty(prop,model.createTypedLiteral(val.to, xc.range));
 						}else {
 							obj.addProperty(model.createDatatypeProperty(xc.valueprop),

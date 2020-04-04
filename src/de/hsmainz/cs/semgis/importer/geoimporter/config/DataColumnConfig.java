@@ -50,6 +50,8 @@ public class DataColumnConfig {
 	
 	public String language;
 	
+	public String namespace;
+	
 	public String keepdataprop;
 
 	public String isind;	//TODO??

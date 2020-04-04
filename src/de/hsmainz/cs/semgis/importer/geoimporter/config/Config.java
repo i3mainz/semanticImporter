@@ -40,6 +40,12 @@ public class Config extends DefaultHandler2 {
 	
 	public Boolean nometadata=false;
 	
+	public String indlabellang;
+	
+	public String classlabellang;
+	
+	public String proplabellang;
+	
 	public String license;
 	
 	public String interlinkItem;
@@ -94,6 +100,9 @@ public class Config extends DefaultHandler2 {
 				if(attributes.getValue("attachepsg")!=null) {
 					attachepsg=Boolean.valueOf(attributes.getValue("attachepsg"));
 				}
+				classlabellang=attributes.getValue("classlabellang");
+				indlabellang=attributes.getValue("indlabellang");
+				proplabellang=attributes.getValue("proplabellang");
 				namespace=attributes.getValue("namespace");
 				attnamespace=attributes.getValue("attnamespace");
 				epsg = Integer.valueOf(attributes.getValue("epsg"));
@@ -178,6 +187,7 @@ public class Config extends DefaultHandler2 {
 				  currentconfig.staticvalue=attributes.getValue("value");
 				  currentconfig.prop=attributes.getValue("prop");
 				  currentconfig.concept=attributes.getValue("concept");
+				  currentconfig.namespace=attributes.getValue("namespace");
 			  }else {
 				  DataColumnConfig dconfig=new DataColumnConfig();
 				  if(attributes.getValue("propiri")!=null)
@@ -221,6 +231,7 @@ public class Config extends DefaultHandler2 {
 				currentconfig.range=attributes.getValue("range");
 				currentconfig.isind=attributes.getValue("isind");
 				currentconfig.language=attributes.getValue("language");
+				currentconfig.namespace=attributes.getValue("namespace");
 				if(attributes.getValue("propiri")!=null)
 					currentconfig.propertyuri.add(attributes.getValue("propiri"));
 				currentconfig.keepdataprop=attributes.getValue("keepdataprop");
