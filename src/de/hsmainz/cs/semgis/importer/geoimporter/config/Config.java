@@ -38,6 +38,8 @@ public class Config extends DefaultHandler2 {
 	
 	public String timestamp;
 	
+	public Boolean nometadata=false;
+	
 	public String license;
 	
 	public String interlinkItem;
@@ -67,6 +69,8 @@ public class Config extends DefaultHandler2 {
 	
 	public List<GeoMatching> geomatchings=new LinkedList<>();
 
+	public boolean attachepsg=false;
+
 
 	public static String getAttrValue(Attributes attr, String qName, String defaultVal)
 	{
@@ -84,6 +88,12 @@ public class Config extends DefaultHandler2 {
 				indid=attributes.getValue("indid");
 				indidprefix=attributes.getValue("indidprefix");
 				indidsuffix=attributes.getValue("indidsuffix");
+				if(attributes.getValue("nometadata")!=null) {
+					nometadata=Boolean.valueOf(attributes.getValue("nometadata"));
+				}
+				if(attributes.getValue("attachepsg")!=null) {
+					attachepsg=Boolean.valueOf(attributes.getValue("attachepsg"));
+				}
 				namespace=attributes.getValue("namespace");
 				attnamespace=attributes.getValue("attnamespace");
 				epsg = Integer.valueOf(attributes.getValue("epsg"));

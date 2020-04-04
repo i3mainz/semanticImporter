@@ -80,7 +80,7 @@ public class DataImporter {
 			rootClass.addSuperClass(addc);			
 		}
 		this.epsgCode = epsgCode;
-		if(!"0".equals(config.epsg) && "0".equals(epsgCode))
+		if(config.epsg!=null && 0!=config.epsg)
 			this.epsgCode=config.epsg.toString();
 		System.out.println("EPSG: "+this.epsgCode);
 		this.geomClass = model.createClass("http://www.opengis.net/ont/sf#" + geomType.replace("http://geotoolkit.org:",""));
@@ -157,7 +157,8 @@ public class DataImporter {
 						vall=vall+config.indidsuffix;
 					}	
 					currentind=rootClass.createIndividual(config.namespace+vall);
-					importMetaData(currentind,vall);
+					if(!config.nometadata)
+						importMetaData(currentind,vall);
 				}else {
 					String indd=dataRow.get(config.indid);
 					if(config.indidprefix!=null) {
@@ -167,7 +168,8 @@ public class DataImporter {
 						indd=indd+config.indidsuffix;
 					}	
 					currentind = rootClass.createIndividual(config.namespace + indd);
-					importMetaData(currentind,indd);
+					if(!config.nometadata)
+						importMetaData(currentind,indd);
 				}
 				for(OntClass cls:additionalClasses) {
 					currentind.addRDFType(cls);
@@ -181,8 +183,11 @@ public class DataImporter {
 					List<DataColumnConfig> conflist=config.resultmap.get(key);
 					String columnName = key;
 					for (DataColumnConfig curconf:conflist) {
-						if (config.resultmap.containsKey(columnName)) {						
-							parseDataColumnConfigs(curconf, currentind, dataRow, dataRow.get("http://geotoolkit.org:"+key), 1);
+						if (config.resultmap.containsKey(columnName)) {
+							if(dataRow.get("http://geotoolkit.org:"+key)!=null)
+								parseDataColumnConfigs(curconf, currentind, dataRow, dataRow.get("http://geotoolkit.org:"+key), 1);
+							else
+								parseDataColumnConfigs(curconf, currentind, dataRow, dataRow.get(key), 1);
 						}else if(curconf.staticvalue!=null) {
 							parseDataColumnConfigs(curconf, currentind, dataRow, curconf.staticvalue, 1);
 						}
@@ -204,8 +209,8 @@ public class DataImporter {
 	
 	public void parseDataColumnConfigs(DataColumnConfig curconf,Individual currentind,
 			Map<String, String> dataRow,String value, Integer depth) {
-			//System.out.println(value);
-			//System.out.println(dataRow);
+			System.out.println(value);
+			System.out.println(dataRow);
 			if(value!=null)
 				value=value.replace("http://geotoolkit.org:","");
 			//System.out.println("ParseDataColumnConfigs in depth "+depth);
@@ -343,10 +348,19 @@ public class DataImporter {
 	private void importGeometry(Individual ind, Property geom) {
 		Individual geomind = geomClass.createIndividual(ind.getURI() + "_geom");
 		if(geom!=null && geom.getValue()!=null) {
-		geomind.addLiteral(model.createDatatypeProperty("http://www.opengis.net/ont/geosparql#asWKT"),
-				model.createTypedLiteral(
-						"<http://www.opengis.net/def/crs/EPSG/0/" + epsgCode + "> " + geom.getValue().toString(),
-						"http://www.opengis.net/ont/geosparql#wktLiteral"));
+			if(config.attachepsg) {
+				geomind.addLiteral(model.createDatatypeProperty("http://www.opengis.net/ont/geosparql#asWKT"),
+						model.createTypedLiteral(
+								"<http://www.opengis.net/def/crs/EPSG/0/" + epsgCode + "> " + geom.getValue().toString(),
+								"http://www.opengis.net/ont/geosparql#wktLiteral"));
+			}else {
+				geomind.addLiteral(model.createDatatypeProperty("http://www.opengis.net/ont/geosparql#epsg"),epsgCode);
+				geomind.addLiteral(model.createDatatypeProperty("http://www.opengis.net/ont/geosparql#asWKT"),
+						model.createTypedLiteral(
+								geom.getValue().toString(),
+								"http://www.opengis.net/ont/geosparql#wktLiteral"));
+			}
+		
 		
 		/*GeoJSONWriter writer = new GeoJSONWriter();
 		GeoJSON json = writer.write((Geometry) geom.getValue());
@@ -417,7 +431,7 @@ public class DataImporter {
 	private void importValue(DataColumnConfig xc, Individual ind, Map<String, String> dataRow, String value,String propiri) {
 		//System.out.println("ImportValue: "+value);
 		//System.out.println("PROPVALUE: "+xc.prop);
-		if (value == null || value.isEmpty() && (xc.valuemapping==null || xc.valuemapping.isEmpty()))
+		if (value == null || (value.isEmpty() && (xc.valuemapping==null || xc.valuemapping.isEmpty())))
 			return;
 		value=value.replace("http://geotoolkit.org:","");
 	
