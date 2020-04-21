@@ -18,7 +18,7 @@ function login() {
     	   }else{
         	 Cookies.set('bkgtoken',res)
         	 $('#loginspan').html("You are logged in <button onClick=\"logout()\">Logout</button>")
-        	 $( "#logindialog" ).close()
+        	 $( "#logindialog" ).dialog("close")
     	   }
        }
     });
