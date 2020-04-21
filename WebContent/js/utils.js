@@ -12,10 +12,10 @@ function login() {
        // in das Response-Div
        success: function(res) { 
            console.log("Res: "+res)
-    	   if(res!=""){
+    	   if(res==""){
     		   $('#loginspan').html("You are not logged in <button onClick=\"openLoginDialog()\">Login</button>")
+    		   alert("Login failed!")
     	   }else{
-
         	 Cookies.set('bkgtoken',res)
         	 $('#loginspan').html("You are logged in <button onClick=\"logout()\">Logout</button>")
         	 $( "#logindialog" ).close()
