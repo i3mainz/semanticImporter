@@ -16,7 +16,7 @@ function login() {
     		   $('#loginspan').html("You are not logged in <button onClick=\"openLoginDialog()\">Login</button>")
     		   alert("Login failed!")
     	   }else{
-        	 Cookies.set('bkgtoken',res)
+        	 Cookies.set('bkguplifttoken',res)
         	 $('#loginspan').html("You are logged in <button onClick=\"logout()\">Logout</button>")
         	 $( "#logindialog" ).dialog("close")
     	   }
@@ -54,7 +54,7 @@ var logindialog = $( "#logindialog" ).dialog({
     event.preventDefault();
     login();
   });  
-  if(Cookies.get('bkgtoken')){
+  if(Cookies.get('bkguplifttoken')){
 	 $('#loginspan').html("You are logged in <button onClick=\"logout()\">Logout</button>")
   }else{
  	 $('#loginspan').html("You are not logged in <button onClick=\"openLoginDialog()\">Login</button>")
