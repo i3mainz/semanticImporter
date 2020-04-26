@@ -15,7 +15,7 @@ public class User {
 	public String authToken;
 	
 	public User(){
-		
+		this.authToken=UUID.randomUUID().toString();
 	}
 	
 	public User(String name,String password,UserType level){
