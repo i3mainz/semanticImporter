@@ -10,12 +10,15 @@ function login() {
        contentType: false,
        // und wenn alles erfolgreich verlaufen ist, schreibe eine Meldung
        // in das Response-Div
-       success: function(data) { 
-    	   if(data!=""){
+       success: function(res) { 
+           console.log("Res: "+res)
+    	   if(res==""){
     		   $('#loginspan').html("You are not logged in <button onClick=\"openLoginDialog()\">Login</button>")
+    		   alert("Login failed!")
     	   }else{
-        	 Cookies.set('bkguplifttoken',data)
+        	 Cookies.set('bkguplifttoken',res)
         	 $('#loginspan').html("You are logged in <button onClick=\"logout()\">Logout</button>")
+        	 $( "#logindialog" ).dialog("close")
     	   }
        }
     });
