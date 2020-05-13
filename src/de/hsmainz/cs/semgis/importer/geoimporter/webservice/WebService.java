@@ -2,6 +2,7 @@ package de.hsmainz.cs.semgis.importer.geoimporter.webservice;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -307,20 +308,20 @@ public class WebService {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces({"text/ttl"})
 	@Path("/saveMappingSchema")
-    public Response saveMappingSchema(@FormDataParam("file") InputStream uploadedInputStream,
-			@FormDataParam("file") FormDataContentDisposition fileDetail,
-			@FormDataParam("format") String fileFormat,
-			@FormDataParam("mappingprofile") String schemaurl,
+    public Response saveMappingSchema(@FormDataParam("data") String fileAsString,
+			@FormDataParam("filename") FormDataContentDisposition fileName,
 			@DefaultValue("") @QueryParam("authtoken") String authtoken) { 
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
-        System.out.println("File Format: "+fileFormat);
-		File file=new File(this.importerconf.get("mappingfolder")+"/"+schemaurl);
+        System.out.println("File Format: "+fileName);
+		File file=new File(importerconf.get("mappingfolder")+"/"+fileName);
 		User user=UserManagementConnection.getInstance().loginAuthToken(authtoken);
 		if(user!=null && (user.getUserlevel()==UserType.Configurer || user.getUserlevel()==UserType.Administrator)) {
 			String serviceurl="";
 			try {
-				FileUtils.copyInputStreamToFile(uploadedInputStream, file);
+				FileWriter writer=new FileWriter(file);
+				writer.write(fileAsString);
+				writer.close();
 			} catch (IOException e) {
 			// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -389,8 +390,6 @@ public class WebService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-
 		return Response.ok("").type("text/ttl").build();
 	}
 	
