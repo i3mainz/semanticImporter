@@ -101,7 +101,6 @@ function toggleTripleStore() {
 
 <body>
 	<span id="loginspan"></span>
-	<h1>GMLConverter: Convert your GML Files to RDF</h1>
 
 <div id="spinner">
   <img src="ajax-loader.gif" alt="Loading" id="loading" style="display: none"/>
@@ -120,6 +119,13 @@ function toggleTripleStore() {
     </fieldset>
   </form>
 </div>
+<div class="page-header">
+	<h1>GMLConverter: Convert your GML Files to RDF</h1>
+	</div>
+	
+<div class="container" role="main">
+<div class="row">
+  <div class="col-sm-12" id="queryresult" class="table-wrapper-scroll-y">  
 	   <p>
 		Select a file : <input type="file" name="file" id="files" size="45" /><br/><br/>
 		<table>
@@ -143,6 +149,6 @@ function toggleTripleStore() {
 <script src="js/utils.js"></script> 
 <div>
 <a href="index.html">Back to Importer Selection</a>
-</div>
+</div></div></div></div>
 </body>
 </html>
