@@ -24,17 +24,17 @@ import org.xml.sax.ext.DefaultHandler2;
 
 public class UserManagementConnection {
 	
-	private static Map<String,User> userNameToPasswordHash;
+	private Map<String,User> userNameToPasswordHash;
 	
-	private static Map<String,User> uuidToUser;
+	private Map<String,User> uuidToUser;
 	
 	private static UserManagementConnection instance;
 	
 	private static String USERS="users.xml";
 	
 	private UserManagementConnection(){
-		userNameToPasswordHash=new TreeMap<String,User>();
-		uuidToUser=new TreeMap<String,User>();
+		this.userNameToPasswordHash=new TreeMap<String,User>();
+		this.uuidToUser=new TreeMap<String,User>();
 		try {
 			this.readUsers();
 		} catch (ParserConfigurationException | SAXException e) {
@@ -63,62 +63,60 @@ public class UserManagementConnection {
 	}
 	
 	public String addUser(String userToAdd,String userToAddPasswordHash,String userlevel) throws XMLStreamException, IOException{
-		if(userNameToPasswordHash.containsKey(userToAdd)){
+		if(this.userNameToPasswordHash.containsKey(userToAdd)){
 			return "User already exists";
 		}
 		User user=new User();
 		user.setName(userToAdd);
 		user.setPasswordHash(this.getHashedPassword(userToAddPasswordHash));
 		user.setUserlevel(UserType.valueOf(userlevel));
-		userNameToPasswordHash.put(userToAdd, user);
+		this.userNameToPasswordHash.put(userToAdd, user);
 		this.toXML();
 		return "User successfully added";
 	}
 	
 	public String updateUser(String userToAdd,String userToAddPasswordHash,String userlevel) throws XMLStreamException, IOException{
-		if(!userNameToPasswordHash.containsKey(userToAdd)){
+		if(!this.userNameToPasswordHash.containsKey(userToAdd)){
 			return "User does not exist";
 		}
 		User user=new User();
 		user.setName(userToAdd);
 		user.setPasswordHash(this.getHashedPassword(userToAddPasswordHash));
 		user.setUserlevel(UserType.valueOf(userlevel));
-		userNameToPasswordHash.put(userToAdd, user);
+		this.userNameToPasswordHash.put(userToAdd, user);
 		this.toXML();
 		return "User successfully edited";
 	}
 	
 	public String deleteUser(String userToAdd,String userToAddPasswordHash,Integer userlevel) throws XMLStreamException, IOException{
-		userNameToPasswordHash.remove(userToAdd);
+		this.userNameToPasswordHash.remove(userToAdd);
 		this.toXML();
 		return "User successfully deleted";
 	}
 	
 	public User login(String username,String password){
 		System.out.println("UserNameToPasswordHash: "+userNameToPasswordHash.toString());
-		System.out.println("Username: "+username+" Password: "+password);
-		if(!userNameToPasswordHash.containsKey(username)){
+		if(!this.userNameToPasswordHash.containsKey(username)){
 			System.out.println("Not logged in: Username "+username+" does not exist! ");
 			return null;//"usernamenotex_false";
 		}
-		if(this.getHashedPassword(password).equals(userNameToPasswordHash.get(username).getPasswordHash())){
-			System.out.println("Logged in: "+userNameToPasswordHash.get(username).toString());
-			User user=userNameToPasswordHash.get(username);
+		if(this.getHashedPassword(password).equals(this.userNameToPasswordHash.get(username).getPasswordHash())){
+			System.out.println("Logged in: "+this.userNameToPasswordHash.get(username).toString());
+			User user=this.userNameToPasswordHash.get(username);
 			user.setUuid(UUID.randomUUID().toString());
-			return userNameToPasswordHash.get(username);//"loginsuccessful_true";
+			return this.userNameToPasswordHash.get(username);//"loginsuccessful_true";
 		}
 		System.out.println("Not logged in: Login failed! ");
 		return null;//"loginfailed_false";
 	}
 	
-	public Boolean loginAuthToken(String authToken){
+	public User loginAuthToken(String authToken){
 		System.out.println("UserNameToPasswordHash: "+userNameToPasswordHash.toString());
-		System.out.println("Authtoken: "+authToken);
-		if(!uuidToUser.containsKey(authToken)){
+		if(!this.uuidToUser.containsKey(authToken)){
 			System.out.println("Not logged in: Auth Token is invalid! ");
-			return false;//"usernamenotex_false";
+			return this.uuidToUser.get(authToken);//"usernamenotex_false";
 		}
-		return true;
+		return null;
 	}
 		
 	public static UserManagementConnection getInstance(){
@@ -131,7 +129,7 @@ public class UserManagementConnection {
 	private void readUsers() throws ParserConfigurationException, SAXException{
 		SAXParser parser=SAXParserFactory.newInstance().newSAXParser();
 		try {
-			parser.parse(USERS, new UserHandler(userNameToPasswordHash,uuidToUser));
+			parser.parse(USERS, new UserHandler(this.userNameToPasswordHash,this.uuidToUser));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -143,8 +141,8 @@ public class UserManagementConnection {
 		if(userNameToPasswordHash.isEmpty()){
 			return "<tr><td>No user available!</td></tr>";
 		}
-		for(String user:userNameToPasswordHash.keySet()){
-			User usr=userNameToPasswordHash.get(user);
+		for(String user:this.userNameToPasswordHash.keySet()){
+			User usr=this.userNameToPasswordHash.get(user);
 			result.append(usr.getName());
 			result.append(",");
 			result.append(usr.getUserlevel()+";");

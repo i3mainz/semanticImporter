@@ -74,11 +74,13 @@ public class Main {
 		fileToConf.put("importdata/POI/Zoll.shp","config/zoll.xml");*/
 		//fileToConf.put("importdata/schools/schulen_nrw.shp","config/nrw_schulen.xml");
 		//fileToConf.put("importdata/schools/brandenburg_schule.shp","config/brandenburg_schulen.xml");
-		fileToConf.put("importdata/HadriansWall/forts_hw.geojson","config/fort.xml");
+		//fileToConf.put("importdata/world_s.geojson","config/covid19.xml");
+		fileToConf.put("importdata/kreise.shp","config/kreise.xml");
+		/*fileToConf.put("importdata/HadriansWall/forts_hw.geojson","config/fort.xml");
 		fileToConf.put("importdata/HadriansWall/roman_roads_hw.geojson","config/romanroads.xml");
 		fileToConf.put("importdata/HadriansWall/hadrians_wall.geojson","config/hadrianswall.xml");
 		fileToConf.put("importdata/HadriansWall/coastal_sites_hw.geojson","config/coastal_sites.xml");
-		/*
+		
 		fileToConf.put("importdata/schools/Schulstandorte_HB.shp","config/bremen_schulen.xml");
 		fileToConf.put("importdata/schools/Schulstandorte_BHV.shp","config/bremen_schulen.xml");
 		//fileToConf.put("importdata/unesco/Welterbe_HB.shp","config/bremen_unesco.xml");

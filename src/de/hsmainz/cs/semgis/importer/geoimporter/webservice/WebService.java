@@ -8,6 +8,9 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -61,12 +64,22 @@ import de.hsmainz.cs.semgis.importer.geoimporter.importer.GMLImporter;
 import de.hsmainz.cs.semgis.importer.geoimporter.parser.GeoJSONParser;
 import de.hsmainz.cs.semgis.importer.geoimporter.user.User;
 import de.hsmainz.cs.semgis.importer.geoimporter.user.UserManagementConnection;
+import de.hsmainz.cs.semgis.importer.geoimporter.user.UserType;
 import de.hsmainz.cs.semgis.importer.schemaconverter.XSD2OWL;
 import de.hsmainz.cs.semgis.importer.schemaconverter.XSD2OWL.XMLTypes;
 
 @Path("/service")
 public class WebService {
 
+	static JSONObject importerconf = new JSONObject();
+	
+	public WebService() throws IOException {
+		if (importerconf == null) {
+			String text2 = new String(Files.readAllBytes(Paths.get("importerconf.json")), StandardCharsets.UTF_8);
+			importerconf = new JSONObject(text2);
+		}
+	}
+	
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces({"text/ttl"})
@@ -255,7 +268,7 @@ public class WebService {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces({"text/ttl"})
 	@Path("/convertExistingSchema")
-    public Response convertExistingSchema(@FormDataParam("file") InputStream uploadedInputStream,
+    public Response convertWithExistingSchema(@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail,
 			@FormDataParam("format") String fileFormat,
 			@FormDataParam("mappingprofile") String schemaurl,
@@ -290,11 +303,37 @@ public class WebService {
 		} 
 	}
 	
+	@POST
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces({"text/ttl"})
+	@Path("/saveMappingSchema")
+    public Response saveMappingSchema(@FormDataParam("file") InputStream uploadedInputStream,
+			@FormDataParam("file") FormDataContentDisposition fileDetail,
+			@FormDataParam("format") String fileFormat,
+			@FormDataParam("mappingprofile") String schemaurl,
+			@DefaultValue("") @QueryParam("authtoken") String authtoken) { 
+		final String dir = System.getProperty("user.dir");
+        System.out.println("current dir = " + dir); 
+        System.out.println("File Format: "+fileFormat);
+		File file=new File(this.importerconf.get("mappingfolder")+"/"+schemaurl);
+		User user=UserManagementConnection.getInstance().loginAuthToken(authtoken);
+		if(user!=null && (user.getUserlevel()==UserType.Configurer || user.getUserlevel()==UserType.Administrator)) {
+			String serviceurl="";
+			try {
+				FileUtils.copyInputStreamToFile(uploadedInputStream, file);
+			} catch (IOException e) {
+			// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+        return Response.ok("Saved").type("text/ttl").build();
+	}
+	
 	@GET
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/getXSLTemplates")
-    public Response importWithMappingSchema() { 
+    public Response getXSLTemplates() { 
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
         File folder=new File("xsl");

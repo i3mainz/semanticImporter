@@ -103,6 +103,28 @@ function saveMappingAsXML(){
 	saveTextAsFile(mappingProfileToXML(),".xml","mapping")
 }
 
+function saveMappingOnServer(){
+	var data = new FormData(); // das ist unser Daten-Objekt ...
+    data.append('data', mappingProfileToXML()); // ... an die wir unsere Datei anhängen
+    data.append('filename',document.getElementById('fileformat').value)
+   	data.append('serviceurl',document.getElementById('serviceurl').value)
+    $('#loading').show();
+    addcolumncounter=0;
+    $.ajax({
+       url: 'rest/service/saveMappingSchema', // Wohin soll die Datei geschickt werden?
+       data: data,          // Das ist unser Datenobjekt.
+       type: 'POST',         // HTTP-Methode, hier: POST
+       processData: false,
+       contentType: false,
+       success: function(data) { 
+    	   
+       }
+    });
+    
+	
+	saveTextAsFile(mappingProfileToXML(),".xml","mapping")
+}
+
 var filedata={}
 var addcolumncounter=0;
 function setAutoComplete(itemid,inputid,proptypeid){
@@ -465,5 +487,8 @@ dialog = $( "#dialog-form" ).dialog({
 	  });
 	  var yasqe = YASQE.fromTextArea(document.getElementById("sparqltextarea"));
 </script> 
+<div>
+<a href="../index.html">Back to Importer Selection</a>
+</div>
 </body>
 </html>
