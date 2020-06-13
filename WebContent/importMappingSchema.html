@@ -80,7 +80,12 @@ function saveTextAsFile(tosave,fileext,filename)
 
 function addColumn(){
 	i=$("#datasettable").find('tbody').children().length
-	table="<tr><td id=\"datasetcol_"+i+"\" style=\"color:green\">Additional column</td>"
+	if(i%2==0){
+	    table="<tr class=\"even\">"
+	}else{
+	    table="<tr class=\"odd\">"
+	}
+	table+="<td id=\"datasetcol_"+i+"\" style=\"color:green\">Additional column</td>"
 	table+="<td id=\"proptypecol_"+i+"\"><select id=\"proptypecol_"+i+"_select\"><option value=\"data\">DatatypeProperty</option><option value=\"obj\">ObjectProperty</option><option value=\"annotation\">AnnotationProperty</option><option value=\"subclass\">SubClass</option></select></td>"
 	table+="<td id=\"coluri_"+i+"\">"
 	table+='<div class="ui-widget"><input id="coluri_'+i+'_input" name='+i+'></div>'//"<input type=\"text\" id=\"coluri_"+i+"_input\" name="+i+">
@@ -192,7 +197,12 @@ function analyzeFile(){
 	    	    var i=0;
 	    	    for(key in json["properties"]){
 	    	    	if(json["properties"][i]!="the_geom"){
-	    	    		table+="<tr><td align=center id=\"datasetcol_"+i+"\" style=\"color:red\">"+json["properties"][i]+"</td>"
+	    	    	    if(i%2==0){
+	    	    	        table+="<tr class=\"even\">"
+	    	    	    }else{
+	    	    	        table+="<tr class=\"odd\">"
+	    	    	    }
+	    	    		table+="<td align=center id=\"datasetcol_"+i+"\" style=\"color:red\">"+json["properties"][i]+"</td>"
 	    	    		table+="<td align=center id=\"proptypecol_"+i+"\"><select id=\"proptypecol_"+i+"_select\"><option value=\"data\">DatatypeProperty</option><option value=\"obj\">ObjectProperty</option><option value=\"annotation\">AnnotationProperty</option><option value=\"subclass\">SubClass</option></select></td>"
 	    	    		table+="<td align=center id=\"coluri_"+i+"\">"
 	    	    		table+='<div class="ui-widget"><input id="coluri_'+i+'_input" name='+i+'></div>'//"<input type=\"text\" id=\"coluri_"+i+"_input\" name="+i+">
@@ -413,7 +423,7 @@ function addValueMapping(from,to,tdtable) {
  	<input type="checkbox" id="importTripleStore" onChange="toggleTripleStore()">Import to a triple store
  	<p id="triplestoreimport" style="display:none">
  	  I want to import the file into the following triple store:<br/>
- 	  <table>
+ 	  <table class="description">
 	   <tr><td>TripleStore:</td><td><input type="text" name="triplestore" id="triplestore" value=""/></td></tr>
 	   <tr><td>Graph:</td><td> <input type="text" name="triplestoregraph" id="triplestoregraph" value=""/></td></tr>
 	   <tr><td>Username:</td><td> <input type="text" name="triplestoreuser" id="triplestoreuser" value=""/></td></tr>
@@ -425,7 +435,7 @@ function addValueMapping(from,to,tdtable) {
 
 <button onClick="saveMappingAsXML()">Save Mapping</button>
 
- 	<table id="datasettable" width="100%" border="1">
+ 	<table id="datasettable" class="description" width="100%" border="1">
  	</table>
 	   <p>
 		Select a file : <input type="file" name="file" id="files" size="45" /><br/>
