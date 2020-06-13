@@ -129,7 +129,7 @@ function toggleTripleStore() {
   <div class="col-sm-12" id="queryresult" class="table-wrapper-scroll-y">  
 	   <p>
 		Select a file : <input type="file" name="file" id="files" size="45" /><br/><br/>
-		<table>
+		<table class="description">
 			   <tr><td>Individual Namespace:</td><td> <input type="url" name="namespace" id="namespace"/></td></tr>
 			   <tr><td>Provider:</td><td> <input type="text" name="provider" id="provider" value="GDI-DE"/></td></tr>
 			   <tr><td>License URL:</td><td> <input type="url" name="license" id="license" value=""/></td></tr>
@@ -139,7 +139,7 @@ function toggleTripleStore() {
 	   <input type="checkbox" id="importTripleStore" onChange="toggleTripleStore()">Import to a triple store
 	   <p id="triplestorediv" style="display:none;">
 	   I want to import the file into the following triple store:<br/>
-	    <table>
+	    <table class="description">
 	   <tr><td>TripleStore:</td><td> <input type="text" name="triplestore" id="triplestore" value=""/></td></tr>
 	   <tr><td>Graph:</td><td> <input type="text" name="triplestoregraph" id="triplestoregraph" value=""/></td></tr>
 	   <tr><td>Username:</td><td> <input type="text" name="triplestoreuser" id="triplestoreuser" value=""/></td></tr>
