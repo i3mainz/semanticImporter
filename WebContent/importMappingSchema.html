@@ -3,6 +3,7 @@
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="css/yasqe.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="js/yasqe.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -105,7 +106,7 @@ function saveMappingAsXML(){
 
 function saveMappingOnServer(){
 	var data = new FormData(); // das ist unser Daten-Objekt ...
-    data.append('data', mappingProfileToXML()); // ... an die wir unsere Datei anhängen
+    data.append('data', mappingProfileToXML()); // ... an die wir unsere Datei anhngen
     data.append('filename',document.getElementById('fileformat').value)
    	data.append('serviceurl',document.getElementById('serviceurl').value)
     $('#loading').show();
@@ -173,7 +174,7 @@ function sparqlDialog(collid){
 
 function analyzeFile(){
 	    var data = new FormData(); // das ist unser Daten-Objekt ...
-	    data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhängen
+	    data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhngen
 	    data.append('fileformat',document.getElementById('fileformat').value)
 	   	data.append('serviceurl',document.getElementById('serviceurl').value)
 	    $('#loading').show();
