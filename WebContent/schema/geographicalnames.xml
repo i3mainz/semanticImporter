@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <data>
 <file class="http://inspire.ec.europa.eu/schemas/gn/4.0#NamedPlace" 
-indid="inspireId" namespace="http://registry.gdi-de.org/id/de.bund.bkg.inspire.gn250/" 
-attnamespace="http://registry.gdi-de.org/id/de.bund.bkg.inspire.gn250/" epsg="4326" interlinkItem="true">
+indid="inspireId" namespace="http://ld.gdi-de.org/id/de.bund.bkg.inspire.gn250/" 
+attnamespace="http://ld.gdi-de.org/id/de.bund.bkg.inspire.gn250/" epsg="4326" interlinkItem="true">
 
 	<column name="inspireId" prop="data" range="http://www.w3.org/2001/XMLSchema#string"/> 
 	
