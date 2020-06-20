@@ -2,6 +2,7 @@
 <head>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="css/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -63,7 +64,7 @@ function saveTextAsFile(tosave,fileext,filename)
 var filedata={}
 function analyzeFile(){
 	    var data = new FormData(); // das ist unser Daten-Objekt ...
-	    data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhängen
+	    data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhngen
 	    $('#loading').show();
 	    $.ajax({
 	       url: 'rest/service/analyzeFile', // Wohin soll die Datei geschickt werden?
@@ -76,12 +77,18 @@ function analyzeFile(){
 	       success: function(data) { 
 	    	    var json=JSON.parse(data);
 	    	    filedata=json
-	    	    var table="<tr><th align=center>Dataset Column</th><th align=center>Column URI</th><th align=center>Column Range</th><th align=center>Value SPARQL Query</th><th align=center>Regular Expression (Optional)</th></tr>"
+	    	    var table="<thead><tr><th align=center>Dataset Column</th><th align=center>Column URI</th><th align=center>Column Range</th><th align=center>Value SPARQL Query</th><th align=center>Regular Expression (Optional)</th></tr></thead><tbody>"
 	    	    var i=1;
 	    	    for(key in data){
-	    	    	table+="<tr><td align=center id=\"datasetcol_"+i+"\">"+key+"</td><td align=center id=\"coluri_"+i+"\"></td><td align=center id=\"colrange_"+i+"\">"+data[key]+"</td><td align=center id=\"valuesparql_"+i+"\"></td><td align=center id=\"valueregex_"+i+"\"></td></tr>"
+	    	        if(i%2==0){
+	    	            table+="<tr class=\"even\">"
+	    	        }else{
+	    	            table+="<tr class=\"odd\">"
+	    	        }
+	    	    	table+="<td align=center id=\"datasetcol_"+i+"\">"+key+"</td><td align=center id=\"coluri_"+i+"\"></td><td align=center id=\"colrange_"+i+"\">"+data[key]+"</td><td align=center id=\"valuesparql_"+i+"\"></td><td align=center id=\"valueregex_"+i+"\"></td></tr>"
 	    	    	i++;
 	    	    }
+	    	    table+="</tbody>"
 	    	    $('#datasettable').html(table)
 	    	    toggleAnalysis()
 	       }
@@ -150,7 +157,7 @@ function mappingSchemaToTable(){
     </fieldset>
   </form>
 </div>
-<div class="page-header">
+<div class="page-header" id="header">
 	<h1>Upload your file for content analysis:</h1>
 </div>
 <div class="container" role="main">
@@ -163,7 +170,7 @@ function mappingSchemaToTable(){
  	<input type="checkbox" id="importTripleStore" onChange="toggleTripleStore()">Import to a triple store
  	<p id="triplestoreimport" style="display:none">
  	  I want to import the file into the following triple store:<br/>
- 	  <table>
+ 	  <table class="description">
 	   <tr><td>TripleStore:</td><td><input type="text" name="triplestore" id="triplestore" value=""/></td></tr>
 	   <tr><td>Graph:</td><td> <input type="text" name="triplestoregraph" id="triplestoregraph" value=""/></td></tr>
 	   <tr><td>Username:</td><td> <input type="text" name="triplestoreuser" id="triplestoreuser" value=""/></td></tr>
@@ -173,7 +180,7 @@ function mappingSchemaToTable(){
 	</p>
 	Mappingschema: <select id="mappingschema" onChange="mappingSchemaToTable()"></select><br/><br/>
 	<span id="tableheader"></span><br/>
- 	<table id="datasettable" width="100%" align="center" border="1">
+ 	<table id="datasettable" class="description" width="100%" align="center" border="1">
  	</table>
 	   <p>
 		Select a file : <input type="file" name="file" id="files" size="45" /><br/>
@@ -193,9 +200,9 @@ for(mapping in mappingschemas){
 $("#mappingschema").html(result)
 mappingSchemaReader($("#mappingschema").val())
 </script>
-<div>
+</div></div></div>
+<div id="footer">
 <a href="index.html">Back to Importer Selection</a>
 </div>
-</div></div></div>
 </body>
 </html>

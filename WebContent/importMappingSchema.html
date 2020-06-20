@@ -3,6 +3,7 @@
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="css/yasqe.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="js/yasqe.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -79,7 +80,12 @@ function saveTextAsFile(tosave,fileext,filename)
 
 function addColumn(){
 	i=$("#datasettable").find('tbody').children().length
-	table="<tr><td id=\"datasetcol_"+i+"\" style=\"color:green\">Additional column</td>"
+	if(i%2==0){
+	    table="<tr class=\"even\">"
+	}else{
+	    table="<tr class=\"odd\">"
+	}
+	table+="<td id=\"datasetcol_"+i+"\" style=\"color:green\">Additional column</td>"
 	table+="<td id=\"proptypecol_"+i+"\"><select id=\"proptypecol_"+i+"_select\"><option value=\"data\">DatatypeProperty</option><option value=\"obj\">ObjectProperty</option><option value=\"annotation\">AnnotationProperty</option><option value=\"subclass\">SubClass</option></select></td>"
 	table+="<td id=\"coluri_"+i+"\">"
 	table+='<div class="ui-widget"><input id="coluri_'+i+'_input" name='+i+'></div>'//"<input type=\"text\" id=\"coluri_"+i+"_input\" name="+i+">
@@ -105,7 +111,7 @@ function saveMappingAsXML(){
 
 function saveMappingOnServer(){
 	var data = new FormData(); // das ist unser Daten-Objekt ...
-    data.append('data', mappingProfileToXML()); // ... an die wir unsere Datei anhängen
+    data.append('data', mappingProfileToXML()); // ... an die wir unsere Datei anhngen
     data.append('filename',document.getElementById('fileformat').value)
    	data.append('serviceurl',document.getElementById('serviceurl').value)
     $('#loading').show();
@@ -173,7 +179,7 @@ function sparqlDialog(collid){
 
 function analyzeFile(){
 	    var data = new FormData(); // das ist unser Daten-Objekt ...
-	    data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhängen
+	    data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhngen
 	    data.append('fileformat',document.getElementById('fileformat').value)
 	   	data.append('serviceurl',document.getElementById('serviceurl').value)
 	    $('#loading').show();
@@ -191,7 +197,12 @@ function analyzeFile(){
 	    	    var i=0;
 	    	    for(key in json["properties"]){
 	    	    	if(json["properties"][i]!="the_geom"){
-	    	    		table+="<tr><td align=center id=\"datasetcol_"+i+"\" style=\"color:red\">"+json["properties"][i]+"</td>"
+	    	    	    if(i%2==0){
+	    	    	        table+="<tr class=\"even\">"
+	    	    	    }else{
+	    	    	        table+="<tr class=\"odd\">"
+	    	    	    }
+	    	    		table+="<td align=center id=\"datasetcol_"+i+"\" style=\"color:red\">"+json["properties"][i]+"</td>"
 	    	    		table+="<td align=center id=\"proptypecol_"+i+"\"><select id=\"proptypecol_"+i+"_select\"><option value=\"data\">DatatypeProperty</option><option value=\"obj\">ObjectProperty</option><option value=\"annotation\">AnnotationProperty</option><option value=\"subclass\">SubClass</option></select></td>"
 	    	    		table+="<td align=center id=\"coluri_"+i+"\">"
 	    	    		table+='<div class="ui-widget"><input id="coluri_'+i+'_input" name='+i+'></div>'//"<input type=\"text\" id=\"coluri_"+i+"_input\" name="+i+">
@@ -396,7 +407,7 @@ function addValueMapping(from,to,tdtable) {
 </div>
 	<span id="loginspan"></span>
 <header>
-<div class="page-header">
+<div class="page-header" id="header">
 	<h1>Upload your file for content analysis:</h1>
 </div></header>
 <div class="container" role="main">
@@ -412,7 +423,7 @@ function addValueMapping(from,to,tdtable) {
  	<input type="checkbox" id="importTripleStore" onChange="toggleTripleStore()">Import to a triple store
  	<p id="triplestoreimport" style="display:none">
  	  I want to import the file into the following triple store:<br/>
- 	  <table>
+ 	  <table class="description">
 	   <tr><td>TripleStore:</td><td><input type="text" name="triplestore" id="triplestore" value=""/></td></tr>
 	   <tr><td>Graph:</td><td> <input type="text" name="triplestoregraph" id="triplestoregraph" value=""/></td></tr>
 	   <tr><td>Username:</td><td> <input type="text" name="triplestoreuser" id="triplestoreuser" value=""/></td></tr>
@@ -424,7 +435,7 @@ function addValueMapping(from,to,tdtable) {
 
 <button onClick="saveMappingAsXML()">Save Mapping</button>
 
- 	<table id="datasettable" width="100%" border="1">
+ 	<table id="datasettable" class="description" width="100%" border="1">
  	</table>
 	   <p>
 		Select a file : <input type="file" name="file" id="files" size="45" /><br/>
@@ -487,7 +498,7 @@ dialog = $( "#dialog-form" ).dialog({
 	  });
 	  var yasqe = YASQE.fromTextArea(document.getElementById("sparqltextarea"));
 </script> 
-<div>
+<div id="footer">
 <a href="index.html">Back to Importer Selection</a>
 </div>
 </body>
