@@ -5,7 +5,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.ext.DefaultHandler2;
 
 import de.hsmainz.cs.semgis.importer.geoimporter.Style;
-import de.hsmainz.cs.semgis.util.Tuple;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -20,9 +19,7 @@ public class Config extends DefaultHandler2 {
 	
 	public Map<String,List<DataColumnConfig>> resultmap=new TreeMap<>();
 	
-	public String rootClass;
-	
-	public Set<String> additionalClasses=new TreeSet<String>();
+	public Map<String,ClassMapping> additionalClasses=new TreeMap<String,ClassMapping>();
 	
 	public String indid;
 	
@@ -40,6 +37,8 @@ public class Config extends DefaultHandler2 {
 	
 	public Boolean nometadata=false;
 	
+	public Boolean ignoreUnresolved=true;
+	
 	public String indlabellang;
 	
 	public String classlabellang;
@@ -51,6 +50,10 @@ public class Config extends DefaultHandler2 {
 	public String interlinkItem;
 	
 	public Boolean nearestMatch=false;
+	
+	public String rootClass,rootClassLabel;
+	
+	public String mostGeneralClass;
 	
 	public Style pointStyle=new Style();
 	
@@ -76,6 +79,8 @@ public class Config extends DefaultHandler2 {
 	public List<GeoMatching> geomatchings=new LinkedList<>();
 
 	public boolean attachepsg=false;
+	
+	public String curclass="";
 
 
 	public static String getAttrValue(Attributes attr, String qName, String defaultVal)
@@ -91,6 +96,7 @@ public class Config extends DefaultHandler2 {
 		switch(qName) {
 		case "file":
 				rootClass=attributes.getValue("class");
+				rootClassLabel=attributes.getValue("classlabel");
 				indid=attributes.getValue("indid");
 				indidprefix=attributes.getValue("indidprefix");
 				indidsuffix=attributes.getValue("indidsuffix");
@@ -113,7 +119,7 @@ public class Config extends DefaultHandler2 {
 			  currentconfig.isCollection=true;
 			  currentconfig.subconfigs=new LinkedList<>();
 			  currentconfig.concept=attributes.getValue("class");
-			  currentconfig.propertyuri.add(attributes.getValue("propiri"));
+			  currentconfig.propertyuri.put(attributes.getValue("propiri"),new TreeMap<>());
 			  currentconfig.name=attributes.getValue("name");
 			  if(this.columnLists.isEmpty()) {
 				  System.out.println("Top Level Collection: Adding "+attributes.getValue("name"));
@@ -174,16 +180,38 @@ public class Config extends DefaultHandler2 {
 			  match.level1endpoint=attributes.getValue("level1endpoint");
 			  this.geomatchings.add(match);
 			  break;
-		case "propiri":
-			  currentconfig.propertyuri.add(attributes.getValue("value"));
+		case "clslabel":
+			  if(!curclass.isEmpty()) {
+				  this.additionalClasses.get(curclass).labels.put(attributes.getValue("lang"),attributes.getValue("value"));
+			  }
+			  break;
+		case "proplabel":
+			  if(currentconfig!=null && currentconfig.propertyuri!=null) {
+				  String key=currentconfig.propertyuri.keySet().iterator().next();
+				  if(currentconfig.propertyuri.get(key)==null) {
+					  currentconfig.propertyuri.put(key,new TreeMap<>());
+				  }
+				  currentconfig.propertyuri.get(key).put(attributes.getValue("lang"),attributes.getValue("value"));
+			  }
+			  break;
+		case "rootclass":
+			  this.mostGeneralClass=attributes.getValue("class");
 			  break;
 		case "classmapping":
-			  additionalClasses.add(attributes.getValue("class"));
+			  if(additionalClasses!=null && attributes.getValue("class")!=null) {
+				  ClassMapping mapp=new ClassMapping();
+				  mapp.iri=attributes.getValue("class");
+				  curclass=mapp.iri;
+				  if(attributes.getValue("superclass")!=null) {
+					  mapp.superclass=attributes.getValue("superclass");				  
+				  }
+				  additionalClasses.put(attributes.getValue("class"),mapp);
+			  }
 			  break;
 		case "addcolumn":
 			  if(valueMapping) {
 				  currentconfig=new DataColumnConfig();
-				  currentconfig.propertyuri.add(attributes.getValue("propiri"));
+				  currentconfig.propertyuri.put(attributes.getValue("propiri"),new TreeMap<>());
 				  currentconfig.staticvalue=attributes.getValue("value");
 				  currentconfig.prop=attributes.getValue("prop");
 				  currentconfig.concept=attributes.getValue("concept");
@@ -191,7 +219,7 @@ public class Config extends DefaultHandler2 {
 			  }else {
 				  DataColumnConfig dconfig=new DataColumnConfig();
 				  if(attributes.getValue("propiri")!=null)
-					  dconfig.propertyuri.add(attributes.getValue("propiri"));
+					  dconfig.propertyuri.put(attributes.getValue("propiri"),new TreeMap<>());
 				  dconfig.staticvalue=attributes.getValue("value");
 				  dconfig.prop=attributes.getValue("prop");
 				  dconfig.concept=attributes.getValue("concept");
@@ -221,6 +249,9 @@ public class Config extends DefaultHandler2 {
 				}
 				currentconfig.name=attributes.getValue("name");
 				//resolve queries
+				if(attributes.getValue("ignoreUnresolved")!=null) {
+					currentconfig.ignoreUnresolved=Boolean.valueOf(attributes.getValue("ignoreUnresolved"));
+				}
 				currentconfig.queryString=attributes.getValue("query");
 				currentconfig.resultvar=attributes.getValue("resultvar");
 				currentconfig.endpoint=attributes.getValue("endpoint");
@@ -233,7 +264,7 @@ public class Config extends DefaultHandler2 {
 				currentconfig.language=attributes.getValue("language");
 				currentconfig.namespace=attributes.getValue("namespace");
 				if(attributes.getValue("propiri")!=null)
-					currentconfig.propertyuri.add(attributes.getValue("propiri"));
+					currentconfig.propertyuri.put(attributes.getValue("propiri"),new TreeMap<>());
 				currentconfig.keepdataprop=attributes.getValue("keepdataprop");
 				currentconfig.valueprefix=attributes.getValue("valueprefix");
 				currentconfig.valuesuffix=attributes.getValue("valuesuffix");
@@ -270,6 +301,9 @@ public class Config extends DefaultHandler2 {
 		}
 		if(qName.equals("valuemapping")) {
 			valueMapping=false;
+		}
+		if(qName.equals("classmapping")) {
+			curclass="";
 		}
 	}
 		

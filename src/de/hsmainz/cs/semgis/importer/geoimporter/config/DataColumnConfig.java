@@ -38,9 +38,11 @@ public class DataColumnConfig {
 	//matching
 	public String indname; 
 	
+	public Boolean ignoreUnresolved=true;
+	
 	public String concept;	// -> objtype
 	public String prop;	// -> proptype
-	public Set<String> propertyuri=new TreeSet<String>();
+	public Map<String,Map<String,String>> propertyuri=new TreeMap<String,Map<String,String>>();
 	
 	public String unit; // -> unittype
 	public String unitprop;

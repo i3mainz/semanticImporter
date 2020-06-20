@@ -52,45 +52,48 @@ public class Main {
 	static Map<String,String> fileToConf=new HashMap<>();
 	
 	public Main() {
-
-		/*fileToConf.put("importdata/POI/BFW.shp","config/bfw.xml");
+		fileToConf.put("importdata/POI/Gerichte.shp","config/gerichte.xml");
+		fileToConf.put("importdata/POI/BFW.shp","config/bfw.xml");
 		fileToConf.put("importdata/POI/BPOL.shp","config/bpol.xml");
 		fileToConf.put("importdata/POI/BotKon.shp","config/botkon.xml");
 		fileToConf.put("importdata/POI/BBeh_plus.shp","config/bbeh.xml");
-		fileToConf.put("importdata/POI/Gerichte.shp","config/gerichte.xml");
-		fileToConf.put("importdata/POI/HS.shp","config/hs.xml");
-		fileToConf.put("importdata/POI/JVA.shp","config/jva.xml");
+		
 		fileToConf.put("importdata/POI/Kfz.shp","config/kfz.xml");
 		fileToConf.put("importdata/POI/KHV_plus.shp","config/khv.xml");
 		fileToConf.put("importdata/POI/LBeh.shp","config/lbeh.xml");
 		fileToConf.put("importdata/POI/LPOL.shp","config/lpol.xml");
-		fileToConf.put("importdata/POI/RefKon.shp","config/refkon.xml");
 		fileToConf.put("importdata/POI/RHV.shp","config/rhv.xml");
-		fileToConf.put("importdata/POI/Schulen_allg.shp","config/schulen_allg.xml");
-		fileToConf.put("importdata/POI/Schulen_beruf.shp","config/schulen_beruf.xml");
+		/*fileToConf.put("importdata/POI/Schulen_allg.shp","config/schulen_allg.xml");
+		fileToConf.put("importdata/POI/Schulen_beruf.shp","config/schulen_beruf.xml");*/
+		//fileToConf.put("importdata/gn_inspire_namedplace.shp","config/geographicalnames.xml");
 		fileToConf.put("importdata/POI/StA.shp","config/sta.xml");
 		fileToConf.put("importdata/POI/THW.shp","config/thw.xml");
 		fileToConf.put("importdata/POI/UNOrg.shp","config/unorg.xml");
-		fileToConf.put("importdata/POI/Zoll.shp","config/zoll.xml");*/
-		//fileToConf.put("importdata/schools/schulen_nrw.shp","config/nrw_schulen.xml");
-		//fileToConf.put("importdata/schools/brandenburg_schule.shp","config/brandenburg_schulen.xml");
+		fileToConf.put("importdata/POI/HS.shp","config/hs.xml");
+		fileToConf.put("importdata/POI/RefKon.shp","config/refkon.xml");
+		fileToConf.put("importdata/POI/JVA.shp","config/jva.xml");
+		fileToConf.put("importdata/POI/Zoll.shp","config/zoll.xml");
+		/*
+		fileToConf.put("importdata/schools/brandenburg_schule.shp","config/brandenburg_schulen.xml");*/
+		/*fileToConf.put("importdata/schools/schulen_nrw.shp","config/nrw_schulen.xml");
+		
 		//fileToConf.put("importdata/world_s.geojson","config/covid19.xml");
-		fileToConf.put("importdata/kreise.shp","config/kreise.xml");
+		//fileToConf.put("importdata/kreise.shp","config/kreise.xml");
 		/*fileToConf.put("importdata/HadriansWall/forts_hw.geojson","config/fort.xml");
 		fileToConf.put("importdata/HadriansWall/roman_roads_hw.geojson","config/romanroads.xml");
 		fileToConf.put("importdata/HadriansWall/hadrians_wall.geojson","config/hadrianswall.xml");
 		fileToConf.put("importdata/HadriansWall/coastal_sites_hw.geojson","config/coastal_sites.xml");
-		
-		fileToConf.put("importdata/schools/Schulstandorte_HB.shp","config/bremen_schulen.xml");
+		*/
+		/*fileToConf.put("importdata/schools/Schulstandorte_HB.shp","config/bremen_schulen.xml");
 		fileToConf.put("importdata/schools/Schulstandorte_BHV.shp","config/bremen_schulen.xml");
-		//fileToConf.put("importdata/unesco/Welterbe_HB.shp","config/bremen_unesco.xml");
+		fileToConf.put("importdata/unesco/Welterbe_HB.shp","config/bremen_unesco.xml");
 		/*fileToConf.put("unesco/42001g.shp","config/bauhaus_unesco.xml");
 		fileToConf.put("unesco/41001g.shp","config/hamburg_unesco.xml");
-		fileToConf.put("unesco/42001g.shp","config/sachsenanhalt_unesco.xml");
-		
-		 * 		fileToConf.put("importdata/xplanung/41001g.shp","config/xplanung_st_bp_plan.xml");
-		fileToConf.put("importdata/xplanung/42001g.shp","config/xplanung_st_fp_plan.xml");
-		 * fileToConf.put("importdata/POI/KITA.shp","config/kita.xml");*/
+		fileToConf.put("unesco/42001g.shp","config/sachsenanhalt_unesco.xml");*/
+		/*
+		fileToConf.put("importdata/xplanung/41001g.shp","config/xplanung_st_bp_plan.xml");
+		fileToConf.put("importdata/xplanung/42001g.shp","config/xplanung_st_fp_plan.xml");*/
+		fileToConf.put("importdata/POI/KITA.shp","config/kita.xml");
 	}
 	
 	

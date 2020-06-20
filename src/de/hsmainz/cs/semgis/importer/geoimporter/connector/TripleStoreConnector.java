@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,8 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdfconnection.RDFConnection;
 import org.apache.jena.rdfconnection.RDFConnectionFactory;
 import org.apache.jena.sparql.engine.http.QueryEngineHTTP;
+
+import de.hsmainz.cs.semgis.util.Tuple;
 
 
 
@@ -52,7 +55,7 @@ public class TripleStoreConnector {
     }
 
     //Remarks: The query result is expected to consist of exactly one data row and data column.
-	public String executeSPARQLQuery(String queryFormatString, String endpoint, Map<String, String> properties) {
+	public Tuple<String,String> executeSPARQLQuery(String queryFormatString, String endpoint, Map<String, String> properties) {
         QueryExecution qexec = null;
         try
         {
@@ -62,9 +65,20 @@ public class TripleStoreConnector {
             qexec = QueryExecutionFactory.sparqlService(endpoint, prefixList + queryString);
 		    org.apache.jena.query.ResultSet results = qexec.execSelect();
             QuerySolution resultSet = results.next();
-            String columnName = resultSet.varNames().next().toString();
+            Iterator<String> variter = resultSet.varNames();
+            String columnName = variter.next().toString();
+            String label=null;
+            if(columnName.toLowerCase().contains("label") && variter.hasNext()) {
+            	label=columnName;
+            	columnName=variter.next().toString();
+            }else if(variter.hasNext()) {
+            	label=variter.next().toString();
+            }
             //System.out.println(columnName+" "+resultSet.get(columnName).toString());
-			return resultSet.get(columnName).toString();
+            if(label!=null) {
+            	return new Tuple<String,String>(resultSet.get(columnName).toString(),resultSet.getLiteral(label).getString());
+            }
+			return new Tuple<String,String>(resultSet.get(columnName).toString(),null);
 		} catch (Exception ex) {
 			//ex.printStackTrace();
 			return null;

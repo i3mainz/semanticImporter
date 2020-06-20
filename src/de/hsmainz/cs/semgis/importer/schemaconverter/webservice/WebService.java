@@ -27,12 +27,11 @@ import javax.xml.xpath.XPathExpressionException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.jena.ontology.OntModel;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.xml.sax.SAXException;
-
-import com.sun.jersey.core.header.FormDataContentDisposition;
-import com.sun.jersey.multipart.FormDataParam;
 
 import de.hsmainz.cs.semgis.importer.geoimporter.importer.GMLImporter;
 import de.hsmainz.cs.semgis.importer.schemaconverter.XSD2OWL;
@@ -53,6 +52,7 @@ public class WebService {
 			@DefaultValue("") @QueryParam("namespace") String namespace) { 
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
+        
         XSD2OWL xsd2owl=new XSD2OWL();
 		xsd2owl.transformercounter = 0;
 		String owlfile = "xsd/"+formatname+"/"+formatname+"_testx";

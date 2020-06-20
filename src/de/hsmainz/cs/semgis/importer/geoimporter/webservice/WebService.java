@@ -48,6 +48,8 @@ import org.geotoolkit.data.shapefile.ShapefileFeatureStoreFactory;
 import org.geotoolkit.data.wfs.WFSFeatureStoreFactory;
 import org.geotoolkit.data.wfs.WebFeatureClient;
 import org.geotoolkit.feature.Property;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.opengis.feature.PropertyType;
@@ -55,9 +57,6 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
-
-import com.sun.jersey.core.header.FormDataContentDisposition;
-import com.sun.jersey.multipart.FormDataParam;
 
 import de.hsmainz.cs.semgis.importer.geoimporter.Main;
 import de.hsmainz.cs.semgis.importer.geoimporter.config.Config;
