@@ -61,6 +61,13 @@ function saveTextAsFile(tosave,fileext,filename)
         window.URL.revokeObjectURL(url);  
     }, 1000);
 }
+
+function downloadSchema(){
+	 $.get($("#mappingschema").val(), {}, function (xml){
+		 return saveTextAsFile(xml,".xml","mapping");
+	 });
+}
+
 var filedata={}
 function analyzeFile(){
 	    var data = new FormData(); // das ist unser Daten-Objekt ...
@@ -145,7 +152,6 @@ function mappingSchemaToTable(){
 	<span id="loginspan"></span>
 <div id="logindialog" title="Login">
   <p class="validateTips">All form fields are required.</p>
- 
   <form>
     <fieldset>
       <label for="username">Username:</label>
@@ -179,7 +185,7 @@ function mappingSchemaToTable(){
  	</p>
 	</p>
 	Mappingschema: <select id="mappingschema" onChange="mappingSchemaToTable()"></select><br/><br/>
-	<span id="tableheader"></span><br/>
+	<span id="tableheader"></span><br/><button id="downloadSchema" onClick="downloadSchema()">Download Schema</button>
  	<table id="datasettable" class="description" width="100%" align="center" border="1">
  	</table>
 	   <p>
