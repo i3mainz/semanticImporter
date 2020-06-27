@@ -64,7 +64,7 @@ function saveTextAsFile(tosave,fileext,filename)
 
 function downloadSchema(){
 	 $.get($("#mappingschema").val(), {}, function (xml){
-		 return saveTextAsFile(xml,".xml","mapping");
+		 return saveTextAsFile(new XMLSerializer().serializeToString(xml),".xml","mapping");
 	 });
 }
 
