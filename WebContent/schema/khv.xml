@@ -1,104 +1,160 @@
 <?xml version="1.0"?>
 <data>
-<file class="https://www.wikidata.org/entity/Q16917"
-namespace="http://registry.gdi-de.org/id/de.bund.bkg.poi/" 
-attnamespace="http://registry.gdi-de.org/id/de.bund.bkg.poi/"
+<file class="http://www.wikidata.org/entity/Q16917" classlabel="Krankenhaus"
+namespace="http://ld.gdi-de.org/id/de.bund.bkg.poi/" 
+attnamespace="http://ld.gdi-de.org/id/de.bund.bkg.poi/"
 geoendpoint="http://linkedgeodata.org/sparql" 
-geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false" epsg="25833">
+geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false" epsg="25832">
 	
-	<metadata publisher="BKG" timestamp="2018-05-30T09:30:10Z" license="https://www.govdata.de/dl-de/by-2-0" />
+	<metadata publisher="BKG" timestamp="2018-05-30T09:30:10Z" license="http://www.govdata.de/dl-de/by-2-0" />
 	
 	<style>
 		<point size="2" border="1" borderColor="black" fillColor="red"/>
 		<linestring size="2" border="1" borderColor="black" fillColor="red"/>
 		<polygon size="2" border="1" borderColor="black" fillColor="red"/>
 	</style>
+	<rootclass class="http://ld.gdi-de.org/id/BKGObject">
+		<clslabel lang="en" value="BKGObject"/>
+		<clslabel lang="de" value="BKGObjekt"/>
+	</rootclass>
+		
+	<classmapping class="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#GovernmentalService">
+		<clslabel lang="en" value="Governmental Service"/>
+		<clslabel lang="de" value="Staatlicher Dienst"/>
+	</classmapping>
 	
-	<classmapping class="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#GovernmentalService"/>
+	<classmapping class="http://ld.gdi-de.org/id/de.bund.bkg.poi/KHV" superclass="http://ld.gdi-de.org/id/de.bund.bkg.poi/POI"/>
 	
-	<addcolumn prop="obj" propiri="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#serviceType" concept="http://inspire.ec.europa.eu/schemas/us/4.0#ServiceTypeValue"  value="http://inspire.ec.europa.eu/codelist/ServiceTypeValue/generalHospital"/>
+	<addcolumn prop="obj" propiri="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#serviceType" concept="http://inspire.ec.europa.eu/schemas/us/4.0#ServiceTypeValue"  value="http://inspire.ec.europa.eu/codelist/ServiceTypeValue/generalHospital">
+		<proplabel lang="en" value="service type"/>
+		<proplabel lang="de" value="Service Typ"/>
+	</addcolumn>
     
-	<column name="Name" prop="annotation" propiri="http://www.w3.org/2000/01/rdf-schema#label" range="http://www.w3.org/2001/XMLSchema#string"/>  
-    
-    <column name="Strasse" prop="data" propiri="http://www.wikidata.org/prop/direct/P669" range="http://www.w3.org/2001/XMLSchema#string"/> 
+	<column name="Name" prop="annotation" propiri="http://www.w3.org/2000/01/rdf-schema#label" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="Name"/>
+		<proplabel lang="de" value="Name"/>
+    </column>
 
-    <column name="Hn" prop="data" propiri="http://www.wikidata.org/prop/direct/P670" range="http://www.w3.org/2001/XMLSchema#string"/> 
-	
-    <column name="PLZ" prop="data" propiri="http://www.wikidata.org/prop/direct/P281" range="http://www.w3.org/2001/XMLSchema#integer"/> 
+	<column name="Kurzname" prop="annotation" propiri="http://www.wikidata.org/prop/direct/P1813" proplabel="short name" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="short name"/>
+		<proplabel lang="de" value="Kurzname"/>
+    </column>      
     
-    <column name="Telefon" prop="data" propiri="http://www.wikidata.org/prop/direct/P1329" range="http://www.w3.org/2001/XMLSchema#string"/> 
+    <column name="Strasse" prop="data" propiri="http://www.wikidata.org/prop/direct/P669" proplabel="located on street" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="located on street"/>
+		<proplabel lang="de" value="Strasse"/>
+    </column> 
 
-    <column name="Telefax" prop="data" propiri="http://www.wikidata.org/prop/direct/P2900" range="http://www.w3.org/2001/XMLSchema#string"/>   
+    <column name="Hn" prop="data" propiri="http://www.wikidata.org/prop/direct/P670" proplabel="street number" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="street number"/>
+		<proplabel lang="de" value="Hausnummer"/>
+    </column>
+	
+    <column name="PLZ" prop="data" propiri="http://www.wikidata.org/prop/direct/P281" proplabel="postal code" range="http://www.w3.org/2001/XMLSchema#integer">
+		<proplabel lang="en" value="postal code"/>
+		<proplabel lang="de" value="Postleitzahl"/>
+    </column>
     
-    <column name="E_Mail" prop="data" propiri="http://www.wikidata.org/prop/direct/P968" range="http://www.w3.org/2001/XMLSchema#string"/>
+    <column name="Telefon" prop="data" propiri="http://www.wikidata.org/prop/direct/P1329" proplabel="phone number" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="phone number"/>
+		<proplabel lang="de" value="Telefonnummer"/>
+    </column> 
+
+    <column name="Telefax" prop="data" propiri="http://www.wikidata.org/prop/direct/P2900" proplabel="fax number" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="fax number"/>
+		<proplabel lang="de" value="Faxnummer"/>
+    </column>    
+    
+    <column name="E_Mail" prop="data" propiri="http://www.wikidata.org/prop/direct/P968" proplabel="e-mail address" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="e-mail address"/>
+		<proplabel lang="de" value="E-Mail Adresse"/>
+    </column>
   
-    <column name="Homepage" prop="data" propiri="http://www.wikidata.org/prop/direct/P856" range="http://www.w3.org/2001/XMLSchema#string"/>  	
+    <column name="Homepage" prop="data" propiri="http://www.wikidata.org/prop/direct/P856" proplabel="official website" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="official website"/>
+		<proplabel lang="de" value="Offizielle Webseite"/>
+    </column> 
 	
-	<column name="Betten_Ins" prop="data" propiri="http://www.wikidata.org/prop/direct/P6801" range="http://www.w3.org/2001/XMLSchema#integer"/> 
+	<column name="Betten_Ins" prop="data" propiri="http://www.wikidata.org/prop/direct/P6801" proplabel="number of hospital beds" range="http://www.w3.org/2001/XMLSchema#integer"/> 
 	
 	<column name="Art_Einric" prop="subclass">
-		<valuemapping from="5" to="https://www.wikidata.org/wiki/Q1009272"/>
+		<valuemapping from="5" to="http://www.wikidata.org/wiki/Q1009272"/>
 	</column>
 	
-	<column name="Innere" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q11180">
+	<column name="Innere" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="http://www.wikidata.org/wiki/Q11180">
 	</column>
 	
-	<column name="l_Kardio" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q10379">
+	<column name="l_Kardio" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="http://www.wikidata.org/wiki/Q10379">
 	</column>
 
-	<column name="I_Rheuma" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q327657">
+	<column name="I_Rheuma" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="http://www.wikidata.org/wiki/Q327657">
 	</column>
 	
-	<column name="I_Angio" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q539717">
+	<column name="I_Angio" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="http://www.wikidata.org/wiki/Q539717">
 	</column>
 	
-	<column name="I_Endo" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q212809">
+	<column name="I_Endo" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="http://www.wikidata.org/wiki/Q212809">
 	</column>
 	
-	<column name="I_Gastro" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q120569">
+	<column name="I_Gastro" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="http://www.wikidata.org/wiki/Q120569">
 	</column>
 	
-	<column name="I_Haema" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q103824">
+	<column name="I_Haema" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="http://www.wikidata.org/wiki/Q103824">
 	</column>
 	
-	<column name="I_Nephro" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q177635">
+	<column name="I_Nephro" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="http://www.wikidata.org/wiki/Q177635">
 	</column>
 	
-	<column name="Neurologie" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q83042">
+	<column name="Neurologie" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="http://www.wikidata.org/wiki/Q83042">
 	</column>
 	
-	<column name="Kinderhk" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q123028">
+	<column name="Kinderhk" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="http://www.wikidata.org/wiki/Q123028">
 	</column>
 	
-	<column name="Geriatrie" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q10384">
+	<column name="Geriatrie" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="http://www.wikidata.org/wiki/Q10384">
 	</column>
 	
-	<column name="Ortho" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q216685">
+	<column name="Ortho" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="http://www.wikidata.org/wiki/Q216685">
 	</column>
 	
-	<column name="Psychiat" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q7867">
+	<column name="Psychiat" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="http://www.wikidata.org/wiki/Q7867">
 	</column>
 	
-	<column name="Psychother" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q183257">
+	<column name="Psychother" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="http://www.wikidata.org/wiki/Q183257">
 	</column>
 	
-	<column name="Kinderpsyc" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="https://www.wikidata.org/wiki/Q5097917">
+	<column name="Kinderpsyc" prop="obj" propiri="http://www.wikidata.org/prop/direct/P2175" notempty="true" value="http://www.wikidata.org/wiki/Q5097917">
 	</column>
 		
-	<column name="Verwaltung" prop="obj" concept="https://www.wikidata.org/entity/Q149621" propiri="http://www.wikidata.org/prop/direct/P131" 
-	query="SELECT distinct ?item WHERE{ ?item wdt:P131 wd:Q149621 . ?item ?label '%%Verwaltung%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="https://query.wikidata.org/sparql"/> 
+	<column name="Verwaltung" prop="obj" concept="http://www.wikidata.org/entity/Q149621" propiri="http://www.wikidata.org/prop/direct/P131" ignoreUnresolved="false"
+	query="SELECT distinct ?item ?itemLabel WHERE{ ?item wdt:P31 wd:Q149621 . ?item ?label '%%Verwaltung%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de,en'. }}" endpoint="http://query.wikidata.org/sparql">
+		<proplabel lang="en" value="administration"/>
+		<proplabel lang="de" value="Verwaltung"/>
+    </column> 
 
-	<column name="Kreis" prop="obj" concept="https://www.wikidata.org/entity/Q106658" propiri="http://www.wikidata.org/prop/direct/P131"
-	query="SELECT distinct ?item WHERE{ ?item wdt:P131 wd:Q106658 . ?item ?label '%%Kreis%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="https://query.wikidata.org/sparql"/> 
+	<column name="Kreis" prop="obj" concept="http://www.wikidata.org/entity/Q106658" propiri="http://www.wikidata.org/prop/direct/P131" ignoreUnresolved="false" 
+	query="SELECT distinct ?item ?itemLabel WHERE{ ?item wdt:P31* wd:Q106658 . ?item ?label '%%Kreis%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de,en'. }}" endpoint="http://query.wikidata.org/sparql">
+		<proplabel lang="en" value="district of Germany"/>
+		<proplabel lang="de" value="Kreis"/>
+    </column>  
 
-	<column name="Regierungs" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" concept="https://www.wikidata.org/entity/Q22721"
-	query="SELECT distinct ?city WHERE {?city wdt:P31 wd:Q22721 . ?city ?label '%%Regierungs%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="https://query.wikidata.org/sparql"/> 
+	<column name="Regierungs" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" concept="http://www.wikidata.org/entity/Q22721" ignoreUnresolved="false"
+	query="SELECT distinct ?city ?cityLabel WHERE {?city wdt:P31 wd:Q22721 . ?city ?label '%%Regierungs%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de,en'. }}" endpoint="http://query.wikidata.org/sparql">
+		<proplabel lang="en" value="Regierungsbezirk"/>
+		<proplabel lang="de" value="Regierungsbezirk"/>
+    </column> 
 
-	<column name="Gemeinde" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" concept="https://www.wikidata.org/entity/Q262166"
-	query="SELECT distinct ?city WHERE {?city wdt:P31 wd:Q262166 . ?city ?label '%%Gemeinde%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="https://query.wikidata.org/sparql"/> 	
+	<column name="Gemeinde" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" concept="http://www.wikidata.org/entity/Q262166" ignoreUnresolved="false"
+	query="SELECT distinct ?city ?cityLabel WHERE { VALUES ?classes { wd:Q262166 wd:Q42744322 wd:Q23006 }  ?city wdt:P31 ?classes . ?city ?label '%%Gemeinde%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de,en'. }}" endpoint="http://query.wikidata.org/sparql">
+		<proplabel lang="en" value="municipality"/>
+		<proplabel lang="de" value="Gemeinde"/>
+    </column> 	
 	
-    <column name="Bundesland" prop="obj" propiri="http://www.wikidata.org/prop/direct/P17" range="http://www.w3.org/2001/XMLSchema#string" concept="https://www.wikidata.org/entity/Q1221156"
-	query="SELECT distinct ?city WHERE {?city wdt:P31 wd:Q1221156 . ?city ?label '%%Bundesland%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="https://query.wikidata.org/sparql"/>
+    <column name="Bundesland" prop="obj" propiri="http://www.wikidata.org/prop/direct/P17" range="http://www.w3.org/2001/XMLSchema#string" concept="http://www.wikidata.org/entity/Q1221156" ignoreUnresolved="false"
+	query="SELECT distinct ?city ?cityLabel WHERE {?city wdt:P31 wd:Q1221156 . ?city ?label '%%Bundesland%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de,en'. }}" endpoint="http://query.wikidata.org/sparql">
+		<proplabel lang="en" value="federal state"/>
+		<proplabel lang="de" value="Bundesland"/>
+    </column>
     
 </file>
 </data>

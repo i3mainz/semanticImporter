@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <data>
-<file class="https://www.wikidata.org/entity/Q41487" 
-namespace="http://registry.gdi-de.org/id/de.bund.bkg.poi/" 
-attnamespace="http://registry.gdi-de.org/id/de.bund.bkg.poi/"
+<file class="http://www.wikidata.org/entity/Q41487" classlabel="Gericht"
+namespace="http://ld.gdi-de.org/id/de.bund.bkg.poi/" 
+attnamespace="http://ld.gdi-de.org/id/de.bund.bkg.poi/"
 geoendpoint="http://linkedgeodata.org/sparql" 
-geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false" epsg="25833">
+geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false" epsg="25832">
 	
 	<metadata publisher="BKG" timestamp="2018-05-30T09:30:10Z" license="https://www.govdata.de/dl-de/by-2-0" />
 	
@@ -14,82 +14,143 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
 		<polygon size="2" border="1" borderColor="black" fillColor="red"/>
 	</style>
 	
-	<classmapping class="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#GovernmentalService"/>
+	<rootclass class="http://ld.gdi-de.org/id/BKGObject">
+		<clslabel lang="en" value="BKGObject"/>
+		<clslabel lang="de" value="BKGObjekt"/>
+	</rootclass>
+		
+	<classmapping class="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#GovernmentalService">
+		<clslabel lang="en" value="Governmental Service"/>
+		<clslabel lang="de" value="Staatlicher Dienst"/>
+	</classmapping>
 	
-	<addcolumn prop="obj" propiri="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#serviceType" concept="http://inspire.ec.europa.eu/schemas/us/4.0#ServiceTypeValue"  value="http://inspire.ec.europa.eu/codelist/ServiceTypeValue/pulicOrderAndSafety"/>
-    
-	<column name="Name" prop="annotation" propiri="http://www.w3.org/2000/01/rdf-schema#label" range="http://www.w3.org/2001/XMLSchema#string"/> 
-
-	<column name="Kurzname" prop="annotation" propiri="http://www.wikidata.org/prop/direct/P1813" range="http://www.w3.org/2001/XMLSchema#string"/>     
-    
-    <column name="Strasse" prop="data" propiri="http://www.wikidata.org/prop/direct/P669" range="http://www.w3.org/2001/XMLSchema#string"/> 
-
-    <column name="Hn" prop="data" propiri="http://www.wikidata.org/prop/direct/P670" range="http://www.w3.org/2001/XMLSchema#string"/> 
+	<classmapping class="http://ld.gdi-de.org/id/de.bund.bkg.poi/Gerichte" superclass="http://ld.gdi-de.org/id/de.bund.bkg.poi/POI"/>
 	
-    <column name="PLZ" prop="data" propiri="http://www.wikidata.org/prop/direct/P281" range="http://www.w3.org/2001/XMLSchema#integer"/> 
+	<addcolumn prop="obj" propiri="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#serviceType" concept="http://inspire.ec.europa.eu/schemas/us/4.0#ServiceTypeValue"  value="http://inspire.ec.europa.eu/codelist/ServiceTypeValue/publicOrderAndSafety">
+		<proplabel lang="en" value="service type"/>
+		<proplabel lang="de" value="Service Typ"/>
+	</addcolumn>
     
-    <column name="Telefon" prop="data" propiri="http://www.wikidata.org/prop/direct/P1329" range="http://www.w3.org/2001/XMLSchema#string"/> 
+	<column name="Name" prop="annotation" propiri="http://www.w3.org/2000/01/rdf-schema#label" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="Name"/>
+		<proplabel lang="de" value="Name"/>
+    </column>
 
-    <column name="Telefax" prop="data" propiri="http://www.wikidata.org/prop/direct/P2900" range="http://www.w3.org/2001/XMLSchema#string"/>   
+	<column name="Kurzname" prop="annotation" propiri="http://www.wikidata.org/prop/direct/P1813" proplabel="short name" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="short name"/>
+		<proplabel lang="de" value="Kurzname"/>
+    </column>      
     
-    <column name="E_Mail" prop="data" propiri="http://www.wikidata.org/prop/direct/P968" range="http://www.w3.org/2001/XMLSchema#string"/>
+    <column name="Strasse" prop="data" propiri="http://www.wikidata.org/prop/direct/P669" proplabel="located on street" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="located on street"/>
+		<proplabel lang="de" value="Strasse"/>
+    </column> 
+
+    <column name="Hn" prop="data" propiri="http://www.wikidata.org/prop/direct/P670" proplabel="street number" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="street number"/>
+		<proplabel lang="de" value="Hausnummer"/>
+    </column>
+	
+    <column name="PLZ" prop="data" propiri="http://www.wikidata.org/prop/direct/P281" proplabel="postal code" range="http://www.w3.org/2001/XMLSchema#integer">
+		<proplabel lang="en" value="postal code"/>
+		<proplabel lang="de" value="Postleitzahl"/>
+    </column>
+    
+    <column name="Telefon" prop="data" propiri="http://www.wikidata.org/prop/direct/P1329" proplabel="phone number" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="phone number"/>
+		<proplabel lang="de" value="Telefonnummer"/>
+    </column> 
+
+    <column name="Telefax" prop="data" propiri="http://www.wikidata.org/prop/direct/P2900" proplabel="fax number" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="fax number"/>
+		<proplabel lang="de" value="Faxnummer"/>
+    </column>    
+    
+    <column name="E_Mail" prop="data" propiri="http://www.wikidata.org/prop/direct/P968" proplabel="e-mail address" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="e-mail address"/>
+		<proplabel lang="de" value="E-Mail Adresse"/>
+    </column>
   
-    <column name="Homepage" prop="data" propiri="http://www.wikidata.org/prop/direct/P856" range="http://www.w3.org/2001/XMLSchema#string"/>
+    <column name="Homepage" prop="data" propiri="http://www.wikidata.org/prop/direct/P856" proplabel="official website" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="official website"/>
+		<proplabel lang="de" value="Offizielle Webseite"/>
+    </column>
+
+    <column name="Postfach" prop="data" propiri="http://www.wikidata.org/prop/direct/P2918" proplabel="PO Box" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="PO Box"/>
+		<proplabel lang="de" value="Postfach"/>
+    </column>    
 
     <column name="Typ" prop="subclass">
-		<valuemapping from="Amtsgericht" to="https://www.wikidata.org/entity/Q480477"/>
-		<valuemapping from="Amtsgericht (A)" to="https://www.wikidata.org/entity/Q480477"/>
-		<valuemapping from="Amtsgericht (G)" to="https://www.wikidata.org/entity/Q480477"/>
-		<valuemapping from="Amtsgericht (N)" to="https://www.wikidata.org/entity/Q480477"/>
-		<valuemapping from="Arbeitsgericht" to="https://www.wikidata.org/entity/Q627718"/>
-		<valuemapping from="Arbeitsgericht (A)" to="https://www.wikidata.org/entity/Q627718"/>
-		<valuemapping from="Bundesarbeitsgericht" to="https://www.wikidata.org/entity/Q176936"/>
-		<valuemapping from="Bundesfinanzhof" to="https://www.wikidata.org/entity/Q702415"/>
-		<valuemapping from="Bundesgerichtshof" to="https://www.wikidata.org/entity/Q687323"/>
-		<valuemapping from="Bundesgerichtshof (N)" to="https://www.wikidata.org/entity/Q687323"/>
-		<valuemapping from="Bundespatentgericht" to="https://www.wikidata.org/entity/Q314237"/>
-		<valuemapping from="Bundessozialgericht" to="https://www.wikidata.org/entity/Q674868"/>
-		<valuemapping from="Bundesverwaltungsgericht" to="https://www.wikidata.org/entity/Q702424"/>
-		<valuemapping from="Oberlandesgericht" to="https://www.wikidata.org/entity/Q452543"/>
-		<valuemapping from="Oberlandesgericht (A)" to="https://www.wikidata.org/entity/Q452543"/>
-		<valuemapping from="Oberlandesgericht (N)" to="https://www.wikidata.org/entity/Q452543"/>
-		<valuemapping from="Verfassungsgericht" to="https://www.wikidata.org/entity/Q32766"/>
-		<valuemapping from="Landgericht" to="https://www.wikidata.org/entity/Q13384978"/>
-		<valuemapping from="Landgericht (A)" to="https://www.wikidata.org/entity/Q13384978"/>
-		<valuemapping from="Landgericht (N)" to="https://www.wikidata.org/entity/Q13384978"/>
-		<valuemapping from="Landesarbeitsgericht" to="https://www.wikidata.org/entity/Q1802087"/>
-		<valuemapping from="Landesarbeitsgericht (A)" to="https://www.wikidata.org/entity/Q1802087"/>
-		<valuemapping from="Landessozialgericht" to="https://www.wikidata.org/entity/Q1802611"/>
-		<valuemapping from="Landessozialgericht (A)" to="https://www.wikidata.org/entity/Q1802611"/>
-		<valuemapping from="Finanzgericht" to="https://www.wikidata.org/entity/Q897056"/>
-		<valuemapping from="Finanzgericht (A)" to="https://www.wikidata.org/entity/Q897056"/>
-		<valuemapping from="Kammergericht" to="https://www.wikidata.org/entity/Q59165607"/>
-		<valuemapping from="Verwaltungsgericht" to="https://www.wikidata.org/entity/Q1641572"/>
-		<valuemapping from="Verwaltungsgericht (N)" to="https://www.wikidata.org/entity/Q1641572"/>
-		<valuemapping from="Sozialgericht" to="https://www.wikidata.org/entity/Q2305602"/>
-		<valuemapping from="Sozialgericht (N)" to="https://www.wikidata.org/entity/Q2305602"/>
-		<valuemapping from="Oberverwaltungsgericht" to="https://www.wikidata.org/entity/Q2011365"/>
-		<valuemapping from="Oberverwaltungsgericht (A)" to="https://www.wikidata.org/entity/Q2011365"/>
+		<valuemapping from="Amtsgericht" to="http://www.wikidata.org/entity/Q480477"/>
+		<valuemapping from="Amtsgericht (A)" to="http://www.wikidata.org/entity/Q480477"/>
+		<valuemapping from="Amtsgericht (G)" to="http://www.wikidata.org/entity/Q480477"/>
+		<valuemapping from="Amtsgericht (N)" to="http://www.wikidata.org/entity/Q480477"/>
+		<valuemapping from="Arbeitsgericht" to="http://www.wikidata.org/entity/Q627718"/>
+		<valuemapping from="Arbeitsgericht (A)" to="http://www.wikidata.org/entity/Q627718"/>
+		<valuemapping from="Bundesarbeitsgericht" to="http://www.wikidata.org/entity/Q176936"/>
+		<valuemapping from="Bundesfinanzhof" to="http://www.wikidata.org/entity/Q702415"/>
+		<valuemapping from="Bundesgerichtshof" to="http://www.wikidata.org/entity/Q687323"/>
+		<valuemapping from="Bundesgerichtshof (N)" to="http://www.wikidata.org/entity/Q687323"/>
+		<valuemapping from="Bundespatentgericht" to="http://www.wikidata.org/entity/Q314237"/>
+		<valuemapping from="Bundessozialgericht" to="http://www.wikidata.org/entity/Q674868"/>
+		<valuemapping from="Bundesverwaltungsgericht" to="http://www.wikidata.org/entity/Q702424"/>
+		<valuemapping from="Oberlandesgericht" to="http://www.wikidata.org/entity/Q452543"/>
+		<valuemapping from="Oberlandesgericht (A)" to="http://www.wikidata.org/entity/Q452543"/>
+		<valuemapping from="Oberlandesgericht (N)" to="http://www.wikidata.org/entity/Q452543"/>
+		<valuemapping from="Verfassungsgericht" to="http://www.wikidata.org/entity/Q32766"/>
+		<valuemapping from="Landgericht" to="http://www.wikidata.org/entity/Q13384978"/>
+		<valuemapping from="Landgericht (A)" to="http://www.wikidata.org/entity/Q13384978"/>
+		<valuemapping from="Landgericht (N)" to="http://www.wikidata.org/entity/Q13384978"/>
+		<valuemapping from="Landesarbeitsgericht" to="http://www.wikidata.org/entity/Q1802087"/>
+		<valuemapping from="Landesarbeitsgericht (A)" to="http://www.wikidata.org/entity/Q1802087"/>
+		<valuemapping from="Landessozialgericht" to="http://www.wikidata.org/entity/Q1802611"/>
+		<valuemapping from="Landessozialgericht (A)" to="http://www.wikidata.org/entity/Q1802611"/>
+		<valuemapping from="Finanzgericht" to="http://www.wikidata.org/entity/Q897056"/>
+		<valuemapping from="Finanzgericht (A)" to="http://www.wikidata.org/entity/Q897056"/>
+		<valuemapping from="Kammergericht" to="http://www.wikidata.org/entity/Q59165607"/>
+		<valuemapping from="Verwaltungsgericht" to="http://www.wikidata.org/entity/Q1641572"/>
+		<valuemapping from="Verwaltungsgericht (N)" to="http://www.wikidata.org/entity/Q1641572"/>
+		<valuemapping from="Sozialgericht" to="http://www.wikidata.org/entity/Q2305602"/>
+		<valuemapping from="Sozialgericht (N)" to="http://www.wikidata.org/entity/Q2305602"/>
+		<valuemapping from="Oberverwaltungsgericht" to="http://www.wikidata.org/entity/Q2011365"/>
+		<valuemapping from="Oberverwaltungsgericht (A)" to="http://www.wikidata.org/entity/Q2011365"/>
 	</column>  	
 	
-    <column name="Postfach" prop="data" propiri="http://www.wikidata.org/prop/direct/P2918" range="http://www.w3.org/2001/XMLSchema#string"/>    
+	<column name="RS" prop="data" propiri="http://www.wikidata.org/prop/direct/P1388" proplabel="German regional key" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="German regional key"/>
+		<proplabel lang="de" value="Regionalschlüssel"/>
+    </column>    
 
-	<column name="RS" prop="data" propiri="http://www.wikidata.org/prop/direct/P1388" range="http://www.w3.org/2001/XMLSchema#string"/> 
+		<column name="Verwaltung" prop="obj" concept="http://www.wikidata.org/entity/Q149621" propiri="http://www.wikidata.org/prop/direct/P131" ignoreUnresolved="false"
+	query="SELECT distinct ?item ?itemLabel WHERE{ ?item wdt:P31 wd:Q149621 . ?item ?label '%%Verwaltung%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de,en'. }}" endpoint="http://query.wikidata.org/sparql">
+		<proplabel lang="en" value="administration"/>
+		<proplabel lang="de" value="Verwaltung"/>
+    </column> 
 
-	<column name="Verwaltung" prop="obj" concept="https://www.wikidata.org/entity/Q149621" propiri="http://www.wikidata.org/prop/direct/P131" 
-	query="SELECT distinct ?item WHERE{ ?item wdt:P131 wd:Q149621 . ?item ?label '%%Verwaltung%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="https://query.wikidata.org/sparql"/> 
+	<column name="Kreis" prop="obj" concept="http://www.wikidata.org/entity/Q106658" propiri="http://www.wikidata.org/prop/direct/P131" ignoreUnresolved="false" 
+	query="SELECT distinct ?item ?itemLabel WHERE{ ?item wdt:P31* wd:Q106658 . ?item ?label '%%Kreis%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de,en'. }}" endpoint="http://query.wikidata.org/sparql">
+		<proplabel lang="en" value="district of Germany"/>
+		<proplabel lang="de" value="Kreis"/>
+    </column>  
 
-	<column name="Kreis" prop="obj" concept="https://www.wikidata.org/entity/Q106658" propiri="http://www.wikidata.org/prop/direct/P131"
-	query="SELECT distinct ?item WHERE{ ?item wdt:P131 wd:Q106658 . ?item ?label '%%Kreis%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="https://query.wikidata.org/sparql"/> 
+	<column name="Regierungs" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" concept="http://www.wikidata.org/entity/Q22721" ignoreUnresolved="false"
+	query="SELECT distinct ?city ?cityLabel WHERE {?city wdt:P31 wd:Q22721 . ?city ?label '%%Regierungs%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de,en'. }}" endpoint="http://query.wikidata.org/sparql">
+		<proplabel lang="en" value="Regierungsbezirk"/>
+		<proplabel lang="de" value="Regierungsbezirk"/>
+    </column> 
 
-	<column name="Regierungs" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" concept="https://www.wikidata.org/entity/Q22721"
-	query="SELECT distinct ?city WHERE {?city wdt:P31 wd:Q22721 . ?city ?label '%%Regierungs%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="https://query.wikidata.org/sparql"/> 
-
-	<column name="Gemeinde" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" concept="https://www.wikidata.org/entity/Q262166"
-	query="SELECT distinct ?city WHERE {?city wdt:P31 wd:Q262166 . ?city ?label '%%Gemeinde%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="https://query.wikidata.org/sparql"/> 	
+	<column name="Gemeinde" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" concept="http://www.wikidata.org/entity/Q262166" ignoreUnresolved="false"
+	query="SELECT distinct ?city ?cityLabel WHERE { VALUES ?classes { wd:Q262166 wd:Q42744322 wd:Q23006 }  ?city wdt:P31 ?classes . ?city ?label '%%Gemeinde%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de,en'. }}" endpoint="http://query.wikidata.org/sparql">
+		<proplabel lang="en" value="municipality"/>
+		<proplabel lang="de" value="Gemeinde"/>
+    </column> 	
 	
-    <column name="Bundesland" prop="obj" propiri="http://www.wikidata.org/prop/direct/P17" range="http://www.w3.org/2001/XMLSchema#string" concept="https://www.wikidata.org/entity/Q1221156"
-	query="SELECT distinct ?city WHERE {?city wdt:P31 wd:Q1221156 . ?city ?label '%%Bundesland%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="https://query.wikidata.org/sparql"/>
+    <column name="Bundesland" prop="obj" propiri="http://www.wikidata.org/prop/direct/P17" range="http://www.w3.org/2001/XMLSchema#string" concept="http://www.wikidata.org/entity/Q1221156" ignoreUnresolved="false"
+	query="SELECT distinct ?city ?cityLabel WHERE {?city wdt:P31 wd:Q1221156 . ?city ?label '%%Bundesland%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de,en'. }}" endpoint="http://query.wikidata.org/sparql">
+		<proplabel lang="en" value="federal state"/>
+		<proplabel lang="de" value="Bundesland"/>
+    </column>
     
 </file>
 </data>

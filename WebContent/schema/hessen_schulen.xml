@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <data>
 <file class="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#GovernmentalService" indidprefix="schulen_hessen_" indid="inspireId" 
-namespace="http://registry.gdi-de.org/id/de.he.NUTS.DE71C.US.Schulen/"
-attnamespace="http://registry.gdi-de.org/id/de.he.NUTS.DE71C.US.Schulen/"
+namespace="http://ld.gdi-de.org/id/de.he.NUTS.DE71C.US.Schulen/"
+attnamespace="http://ld.gdi-de.org/id/de.he.NUTS.DE71C.US.Schulen/"
 geoendpoint="http://linkedgeodata.org/sparql" 
 geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false" epsg="25833">
 	
