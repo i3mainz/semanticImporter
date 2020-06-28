@@ -40,9 +40,9 @@ var classes=""
 function processColumns(columnhead,xml,depth){
 	console.log("Depth "+depth);
 	console.log()
-	if(xml.tagName=="column" || xml.tagName=="addcolumn"){
+	if(xml.tagName=="column" || xml.tagName=="addcolumn" || xml.tagName=="classmapping" || xml.tagName=="rootclass"){
         output+="<tr>"+((typeof $(xml).attr("name") !== 'undefined')?"<td align=\"center\" style=\"color:red\">"+columnhead+$(xml).attr("name"):"<td align=\"center\" style=\"color:green\">Additional column")+"</td>"
-        output+="<td align=\"center\">"+$(xml).attr("prop")+"</td>"
+        output+="<td align=\"center\">"+$(xml).attr("prop")+$(xml).attr("class")+"</td>"
         output+="<td align=\"center\"><a href=\""+$(xml).attr("propiri")+"\" target=\"_blank\" >"+((typeof $(xml).attr("propiri") !== 'undefined')?$(xml).attr("propiri").substring($(xml).attr("propiri").lastIndexOf('/')+1):"")+"</a></td>"
         output+="<td align=\"center\"><a target=\"_blank\" href=\""+$(xml).attr("range")+"\">"+((typeof $(xml).attr("range") !== 'undefined')?$(xml).attr("range").substring($(xml).attr("range").lastIndexOf('#')+1):"")+"</a></td>"
 		if($(xml).children().length>0 && ($(xml).attr("prop")=="subclass" || $(xml).attr("prop")=="obj")){
