@@ -51,7 +51,11 @@ function processColumns(columnhead,xml,depth){
         }else if(xml.tagName=="rootclass"){
         	output+="<td align=\"center\" style=\"color:green\">Root class</td>"
         }
-        output+="<td align=\"center\">"+$(xml).attr("prop")+$(xml).attr("class")+"</td>"
+        if((typeof $(xml).attr("prop") !== 'undefined')){
+        	output+="<td align=\"center\">"+$(xml).attr("prop")+"</td>"
+        }else{
+        	output+="<td align=\"center\">"+$(xml).attr("class")+"</td>"
+        }
         output+="<td align=\"center\"><a href=\""+$(xml).attr("propiri")+"\" target=\"_blank\" >"+((typeof $(xml).attr("propiri") !== 'undefined')?$(xml).attr("propiri").substring($(xml).attr("propiri").lastIndexOf('/')+1):"")+"</a></td>"
         output+="<td align=\"center\"><a target=\"_blank\" href=\""+$(xml).attr("range")+"\">"+((typeof $(xml).attr("range") !== 'undefined')?$(xml).attr("range").substring($(xml).attr("range").lastIndexOf('#')+1):"")+"</a></td>"
 		if($(xml).children().length>0 && ($(xml).attr("prop")=="subclass" || $(xml).attr("prop")=="obj")){
