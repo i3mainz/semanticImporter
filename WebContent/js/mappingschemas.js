@@ -62,7 +62,7 @@ function processColumns(columnhead,xml,depth){
         }else if((typeof $(xml).attr("class") !== 'undefined')){
         	output+="<a href=\""+$(xml).attr("class")+"\" target=\"_blank\" >"+((typeof $(xml).attr("class") !== 'undefined')?$(xml).attr("class").substring($(xml).attr("class").lastIndexOf('/')+1):"")+"</a>"
         }   
-        if($(xml).children().length>0){
+        if($(xml).children("proplabel").length>0 || $(xml).children("clslabel").length>0){
     		output+="<table width=\"100%\" border=1><tr><th>Label</th><th>lang</th></tr>"
             	$(xml).children().each(function(){
             		if(this.tagName=="clslabel" || this.tagName=="proplabel"){
@@ -73,7 +73,7 @@ function processColumns(columnhead,xml,depth){
     	}    
         output+="</td>"
         output+="<td align=\"center\"><a target=\"_blank\" href=\""+$(xml).attr("range")+"\">"+((typeof $(xml).attr("range") !== 'undefined')?$(xml).attr("range").substring($(xml).attr("range").lastIndexOf('#')+1):"")+"</a></td>"
-		if($(xml).children().length>0 && ($(xml).attr("prop")=="subclass" || $(xml).attr("prop")=="obj")){
+		if($(xml).children("valuemapping").length>0 && ($(xml).attr("prop")=="subclass" || $(xml).attr("prop")=="obj")){
         	output+="<td align=center><table width=\"100%\" border=1><tr><th>from</th><th>to</th></tr>"
         	$(xml).children().each(function(){
         		if(this.tagName=="valuemapping"){
