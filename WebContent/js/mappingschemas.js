@@ -52,31 +52,21 @@ function processColumns(columnhead,xml,depth){
         	output+="<td align=\"center\" style=\"color:green\">Root class</td>"
         }
         if((typeof $(xml).attr("prop") !== 'undefined')){
-        	output+="<td align=\"center\">"+$(xml).attr("prop")
-        	if($(xml).children().length>0){
-        		output+="<table width=\"100%\" border=1><tr><th>Label</th><th>lang</th></tr>"
-                	$(xml).children().each(function(){
-                		if(this.tagName=="proplabel"){
-                			output+="<tr><td>"+$(this).attr("value")+"</td><td>"+$(this).attr("lang")+"</td></tr>"
-                		}
-                	});
-        		output+="</table>"
-        	}
-        	output+="</td>"
+        	output+="<td align=\"center\">"+$(xml).attr("prop")+"</td>"
         }else{
-        	output+="<td align=\"center\">"+$(xml).attr("class")
-        	if($(xml).children().length>0){
-        		output+="<table width=\"100%\" border=1><tr><th>Label</th><th>lang</th></tr>"
-                	$(xml).children().each(function(){
-                		if(this.tagName=="clslabel"){
-                			output+="<tr><td>"+$(this).attr("value")+"</td><td>"+$(this).attr("lang")+"</td></tr>"
-                		}
-                	});
-        		output+="</table>"
-        	}
-        	output+="</td>"
+        	output+="<td align=\"center\">"+$(xml).attr("class")+"</td>"
         }
-        output+="<td align=\"center\"><a href=\""+$(xml).attr("propiri")+"\" target=\"_blank\" >"+((typeof $(xml).attr("propiri") !== 'undefined')?$(xml).attr("propiri").substring($(xml).attr("propiri").lastIndexOf('/')+1):"")+"</a></td>"
+        output+="<td align=\"center\"><a href=\""+$(xml).attr("propiri")+"\" target=\"_blank\" >"+((typeof $(xml).attr("propiri") !== 'undefined')?$(xml).attr("propiri").substring($(xml).attr("propiri").lastIndexOf('/')+1):"")+"</a>"
+        if($(xml).children().length>0){
+    		output+="<table width=\"100%\" border=1><tr><th>Label</th><th>lang</th></tr>"
+            	$(xml).children().each(function(){
+            		if(this.tagName=="clslabel" || this.tagName=="proplabel"){
+            			output+="<tr><td>"+$(this).attr("value")+"</td><td>"+$(this).attr("lang")+"</td></tr>"
+            		}
+            	});
+    		output+="</table>"
+    	}    
+        output+="</td>"
         output+="<td align=\"center\"><a target=\"_blank\" href=\""+$(xml).attr("range")+"\">"+((typeof $(xml).attr("range") !== 'undefined')?$(xml).attr("range").substring($(xml).attr("range").lastIndexOf('#')+1):"")+"</a></td>"
 		if($(xml).children().length>0 && ($(xml).attr("prop")=="subclass" || $(xml).attr("prop")=="obj")){
         	output+="<td align=center><table width=\"100%\" border=1><tr><th>from</th><th>to</th></tr>"
