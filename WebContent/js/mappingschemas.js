@@ -54,9 +54,14 @@ function processColumns(columnhead,xml,depth){
         if((typeof $(xml).attr("prop") !== 'undefined')){
         	output+="<td align=\"center\">"+$(xml).attr("prop")+"</td>"
         }else{
-        	output+="<td align=\"center\">"+$(xml).attr("class")+"</td>"
+        	output+="<td align=\"center\"></td>"
         }
-        output+="<td align=\"center\"><a href=\""+$(xml).attr("propiri")+"\" target=\"_blank\" >"+((typeof $(xml).attr("propiri") !== 'undefined')?$(xml).attr("propiri").substring($(xml).attr("propiri").lastIndexOf('/')+1):"")+"</a>"
+        output+="<td align=\"center\">"
+        if((typeof $(xml).attr("propiri") !== 'undefined')){
+        	output+="<a href=\""+$(xml).attr("propiri")+"\" target=\"_blank\" >"+((typeof $(xml).attr("propiri") !== 'undefined')?$(xml).attr("propiri").substring($(xml).attr("propiri").lastIndexOf('/')+1):"")+"</a>"	
+        }else if((typeof $(xml).attr("class") !== 'undefined')){
+        	output+="<a href=\""+$(xml).attr("class")+"\" target=\"_blank\" >"+((typeof $(xml).attr("class") !== 'undefined')?$(xml).attr("class").substring($(xml).attr("class").lastIndexOf('/')+1):"")+"</a>"
+        }   
         if($(xml).children().length>0){
     		output+="<table width=\"100%\" border=1><tr><th>Label</th><th>lang</th></tr>"
             	$(xml).children().each(function(){
