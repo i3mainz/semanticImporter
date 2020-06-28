@@ -41,7 +41,16 @@ function processColumns(columnhead,xml,depth){
 	console.log("Depth "+depth);
 	console.log()
 	if(xml.tagName=="column" || xml.tagName=="addcolumn" || xml.tagName=="classmapping" || xml.tagName=="rootclass"){
-        output+="<tr>"+((typeof $(xml).attr("name") !== 'undefined')?"<td align=\"center\" style=\"color:red\">"+columnhead+$(xml).attr("name"):"<td align=\"center\" style=\"color:green\">Additional column")+"</td>"
+        output+="<tr>"
+        if((typeof $(xml).attr("name") !== 'undefined')){
+        	output+="<td align=\"center\" style=\"color:red\">"+columnhead+$(xml).attr("name")+"</td>"
+        }else if(xml.tagName=="addcolumn"){
+        	output+="<td align=\"center\" style=\"color:green\">Additional column</td>"
+        }else if(xml.tagName=="classmapping"){
+        	output+="<td align=\"center\" style=\"color:green\">Additional class</td>"
+        }else if(xml.tagName=="rootclass"){
+        	output+="<td align=\"center\" style=\"color:green\">Root class</td>"
+        }
         output+="<td align=\"center\">"+$(xml).attr("prop")+$(xml).attr("class")+"</td>"
         output+="<td align=\"center\"><a href=\""+$(xml).attr("propiri")+"\" target=\"_blank\" >"+((typeof $(xml).attr("propiri") !== 'undefined')?$(xml).attr("propiri").substring($(xml).attr("propiri").lastIndexOf('/')+1):"")+"</a></td>"
         output+="<td align=\"center\"><a target=\"_blank\" href=\""+$(xml).attr("range")+"\">"+((typeof $(xml).attr("range") !== 'undefined')?$(xml).attr("range").substring($(xml).attr("range").lastIndexOf('#')+1):"")+"</a></td>"
