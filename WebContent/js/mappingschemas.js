@@ -54,7 +54,7 @@ function processColumns(columnhead,xml,depth){
         if((typeof $(xml).attr("prop") !== 'undefined')){
         	output+="<td align=\"center\">"+$(xml).attr("prop")+"</td>"
         }else{
-        	output+="<td align=\"center\"></td>"
+        	output+="<td align=\"center\">class</td>"
         }
         output+="<td align=\"center\">"
         if((typeof $(xml).attr("propiri") !== 'undefined')){
