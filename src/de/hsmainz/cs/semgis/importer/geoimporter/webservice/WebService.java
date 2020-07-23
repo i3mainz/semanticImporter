@@ -77,7 +77,7 @@ public class WebService {
 	
 	public WebService() throws IOException {
 		if (importerconf == null) {
-			String text2 = new String(Files.readAllBytes(Paths.get("importerconf.json")), StandardCharsets.UTF_8);
+			String text2 = new String(Files.readAllBytes(Paths.get("importerconfig.json")), StandardCharsets.UTF_8);
 			importerconf = new JSONObject(text2);
 		}
 	}
