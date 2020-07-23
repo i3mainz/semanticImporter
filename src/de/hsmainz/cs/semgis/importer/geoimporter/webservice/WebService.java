@@ -73,12 +73,13 @@ import de.hsmainz.cs.semgis.importer.schemaconverter.XSD2OWL.XMLTypes;
 @Path("/service")
 public class WebService {
 
-	static JSONObject importerconf = new JSONObject();
+	static JSONObject importerconf = null;
 	
 	public WebService() throws IOException {
 		if (importerconf == null) {
 			String text2 = new String(Files.readAllBytes(Paths.get("importerconfig.json")), StandardCharsets.UTF_8);
 			importerconf = new JSONObject(text2);
+			System.out.println(importerconf);
 		}
 	}
 	
