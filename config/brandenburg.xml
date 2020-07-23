@@ -16,11 +16,20 @@
 
 	<column name="telefonnum" prop="data" propiri="http://www.wikidata.org/prop/direct/P1329" range="http://www.w3.org/2001/XMLSchema#integer"/> 
 	
-	<column name="schulamtname" prop="data" propiri="http://www.w3.org/2000/01/rdf-schema#comment" range="https://www.wikidata.org/entity/Q1477917"/> 
+	<column name="schulamtname" prop="data" propiri="http://www.w3.org/2000/01/rdf-schema#comment" range="https://www.wikidata.org/entity/Q1477917"/>
 	
-	<column name="schultraeg" valuemapping="p:https://www.wikidata.org/entity/Q3248417" prop="data" range="http://www.w3.org/2001/XMLSchema#string"/> 
+	<column name="schultraeg" prop="data" range="http://www.w3.org/2001/XMLSchema#string">
+		<valuemapping from="p" to="https://www.wikidata.org/entity/Q3248417"/>
+	</column> 
 	
-	<column name="schulform" prop="subclass" valuemapping="Fachschule:https://www.wikidata.org/entity/Q1391465;OSZ:https://www.wikidata.org/entity/Q1650577;Grundschule:https://www.wikidata.org/wiki/Q9842;Oberschule:https://www.wikidata.org/wiki/Q9826;Gymnasium:https://www.wikidata.org/wiki/Q55043;Waldorfschule:https://www.wikidata.org/wiki/Q14551995" range="https://www.wikidata.org/entity/Q1265661"/> 
+	<column name="schulform" prop="subclass" range="https://www.wikidata.org/entity/Q1265661">
+		<valuemapping from="Fachschule" to="https://www.wikidata.org/entity/Q1391465"/>
+		<valuemapping from="OSZ" to="https://www.wikidata.org/entity/Q1650577"/>
+		<valuemapping from ="Grundschule" to="https://www.wikidata.org/wiki/Q9842"/>
+		<valuemapping from ="Oberschule" to="https://www.wikidata.org/wiki/Q9826"/>
+		<valuemapping from="Gymnasium" to="https://www.wikidata.org/wiki/Q55043"/>
+		<valuemapping from="Waldorfschule" to="https://www.wikidata.org/wiki/Q14551995"/>		
+	</column> 
 	
 	<column name="besonderhe" prop="annotation" propiri="http://www.w3.org/2000/01/rdf-schema#comment" range="http://www.w3.org/2001/XMLSchema#string"/> 
 	

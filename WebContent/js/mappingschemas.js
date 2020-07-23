@@ -1,37 +1,25 @@
-var mappingschemas={
-		"NamedPlaces":"schema/geographicalnames.xml",
-		"POI Berufsfeuerwehr":"schema/bfw.xml",
-		"POI Botschaften/Konsulate":"schema/botkon.xml",
-		"POI Bundesbehoerden":"schema/bbeh.xml",
-		"POI Gerichte":"schema/gerichte.xml",
-		"POI Hochschulen":"schema/hs.xml",
-		"POI Justizvollzugsanstalt":"schema/jva.xml",
-		"POI KFZ Zulassungsstelle":"schema/kfz.xml",
-		"POI Krankenhaeuser":"schema/khv.xml",
-		"POI Kita":"schema/kita.xml",
-		"POI Landesbehoerden":"schema/lbeh.xml",
-		"POI Landespolizei":"schema/lpol.xml",
-		"POI Rehaklinik":"schema/rhv.xml",
-		"POI Schulen Allgemein":"schema/schulen_allg.xml",
-		"POI Schulen Beruf":"schema/schulen_beruf.xml",
-		"POI Staatsanwaltschaften":"schema/sta.xml",
-		"POI THW":"schema/thw.xml",
-		"POI UN Organisationen":"schema/unorg.xml",
-		"POI Zoll":"schema/zoll.xml",
-		"Schulen Berlin":"schema/berlin_schulen.xml",
-		"Schulen Brandenburg":"schema/brandenburg_schulen.xml",
-		"Schulen Bremen":"schema/bremen_schulen.xml",
-		"Schulen Hamburg":"schema/hamburg_schulen.xml",
-		"Schulen Hessen":"schema/hessen_schulen.xml",
-		"Schulen NRW":"schema/nrw_schulen.xml",
-		"Unesco Heritage Aachen":"schema/aachen_unesco.xml",
-		"Unesco Heritage Bauhaus":"schema/bauhaus_unesco.xml",
-		"Unesco Heritage Bremen":"schema/bremen_unesco.xml",
-		"Unesco Heritage Hamburg":"schema/hamburg_unesco.xml",
-		"Unesco Heritage Quedlinburg":"schema/quedlinburg_unesco.xml",
-		"Unesco Heritage Sachsen-Anhalt":"schema/quedlinburg_unesco.xml",
-		"XPlanung BP_Plan ST":"schema/xplanung_st_bp_plan.xml",
-		"XPlanung FP_Plan ST":"schema/xplanung_st_fp_plan.xml"
+function getMappingSchemas(){
+	  $.ajax({
+       url: 'rest/service/getMappingSchemas',
+       type: 'GET',         // HTTP-Methode, hier: POST
+       processData: false,
+       contentType: false,
+       success: function(data) { 
+    	   return data;
+       }
+    });
+}
+
+function getMappingSchema(schemaname){
+	  $.ajax({
+       url: 'rest/service/getMappingSchemas/'+schemaname,
+       type: 'GET',         // HTTP-Methode, hier: POST
+       processData: false,
+       contentType: false,
+       success: function(data) { 
+    	   return data;
+       }
+    });
 }
 
 var output=""

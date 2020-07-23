@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<data>
+<file class="https://www.wikidata.org/entity/Q3914" indid="schul_id" 
+namespace="http://ld.gdi-de.org/id/de.hh.schulen/"
+attnamespace="http://ld.gdi-de.org/id/de.hh.schulen/"
+geoendpoint="http://linkedgeodata.org/sparql" 
+geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false" epsg="25833">
+	
+	<classmapping class="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#GovernmentalService">
+		<clslabel lang="en" value="Governmental Service"/>
+		<clslabel lang="de" value="Staatlicher Dienst"/>
+	</classmapping>
+	
+	<metadata publisher="BKG" timestamp="2018-05-30T09:30:10Z" license="https://www.govdata.de/dl-de/by-2-0" />
+	
+	<style>
+		<point size="2" border="1" borderColor="black" fillColor="red"/>
+		<linestring size="2" border="1" borderColor="black" fillColor="red"/>
+		<polygon size="2" border="1" borderColor="black" fillColor="red"/>
+	</style>
+	
+	<addcolumn prop="obj" concept="http://inspire.ec.europa.eu/schemas/us/4.0#ServiceTypeValue" propiri="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#serviceType" value="http://inspire.ec.europa.eu/codelist/ServiceTypeValue/education">
+		<proplabel lang="en" value="service type value"/>
+		<proplabel lang="de" value="Servicetyp"/>
+	</addcolumn>
+	
+	<column name="schulname" prop="annotation" propiri="http://www.w3.org/2000/01/rdf-schema#label" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="name"/>
+		<proplabel lang="de" value="Name"/>
+	</column> 
+	
+	<column name="kapitelbezeichnung" prop="subclass" range="https://www.wikidata.org/entity/Q1265661">
+		<valuemapping from="Grundschulen" to="https://www.wikidata.org/entity/Q9842"/>
+		<valuemapping from="Gymnasien" to="https://www.wikidata.org/entity/Q55043"/>
+		<valuemapping from="Sonderschulen" to="https://www.wikidata.org/entity/Q1110689"/>
+		<valuemapping from="Stadtteilschulen" to="https://www.wikidata.org/entity/Q2328157"/>
+	</column>
+	
+	<column name="besonderhe" prop="annotation" propiri="http://www.w3.org/2000/01/rdf-schema#comment" range="http://www.w3.org/2001/XMLSchema#string"/> 
+	
+	<column name="anzahl_schueler" prop="data" propiri="http://www.wikidata.org/prop/direct/P2196" range="http://www.w3.org/2001/XMLSchema#integer">
+		<proplabel lang="en" value="number of students"/>
+		<proplabel lang="de" value="Anzahl der Schüler"/>
+	</column> 
+	
+	<column name="fax" prop="data" propiri="http://www.wikidata.org/prop/direct/P2900" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="fax number"/>
+		<proplabel lang="de" value="Faxnummer"/>
+	</column> 
+	
+	<column name="schul_telefonnr" prop="data" propiri="http://www.wikidata.org/prop/direct/P1329" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="phone number"/>
+		<proplabel lang="de" value="Telefonnummer"/>
+	</column> 
+    
+	<column name="schul_homepage" prop="data" propiri="http://www.wikidata.org/prop/direct/P856" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="homepage"/>
+		<proplabel lang="de" value="Homepage"/>
+	</column> 
+
+	<column name="schul_email" prop="data" propiri="http://www.wikidata.org/prop/direct/P968" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="email address"/>
+		<proplabel lang="de" value="Email Adresse"/>
+	</column> 
+    
+    <column name="adresse_strasse_hausnr" prop="data" propiri="http://www.wikidata.org/prop/direct/P670" range="http://www.w3.org/2001/XMLSchema#string" splitcharacter=" " splitposition="last">
+    	<proplabel lang="en" value="street number"/>
+		<proplabel lang="de" value="Hausnummer"/>
+    </column> 
+	
+	<column name="adresse_strasse_hausnr" prop="data" propiri="http://www.wikidata.org/prop/direct/P669" range="http://www.w3.org/2001/XMLSchema#string" splitcharacter=" " splitposition="untillast">
+	    <proplabel lang="en" value="street"/>
+		<proplabel lang="de" value="Strasse"/>
+    </column>  
+	
+    <column name="adresse_ort" prop="data" propiri="http://www.wikidata.org/prop/direct/P281" range="http://www.w3.org/2001/XMLSchema#integer" splitcharacter=" " splitposition="untillast">
+        <proplabel lang="en" value="postal code"/>
+		<proplabel lang="de" value="Postleitzahl"/>
+    </column> 
+    
+	<column name="adresse_ort" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" concept="https://www.wikidata.org/entity/Q262166"
+	query="SELECT ?city WHERE {?city wdt:P31 wd:Q262166 . ?item ?label '%%ort%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql"/> 
+	
+	<column name="bezirk" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" 
+	query="SELECT distinct ?item WHERE{ ?ind wdt:P131 ?item . ?item rdf:type wd:Q278976 . ?item ?label '%%bezirk%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql">
+	    <proplabel lang="en" value="district"/>
+		<proplabel lang="de" value="Bezirk"/>
+    </column>  
+		
+</file>
+</data>

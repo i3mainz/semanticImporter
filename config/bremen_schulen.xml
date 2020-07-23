@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<data>
+<file class="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#GovernmentalService" indidprefix="schulen_bremen_" indid="SNR" 
+namespace="http://ld.gdi-de.org/id/de.hb.schulen/"
+attnamespace="http://ld.gdi-de.org/id/de.hb.schulen/"
+geoendpoint="http://linkedgeodata.org/sparql" 
+geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false" epsg="25833">
+	
+	<classmapping value="https://www.wikidata.org/entity/Q3914"/>
+	
+	<metadata publisher="BKG" timestamp="2018-05-30T09:30:10Z" license="https://www.govdata.de/dl-de/by-2-0" />
+	
+	<style>
+		<point size="2" border="1" borderColor="black" fillColor="red"/>
+		<linestring size="2" border="1" borderColor="black" fillColor="red"/>
+		<polygon size="2" border="1" borderColor="black" fillColor="red"/>
+	</style>
+	
+	<addcolumn prop="obj" concept="http://inspire.ec.europa.eu/schemas/us/4.0#ServiceTypeValue" propiri="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#serviceType" value="http://inspire.ec.europa.eu/codelist/ServiceTypeValue/education">
+		<proplabel lang="en" value="service type value"/>
+		<proplabel lang="de" value="Servicetyp"/>
+	</addcolumn>
+	
+	<column name="NAM" prop="annotation" propiri="http://www.w3.org/2000/01/rdf-schema#label" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="name"/>
+		<proplabel lang="de" value="Name"/>
+	</column> 
+	
+	<column name="Schultraeg" prop="obj" propiri="http://www.w3.org/2000/01/rdf-schema#label" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="school sponsor"/>
+		<proplabel lang="de" value="Schulträger"/>
+		<valuemapping from="HB" to="https://www.wikidata.org/entity/Q24879"/>
+		<valuemapping from="FTHB" to="https://www.wikidata.org/entity/Q1454131"/>
+	</column> 
+	
+	<column name="LblNameKur" prop="data" propiri="http://www.wikidata.org/prop/direct/P1813" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="short name"/>
+		<proplabel lang="de" value="Kurzname"/>
+	</column> 
+
+	<column name="Ganztagsch" prop="subclass">´
+		<proplabel lang="en" value="is all-day school"/>
+		<proplabel lang="de" value="ist Ganztagsschule"/>
+		<valuemapping from="J" to="https://www.wikidata.org/entity/Q1493752"/>
+		<valuemapping from="N" to="https://www.wikidata.org/entity/Q3914"/>
+	</column> 
+	
+	<column name="Schulart_2" prop="subclass">
+		<valuemapping from="Berufsbildende Schule" to="https://www.wikidata.org/entity/Q322563"/>
+		<valuemapping from="Oberschule" to="https://www.wikidata.org/entity/Q1668867"/>
+		<valuemapping from="Grundschule" to="https://www.wikidata.org/entity/Q9842"/>
+		<valuemapping from="Gymnasium" to="https://www.wikidata.org/entity/Q55043"/>
+		<valuemapping from="Förderzentrum" to="https://www.wikidata.org/entity/Q1110689"/>
+	</column> 
+	
+	<column name="Strasse" prop="data" propiri="http://www.wikidata.org/prop/direct/P670" range="http://www.w3.org/2001/XMLSchema#string" splitcharacter=" " splitposition="last">
+		<proplabel lang="en" value="street"/>
+		<proplabel lang="de" value="Strasse"/>
+	</column> 
+	
+	<column name="Strasse" prop="data" propiri="http://www.wikidata.org/prop/direct/P669" range="http://www.w3.org/2001/XMLSchema#string" splitcharacter=" " splitposition="untillast">
+		<proplabel lang="en" value="street number"/>
+		<proplabel lang="de" value="Hausnummer"/>
+	</column> 
+
+	<column name="PLZ" prop="data" propiri="http://www.wikidata.org/prop/direct/P281" range="http://www.w3.org/2001/XMLSchema#integer">
+		<proplabel lang="en" value="postal code"/>
+		<proplabel lang="de" value="Postleitzahl"/>
+	</column> 
+				
+</file>
+</data>

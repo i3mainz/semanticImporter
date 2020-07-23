@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<data>
+<file class="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#GovernmentalService" indid="gml:id" 
+namespace="http://ld.gdi-de.org/id/de.be.schulen/"
+attnamespace="http://ld.gdi-de.org/id/de.be.schulen/"
+geoendpoint="http://linkedgeodata.org/sparql" 
+geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false" epsg="25832">
+	
+	<classmapping value="http://www.wikidata.org/entity/Q3914"/>
+	
+	<metadata publisher="BKG" timestamp="2018-05-30T09:30:10Z" license="https://www.govdata.de/dl-de/by-2-0" />
+	
+	<style>
+		<point size="2" border="1" borderColor="black" fillColor="red"/>
+		<linestring size="2" border="1" borderColor="black" fillColor="red"/>
+		<polygon size="2" border="1" borderColor="black" fillColor="red"/>
+	</style>
+	
+	<addcolumn prop="obj" concept="http://inspire.ec.europa.eu/schemas/us/4.0#ServiceTypeValue" propiri="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#serviceType" value="http://inspire.ec.europa.eu/codelist/ServiceTypeValue/education">
+		<proplabel lang="en" value="service type value"/>
+		<proplabel lang="de" value="Servicetyp"/>
+	</addcolumn>
+	
+	<column name="NAME" prop="annotation" propiri="http://www.w3.org/2000/01/rdf-schema#label" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="name"/>
+		<proplabel lang="de" value="Name"/> 
+	</column> 
+	
+	<column name="SCHULART" prop="subclass" >
+		<valuemapping from="Grundschule" to="http://www.wikidata.org/entity/Q9842"/>
+		<valuemapping from="Gymnasium" to="http://www.wikidata.org/entity/Q55043"/>
+	</column>
+	
+	<column name="TRAEGER" prop="subclass" propiri="http://www.wikidata.org/entity/Property:P1454" >
+		<valuemapping from="1" to="http://www.wikidata.org/entity/Q56292968"/>
+		<valuemapping from="2" to="http://www.wikidata.org/entity/Q1454131"/>
+	</column>
+	
+	<column name="PLZ" prop="data" propiri="http://www.wikidata.org/prop/direct/P281" range="http://www.w3.org/2001/XMLSchema#integer">
+		<proplabel lang="en" value="postal code"/>
+		<proplabel lang="de" value="Postleitzahl"/> 
+	</column> 
+	
+	<column name="INTERNET" prop="data" propiri="http://www.wikidata.org/prop/direct/P856" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="homepage"/>
+		<proplabel lang="de" value="Homepage"/> 
+	</column> 
+	
+	<column name="EMAIL" prop="data" propiri="http://www.wikidata.org/prop/direct/P968" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="email address"/>
+		<proplabel lang="de" value="Email Adresse"/> 
+	</column> 
+	
+	<column name="TELEFON" prop="data" propiri="http://www.wikidata.org/prop/direct/P1329" range="http://www.w3.org/2001/XMLSchema#integer">
+		<proplabel lang="en" value="phone number"/>
+		<proplabel lang="de" value="Telefonnummer"/> 
+	</column> 
+	
+	<column name="FAX" prop="data" propiri="http://www.wikidata.org/prop/direct/P2900" range="http://www.w3.org/2001/XMLSchema#integer">
+		<proplabel lang="en" value="fax number"/>
+		<proplabel lang="de" value="Faxnummer"/> 
+	</column> 
+	
+	<column name="ADRESSE" prop="data" propiri="http://www.wikidata.org/prop/direct/P670" range="http://www.w3.org/2001/XMLSchema#string" splitcharacter=" " splitposition="last">
+		<proplabel lang="en" value="postal code"/>
+		<proplabel lang="de" value="Postleitzahl"/> 
+	</column> 
+	
+	<column name="ADRESSE" prop="data" propiri="http://www.wikidata.org/prop/direct/P669" range="http://www.w3.org/2001/XMLSchema#string" splitcharacter=" " splitposition="untillast">
+		<proplabel lang="en" value="street"/>
+		<proplabel lang="de" value="Strasse"/> 
+	</column> 
+	
+	<column name="BEZIRK" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" concept="http://www.wikidata.org/entity/Q262166"
+	query="SELECT ?city WHERE {?city wdt:P31 wd:Q262166 . ?item ?label '%%ort%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql">
+		<proplabel lang="en" value="district"/>
+		<proplabel lang="de" value="Bezirk"/> 
+	</column>
+	
+	<column name="ORTSTEIL" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" concept="http://www.wikidata.org/entity/Q262166"
+	query="SELECT ?city WHERE {?city wdt:P31 wd:Q262166 . ?item ?label '%%ort%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql">
+		<proplabel lang="en" value="district"/>
+		<proplabel lang="de" value="Ortsteil"/> 
+	</column>
+			
+</file>
+</data>
+

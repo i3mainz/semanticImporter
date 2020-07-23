@@ -1,4 +1,38 @@
 {
- "mappingfolder":"config"
+ "mappingfolder":"config",
+ "mappings":{
+		"NamedPlaces":"geographicalnames",
+		"POI Berufsfeuerwehr":"bfw",
+		"POI Botschaften/Konsulate":"botkon",
+		"POI Bundesbehoerden":"bbeh",
+		"POI Gerichte":"gerichte",
+		"POI Hochschulen":"hs",
+		"POI Justizvollzugsanstalt":"jva",
+		"POI KFZ Zulassungsstelle":"kfz",
+		"POI Krankenhaeuser":"khv",
+		"POI Kita":"kita",
+		"POI Landesbehoerden":"lbeh",
+		"POI Landespolizei":"lpol",
+		"POI Rehaklinik":"rhv",
+		"POI Schulen Allgemein":"schulen_allg",
+		"POI Schulen Beruf":"schulen_beruf",
+		"POI Staatsanwaltschaften":"sta",
+		"POI THW":"thw",
+		"POI UN Organisationen":"unorg",
+		"POI Zoll":"zoll",
+		"Schulen Berlin":"berlin_schulen",
+		"Schulen Brandenburg":"brandenburg_schulen",
+		"Schulen Bremen":"bremen_schulen",
+		"Schulen Hamburg":"hamburg_schulen",
+		"Schulen Hessen":"hessen_schulen",
+		"Schulen NRW":"nrw_schulen",
+		"Unesco Heritage Aachen":"aachen_unesco",
+		"Unesco Heritage Sachsen-Anhalt":"bauhaus_unesco",
+		"Unesco Heritage Bremen":"bremen_unesco",
+		"Unesco Heritage Hamburg":"hamburg_unesco",
+		"XPlanung BP_Plan ST":"xplanung_st_bp_plan",
+		"XPlanung FP_Plan ST":"xplanung_st_fp_plan"
+}
+ 
  
 }

@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<data>
+<file class="https://www.wikidata.org/entity/Q9259" indidprefix="wh_bremen_" indid="OBJECTID_1" 
+namespace="http://ld.gdi-de.org/id/de.hb.unesco/" 
+attnamespace="http://ld.gdi-de.org/id/de.hb.unesco/"
+geoendpoint="http://linkedgeodata.org/sparql" 
+geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false" epsg="25833">
+	
+	<metadata publisher="BKG" timestamp="2018-05-30T09:30:10Z" license="https://www.govdata.de/dl-de/by-2-0" />
+	
+	<style>
+		<point size="2" border="1" borderColor="black" fillColor="red"/>
+		<linestring size="2" border="1" borderColor="black" fillColor="red"/>
+		<polygon size="2" border="1" borderColor="black" fillColor="red"/>
+	</style>
+	
+	<classmapping class="http://inspire.ec.europa.eu/schemas/ps/4.0#ProtectedSite">
+		<proplabel lang="en" value="Protected Site"/>
+		<proplabel lang="de" value="Schutzgebiet"/> 
+	</classmapping>
+	
+	<addcolumn prop="obj" concept="http://inspire.ec.europa.eu/schemas/ps/4.0#UNESCOWorldHeritageDesignationValue" propiri="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#siteDesignation" value="http://inspire.ec.europa.eu/codelist/UNESCOWorldHeritageDesignationValue/cultural">
+		<proplabel lang="en" value="UNESCO World Heritage Designation Type"/>
+		<proplabel lang="de" value="Welterbetyp"/> 
+	</addcolumn>
+	
+	<column name="stadt" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" value="http://www.wikidata.org/entity/Q24879">
+		<proplabel lang="en" value="city"/>
+		<proplabel lang="de" value="Stadt"/>
+	</column> 
+	
+	<column name="bez_5107" prop="obj" propiri="http://www.w3.org/2000/01/rdf-schema#label" value="http://www.wikidata.org/entity/Q17278534" >
+		<proplabel lang="en" value="district"/>
+		<proplabel lang="de" value="Bezirk"/>
+	</column> 
+    
+	<column name="stdttl_5107" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" value="http://www.wikidata.org/entity/Q1715951" >
+		<proplabel lang="en" value="city district"/>
+		<proplabel lang="de" value="Stadtteil"/>
+	</column> 
+	
+	<column name="ot_5109" prop="data" propiri="http://www.wikidata.org/prop/direct/P131" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="district"/>
+		<proplabel lang="de" value="Ortsteil"/>
+	</column> 
+	
+	<column name="str_5116" prop="data" propiri="http://www.wikidata.org/prop/direct/P669" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="street"/>
+		<proplabel lang="de" value="Strasse"/>
+	</column> 
+
+	<column name="hn_5117" prop="data" propiri="http://www.wikidata.org/prop/direct/P670" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="street number"/>
+		<proplabel lang="de" value="Hausnummer"/>
+	</column> 
+	
+	<column name="zone" prop="obj" range="http://www.w3.org/2001/XMLSchema#double">
+        <valuemapping from="Pufferzone" to="http://www.wikidata.org/entity/Q64364418"/>
+        <valuemapping from="Kernzone" to="http://www.wikidata.org/entity/Q9259"/>
+    </column>
+    
+
+</file>
+</data>
+ 

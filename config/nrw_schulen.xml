@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<data>
+<file class="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#GovernmentalService" indidprefix="schulen_hessen_" indid="Schulnumme" 
+namespace="http://ld.gdi-de.org/id/de.nw.schulen/"
+attnamespace="http://ld.gdi-de.org/id/de.nw.schulen/"
+geoendpoint="http://linkedgeodata.org/sparql" 
+geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false" epsg="25832">
+	
+	<classmapping value="https://www.wikidata.org/entity/Q3914">
+		<clslabel lang="en" value="school"/>
+		<clslabel lang="de" value="Schule"/> 
+	</classmapping>
+	
+	<addcolumn prop="obj" concept="http://inspire.ec.europa.eu/schemas/us/4.0#ServiceTypeValue" propiri="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#serviceType" value="http://inspire.ec.europa.eu/codelist/ServiceTypeValue/education">
+		<proplabel lang="en" value="service type"/>
+		<proplabel lang="de" value="Servicetyp"/> 
+	</addcolumn>
+	
+	<metadata publisher="BKG" timestamp="2018-05-30T09:30:10Z" license="https://www.govdata.de/dl-de/by-2-0" />
+	
+	<style>
+		<point size="2" border="1" borderColor="black" fillColor="red"/>
+		<linestring size="2" border="1" borderColor="black" fillColor="red"/>
+		<polygon size="2" border="1" borderColor="black" fillColor="red"/>
+	</style>
+	
+	<column name="Schulbezei" prop="annotation" propiri="http://www.w3.org/2000/01/rdf-schema#label" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="name"/>
+		<proplabel lang="de" value="Name"/> 
+	</column> 
+
+	<column name="Kurzbezeic" prop="data" propiri="http://www.wikidata.org/prop/direct/P1813" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="short name"/>
+		<proplabel lang="de" value="Kurzname"/> 
+	</column> 
+	
+	<column name="Schulform" prop="subclass">
+		<valuemapping from="2" to="https://www.wikidata.org/entity/Q9842"/>
+		<valuemapping from="4" to="https://www.wikidata.org/entity/Q675423"/>
+		<valuemapping from="6" to="https://www.wikidata.org/entity/Q513984"/>
+		<valuemapping from="8" to="https://www.wikidata.org/entity/Q1110689"/>
+		<valuemapping from="10" to="https://www.wikidata.org/entity/Q667471"/>
+		<valuemapping from="14" to="https://www.wikidata.org/entity/Q159334"/>
+		<valuemapping from="15" to="https://www.wikidata.org/entity/Q33026952"/>
+		<valuemapping from="16" to="https://www.wikidata.org/entity/Q1501026"/>
+		<valuemapping from="17" to="https://www.wikidata.org/entity/Q14551995"/>
+		<valuemapping from="18" to="https://www.wikidata.org/entity/Q1609854"/>
+		<valuemapping from="20" to="https://www.wikidata.org/entity/Q55043"/>
+		<valuemapping from="25" to="https://www.wikidata.org/entity/Q16295381"/>
+		<valuemapping from="30" to="https://www.wikidata.org/entity/Q828973"/>
+		<valuemapping from="83" to="https://www.wikidata.org/entity/Q56297242"/>
+		<valuemapping from="85" to="https://www.wikidata.org/entity/Q1110689"/>
+		<valuemapping from="87" to="https://www.wikidata.org/entity/Q1110689"/>
+		<valuemapping from="88" to="https://www.wikidata.org/entity/Q1110689"/>
+	</column>
+	
+	<column name="Rechtsform" prop="subclass" propiri="https://www.wikidata.org/entity/Property:P1454" >
+		<proplabel lang="en" value="legal form"/>
+		<proplabel lang="de" value="Rechtsform"/> 
+		<valuemapping from="1" to="https://www.wikidata.org/entity/Q56292968"/>
+		<valuemapping from="2" to="https://www.wikidata.org/entity/Q1454131"/>
+	</column>
+	
+	<column name="PLZ" prop="data" propiri="http://www.wikidata.org/prop/direct/P281" range="http://www.w3.org/2001/XMLSchema#integer">
+		<proplabel lang="en" value="postal code"/>
+		<proplabel lang="de" value="Postleitzahl"/>
+	</column> 
+
+	<column name="Gemeindesc" prop="data" propiri="http://www.wikidata.org/prop/direct/P439" range="http://www.w3.org/2001/XMLSchema#integer">
+		<proplabel lang="en" value="German municipality key"/>
+		<proplabel lang="de" value="Gemeindeschlüssel"/> 
+	</column> 
+	
+	<column name="Homepage" prop="data" propiri="http://www.wikidata.org/prop/direct/P856" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="homepage"/>
+		<proplabel lang="de" value="Homepage"/>
+	</column> 
+	
+	<column name="E-Mail" prop="data" propiri="http://www.wikidata.org/prop/direct/P968" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="email address"/>
+		<proplabel lang="de" value="Emailadresse"/>
+	</column>  
+	
+	<column name="Strasse" prop="data" propiri="http://www.wikidata.org/prop/direct/P670" range="http://www.w3.org/2001/XMLSchema#string" splitcharacter=" " splitposition="last">
+		<proplabel lang="en" value="street number"/>
+		<proplabel lang="de" value="Hausnummer"/>
+	</column>   
+	
+	<column name="Strasse" prop="data" propiri="http://www.wikidata.org/prop/direct/P669" range="http://www.w3.org/2001/XMLSchema#string" splitcharacter=" " splitposition="untillast">
+		<proplabel lang="en" value="street"/>
+		<proplabel lang="de" value="Strasse"/>
+	</column> 
+	
+	<column name="Ort" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" concept="https://www.wikidata.org/entity/Q262166"
+	query="SELECT ?city WHERE {?city wdt:P31 wd:Q262166 . ?item ?label '%%ort%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql"/>
+	
+	<column name="serviceTyp" prop="obj" valueprefix="http://inspire.ec.europa.eu/codelist/ServiceTypeValue/" propiri="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#serviceType" range="http://www.w3.org/2001/XMLSchema#string"> 
+		<proplabel lang="en" value="service type"/>
+		<proplabel lang="de" value="Servicetyp"/>
+	</column>  
+			
+</file>
+</data>
+

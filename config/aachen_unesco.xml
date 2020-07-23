@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<data>
+<file class="https://www.wikidata.org/wiki/Q9259" indidprefix="wh_quedlinburg_"
+namespace="http://ld.gdi-de.org/id/de.nw.unesco/" 
+attnamespace="http://ld.gdi-de.org/id/de.nw.unesco/"
+geoendpoint="http://linkedgeodata.org/sparql" 
+geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false" epsg="25833">
+	
+	<metadata publisher="BKG" timestamp="2018-05-30T09:30:10Z" license="https://www.govdata.de/dl-de/by-2-0" />
+	
+	<style>
+		<point size="2" border="1" borderColor="black" fillColor="red"/>
+		<linestring size="2" border="1" borderColor="black" fillColor="red"/>
+		<polygon size="2" border="1" borderColor="black" fillColor="red"/>
+	</style>
+    
+	<classmapping class="http://inspire.ec.europa.eu/schemas/ps/4.0#ProtectedSite">
+		<proplabel lang="en" value="Protected Site"/>
+		<proplabel lang="de" value="Schutzgebiet"/> 
+	</classmapping>
+	
+	<addcolumn prop="obj" concept="http://inspire.ec.europa.eu/schemas/ps/4.0#UNESCOWorldHeritageDesignationValue" propiri="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#siteDesignation" value="http://inspire.ec.europa.eu/codelist/UNESCOWorldHeritageDesignationValue/cultural">
+		<proplabel lang="en" value="UNESCO World Heritage Designation Type"/>
+		<proplabel lang="de" value="Welterbetyp"/> 
+	</addcolumn>
+		
+	<column name="satzungsna" prop="annotation" propiri="http://www.w3.org/2000/01/rdf-schema#label" range="http://www.w3.org/2001/XMLSchema#string"/> 
+	
+    <column name="in_kraft_g" prop="data" propiri="http://www.wikidata.org/prop/direct/P571" range="http://www.w3.org/2001/XMLSchema#date"/> 
+
+	<column name="bemerkung" prop="annotation" propiri="http://www.w3.org/2000/01/rdf-schema#comment" range="http://www.w3.org/2001/XMLSchema#string"/> 
+	
+	<column name="satzung_in" prop="data" concept="https://www.wikidata.org/wiki/Q679847" range="http://www.w3.org/2001/XMLSchema#string"/> 
+		
+	<column name="weitere_in" prop="data" range="http://www.w3.org/2001/XMLSchema#string"/> 
+	
+
+</file>
+</data>
+ 

@@ -199,6 +199,7 @@ function mappingSchemaToTable(){
 	   <button id="uploadButton" onclick="convert()">Upload It</button>
 <script src="js/utils.js"></script>
 <script>
+var mappingschemas=getMappingSchemas()
 result=""
 for(mapping in mappingschemas){
 	result+="<option value=\""+mappingschemas[mapping]+"\">"+mapping+"</option>"

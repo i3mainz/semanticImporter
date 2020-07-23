@@ -18,8 +18,10 @@ import java.util.TreeMap;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
@@ -327,6 +329,47 @@ public class WebService {
 			}
 		}
         return Response.ok("Saved").type("text/ttl").build();
+	}
+
+	@GET
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/getMappingSchemas")
+    public Response getMappingSchemas() { 
+		final String dir = System.getProperty("user.dir");
+        System.out.println("current dir = " + dir); 
+        return Response.ok(importerconf.getJSONObject("mappings")).type(MediaType.APPLICATION_JSON).build();
+	}
+	
+	
+	private static String readAllBytesJava7(String filePath) 
+	{
+		String content = "";
+
+		try 
+		{
+			content = new String ( Files.readAllBytes( Paths.get(filePath) ) );
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+
+		return content;
+	}
+	
+	@GET
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/getMappingSchema/{mappingschema}")
+    public Response getMappingSchema(@PathParam("mappingschema") String mappingschema) { 
+		final String dir = System.getProperty("user.dir");
+        System.out.println("current dir = " + dir); 
+        File folder=new File(importerconf.getString("mappingfolder/"+mappingschema+".xml"));
+        if(!folder.exists()) {
+        	throw new NotFoundException();
+        }       
+        return Response.ok(readAllBytesJava7(importerconf.getString("mappingfolder/"+mappingschema+".xml"))).type(MediaType.APPLICATION_XML).build();
 	}
 	
 	@GET

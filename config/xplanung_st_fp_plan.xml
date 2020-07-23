@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<data>
+<file class="http://www.xplanung.de/xplangml/5/0#FP_Geometrieobjekt" indidprefix="xplanung_bp_st_" indid="AKTENNR1" 
+namespace="http://ld.gdi-de.org/id/de.st.xplanung/" 
+attnamespace="http://ld.gdi-de.org/id/de.st.xplanung/"
+geoendpoint="http://linkedgeodata.org/sparql" 
+geomatchingclass="http://www.xplanung.de/xplangml/5/0#FP_Plan" nearestMatch="false" epsg="25833">
+	
+	<metadata publisher="BKG" timestamp="2018-05-30T09:30:10Z" license="https://www.govdata.de/dl-de/by-2-0" />
+	
+	<style>
+		<point size="2" border="1" borderColor="black" fillColor="red"/>
+		<linestring size="2" border="1" borderColor="black" fillColor="red"/>
+		<polygon size="2" border="1" borderColor="black" fillColor="red"/>
+	</style>
+	
+	<column name="BEZEICHNUN" prop="annotation" propiri="http://www.w3.org/2000/01/rdf-schema#label" range="http://www.w3.org/2001/XMLSchema#string">
+		<proplabel lang="en" value="name"/>
+		<proplabel lang="de" value="Name"/> 
+	</column> 
+
+	<column name="FLAE_HA" prop="data" propiri="http://www.wikidata.org/prop/direct/P2046" range="http://www.w3.org/2001/XMLSchema#double">
+		<proplabel lang="en" value="area"/>
+		<proplabel lang="de" value="Flaeche"/> 
+	</column> 
+	
+	<column name="AKTENNR_RO" prop="data" propiri="http://www.wikidata.org/prop/direct/P2046" range="http://www.w3.org/2001/XMLSchema#double">
+		<proplabel lang="en" value="file number"/>
+		<proplabel lang="de" value="Aktennummer"/> 
+	</column> 
+	
+	<column name="THEMENNR" prop="data" range="http://www.w3.org/2001/XMLSchema#integer">
+		<proplabel lang="en" value="topic number"/>
+		<proplabel lang="de" value="Themennummer"/> 
+	</column>
+	
+	<column name="DAT_ERF" prop="data" range="http://www.w3.org/2001/XMLSchema#date">
+		<proplabel lang="en" value="registration date"/>
+		<proplabel lang="de" value="Erfassungsnummer"/> 
+	</column>
+	
+	<column name="GEN_DAT" prop="data" propiri="http://purl.org/dc/terms/date" range="http://www.w3.org/2001/XMLSchema#date">
+		<proplabel lang="en" value="created date"/>
+		<proplabel lang="de" value="Erstellungsdatum"/> 
+	</column>
+
+	<column name="NUTZUNGSAR" prop="obj" propiri="http://www.xplanung.de/xplangml/5/0#allgArtDerBaulNutzung">
+		<proplabel lang="en" value="type of use"/>
+		<proplabel lang="de" value="Nutzungsart"/> 
+		<valuemapping from="Wohnbaufläche" to="http://www.xplanung.de/xplangml/5/0#XP_AllgArtDerBaulNutzung_1000"/>
+		<valuemapping from="Mischgebiet" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1500"/>
+		<valuemapping from="Gemischte Baufläche" to="http://www.xplanung.de/xplangml/5/0#XP_AllgArtDerBaulNutzung_2000"/>
+		<valuemapping from="Gewerbliche Baufläche" to="http://www.xplanung.de/xplangml/5/0#XP_AllgArtDerBaulNutzung_3000"/>
+		<valuemapping from="Allgemeines Wohngebiet" propiri="http://www.xplanung.de/xplangml/5/0#besondereArtDerBaulNutzung" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1200">
+			<addcolumn prop="obj" propiri="http://www.xplanung.de/xplangml/5/0#allgArtDerBaulNutzung" value="http://www.xplanung.de/xplangml/5/0#XP_AllgArtDerBaulNutzung_1000"/>
+		</valuemapping>
+		<valuemapping from="Dorfgebiet" propiri="http://www.xplanung.de/xplangml/5/0#besondereArtDerBaulNutzung" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1400">
+			<addcolumn prop="obj" propiri="http://www.xplanung.de/xplangml/5/0#allgArtDerBaulNutzung" value="http://www.xplanung.de/xplangml/5/0#XP_AllgArtDerBaulNutzung_2000"/>
+		</valuemapping>
+		<valuemapping from="Gewerbegebiet" propiri="http://www.xplanung.de/xplangml/5/0#besondereArtDerBaulNutzung" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1700">
+			<addcolumn prop="obj" propiri="http://www.xplanung.de/xplangml/5/0#allgArtDerBaulNutzung" value="http://www.xplanung.de/xplangml/5/0#XP_AllgArtDerBaulNutzung_3000"/>
+		</valuemapping>	
+		<valuemapping from="Industriegebiet" propiri="http://www.xplanung.de/xplangml/5/0#besondereArtDerBaulNutzung" to="http://www.xplanung.de/xplangml/5/0#XP_BesondereArtDerBaulNutzung_1800">
+			<addcolumn prop="obj" propiri="http://www.xplanung.de/xplangml/5/0#allgArtDerBaulNutzung" value="http://www.xplanung.de/xplangml/5/0#XP_AllgArtDerBaulNutzung_3000"/>
+		</valuemapping>
+		<valuemapping from="Friedhof" propiri="http://www.xplanung.de/xplangml/5/0#zweckbestimmung" to="http://www.xplanung.de/xplangml/5/0#XP_ZweckbestimmungGruen_2600"/>
+		<valuemapping from="Parkplatz" to="http://www.xplanung.de/xplangml/5/0#LP_ErholungFreizeitFunktionen_5000"/>
+		<valuemapping from="sonstiges Sondergebiet" propiri="http://www.xplanung.de/xplangml/5/0#sondernutzung" to="http://www.xplanung.de/xplangml/5/0#XP_Sondernutzungen_9999"/>
+		<valuemapping from="Einkaufszentrum §11(3) BauNVO" propiri="http://www.xplanung.de/xplangml/5/0#sondernutzung" to="http://www.xplanung.de/xplangml/5/0#XP_Sondernutzungen_16001"/>
+	</column>
+	
+	<column name="LANDKREIS" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" 
+	query="SELECT distinct ?item WHERE{ ?ind wdt:P131 ?item . ?item ?label '%%LANDKREIS%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql">
+		<proplabel lang="en" value="rural district"/>
+		<proplabel lang="de" value="Landkreis"/> 
+	</column>  
+	
+	<column name="GEMEINDE" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" concept="https://www.wikidata.org/entity/Q262166"
+	query="SELECT ?city WHERE {?city wdt:P31 wd:Q262166 . ?item ?label '%%GEMEINDE%%'@de. SERVICE wikibase:label { bd:serviceParam wikibase:language 'de'. }}" endpoint="http://query.wikidata.org/sparql">
+		<proplabel lang="en" value="municipality"/>
+		<proplabel lang="de" value="Gemeinde"/> 
+	</column> 
+   				
+</file>
+</data>
