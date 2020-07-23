@@ -1,0 +1,504 @@
+<html>
+<head>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="css/yasqe.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="js/yasqe.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="concepts/aaa7.js"></script>
+<script src="concepts/inspire4.js"></script>
+<script src="concepts/xerleben2.js"></script>
+<script src="concepts/xplanung5_0.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<style>
+
+label, input { display:block; }
+    input.text { margin-bottom:12px; width:95%; padding: .4em; }
+    fieldset { padding:0; border:0; margin-top:25px; }
+    h1 { font-size: 1.2em; margin: .6em 0; }
+    div#users-contain { width: 350px; margin: 20px 0; }
+    div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
+    div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
+    .ui-dialog .ui-state-error { padding: .3em; }
+    .validateTips { border: 1px solid transparent; padding: 0.3em; }
+
+.loading { margin: auto; }
+
+.loading span {
+  line-height: 32px;
+  margin-left: 12px;
+  font-size: 16px;
+  vertical-align: middle;
+}
+
+.loading img { vertical-align: middle; }
+
+.loading_wrp {
+  background-color: #FFF;
+  display: block;
+  height: 100%;
+  left: 0;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1020;
+}
+
+.loading_wrp .x16 span {
+  line-height: 16px;
+  font-size: 12px;
+  margin-left: 6px;
+}
+
+.loading_wrp .x32 img {
+  width: 32px;
+  height: 32px;
+}
+</style>
+<script>
+function saveTextAsFile(tosave,fileext,filename)
+{
+    var a = document.createElement('a');
+    a.style = "display: none";  
+    var blob= new Blob([tosave], {type:'text/plain'});
+    var url = window.URL.createObjectURL(blob);
+    var filename = filename+fileext;
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function(){
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);  
+    }, 1000);
+}
+
+function addColumn(){
+	i=$("#datasettable").find('tbody').children().length
+	if(i%2==0){
+	    table="<tr class=\"even\">"
+	}else{
+	    table="<tr class=\"odd\">"
+	}
+	table+="<td id=\"datasetcol_"+i+"\" style=\"color:green\">Additional column</td>"
+	table+="<td id=\"proptypecol_"+i+"\"><select id=\"proptypecol_"+i+"_select\"><option value=\"data\">DatatypeProperty</option><option value=\"obj\">ObjectProperty</option><option value=\"annotation\">AnnotationProperty</option><option value=\"subclass\">SubClass</option></select></td>"
+	table+="<td id=\"coluri_"+i+"\">"
+	table+='<div class="ui-widget"><input id="coluri_'+i+'_input" name='+i+'></div>'//"<input type=\"text\" id=\"coluri_"+i+"_input\" name="+i+">
+	table+="<br/>TripleStore:<select id=\"triplestoredropdown_property_"+i+"\">"
+	table+="<option value=\"aaa7\">AAA7</option>"
+	table+="<option value=\"inspire4\">INSPIRE4</option>"
+	table+="<option value=\"https://www.wikidata.org/w/api.php?action=wbsearchentities&&format=json&language=en&uselang=en&type=property&search=\">Wikidata</option>"
+	table+="<option value=\"xerleben2\">XErleben2</option>"
+	table+="<option value=\"xplanung5\">XPlanung5</option>"
+	table+="</select></td>"
+	table+="<td id=\"colrange_"+i+"\"><select><option value=\"xsd:double\">xsd:double</option><option value=\"xsd:integer\">xsd:integer</option><option value=\"xsd:string\">xsd:string</option></select></td>"
+	table+="<td><button id=\"\">Add Value Mapping</button><button id=\"\">Find Concept</button></td>"
+	table+="<td id=\"valuesparql_"+i+"\"><button id=\"colsparql_"+i+"_query\">Set SPARQL Query</button></td>"
+	table+="<td><select><option value=\"http://query.wikidata.org/sparql\">Wikidata</option><option value=\"https://dbpedia.org/sparql\">DBPedia</option></select></td>"
+	table+="<td id=\"valueregex_"+i+"\"><input type=\"text\" id=\"colrange_"+i+"_input\"></td></tr>"
+	$("#datasettable").find('tbody').append(table);
+}
+
+
+function saveMappingAsXML(){
+	saveTextAsFile(mappingProfileToXML(),".xml","mapping")
+}
+
+function saveMappingOnServer(){
+	var data = new FormData(); // das ist unser Daten-Objekt ...
+    data.append('data', mappingProfileToXML()); // ... an die wir unsere Datei anhngen
+    data.append('filename',document.getElementById('fileformat').value)
+   	data.append('serviceurl',document.getElementById('serviceurl').value)
+    $('#loading').show();
+    addcolumncounter=0;
+    $.ajax({
+       url: 'rest/service/saveMappingSchema', // Wohin soll die Datei geschickt werden?
+       data: data,          // Das ist unser Datenobjekt.
+       type: 'POST',         // HTTP-Methode, hier: POST
+       processData: false,
+       contentType: false,
+       success: function(data) { 
+    	   
+       }
+    });
+    
+	
+	saveTextAsFile(mappingProfileToXML(),".xml","mapping")
+}
+
+var filedata={}
+var addcolumncounter=0;
+function setAutoComplete(itemid,inputid,proptypeid){
+	$("#"+inputid).autocomplete("destroy");
+	console.log(itemid)
+	console.log(inputid)
+	console.log(proptypeid)
+	if($("#"+itemid).val().includes("http")){
+    	var url=$("#"+itemid).val()+$("#"+inputid).val()
+		$("#"+inputid).autocomplete({
+    	      source: function( request, response ) {
+    	        $.ajax( {
+    	          url: url,
+    	          dataType: "jsonp",
+    	          data: {
+    	            term: request.term
+    	          },
+    	          success: function( data ) {
+    	        	console.log(data)
+    	            response( data );
+    	          }
+    	        } );
+    	      },
+    	      minLength: 2,
+    	      select: function( event, ui ) {
+    	    	$("#"+inputid).val(ui.item.value)
+    	      }
+    	    } );
+	}else{
+		$("#"+inputid).autocomplete({source: Object.keys(window[$("#"+itemid).val()][$("#"+proptypeid).val()]).sort()} );
+	}
+}
+
+
+var colid=null
+function valueMappingDialog(collid){
+	colid=collid;
+	dialog.dialog( "open" );
+}
+
+function sparqlDialog(collid){
+	colid=collid;
+	sparqldialog.dialog( "open" );
+}
+
+
+function analyzeFile(){
+	    var data = new FormData(); // das ist unser Daten-Objekt ...
+	    data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhngen
+	    data.append('fileformat',document.getElementById('fileformat').value)
+	   	data.append('serviceurl',document.getElementById('serviceurl').value)
+	    $('#loading').show();
+	    addcolumncounter=0;
+	    $.ajax({
+	       url: 'rest/service/analyzeFile', // Wohin soll die Datei geschickt werden?
+	       data: data,          // Das ist unser Datenobjekt.
+	       type: 'POST',         // HTTP-Methode, hier: POST
+	       processData: false,
+	       contentType: false,
+	       success: function(data) { 
+	    	   console.log(data)
+	    	    var json=data;
+	    	    var table="<tr><td align=center>Dataset Class: <div class=\"ui-widget\"><input id=\"class_'+i+'_input\" name=\""+i+"\"></div></td><td align=center><button id=\"addcolumn\" onclick=\"addColumn()\">Add Column</button></td></tr><tr><th align=center>Column</th><th align=center>Type</th><th align=center>Property IRI</th><th align=center>Range</th><th align=center>Concept</th><th align=center>Query or Fixed Value</th><th align=center>Endpoint</th><th align=center>Regex</th></tr>"
+	    	    var i=0;
+	    	    for(key in json["properties"]){
+	    	    	if(json["properties"][i]!="the_geom"){
+	    	    	    if(i%2==0){
+	    	    	        table+="<tr class=\"even\">"
+	    	    	    }else{
+	    	    	        table+="<tr class=\"odd\">"
+	    	    	    }
+	    	    		table+="<td align=center id=\"datasetcol_"+i+"\" style=\"color:red\">"+json["properties"][i]+"</td>"
+	    	    		table+="<td align=center id=\"proptypecol_"+i+"\"><select id=\"proptypecol_"+i+"_select\"><option value=\"data\">DatatypeProperty</option><option value=\"obj\">ObjectProperty</option><option value=\"annotation\">AnnotationProperty</option><option value=\"subclass\">SubClass</option></select></td>"
+	    	    		table+="<td align=center id=\"coluri_"+i+"\">"
+	    	    		table+='<div class="ui-widget"><input id="coluri_'+i+'_input" name='+i+'></div>'//"<input type=\"text\" id=\"coluri_"+i+"_input\" name="+i+">
+	    	    		table+="<br/>TripleStore:<select id=\"triplestoredropdown_property_"+i+"\" onChange=\"setAutoComplete('triplestoredropdown_property_"+i+"','coluri_"+i+"_input','proptypecol_"+i+"_select')\">"
+	        	    	table+="<option value=\"aaa7\">AAA7</option>"
+	    	    		table+="<option value=\"inspire4\">INSPIRE4</option>"
+	    	    		table+="<option value=\"https://www.wikidata.org/w/api.php?action=wbsearchentities&&format=json&language=en&uselang=en&type=property&search=\">Wikidata</option>"
+	        	    	table+="<option value=\"xerleben2\">XErleben2</option>"
+	    	    		table+="<option value=\"xplanung5\">XPlanung5</option>"
+	    	    		table+="</select></td>"
+	    	    		table+="<td align=center id=\"colrange_"+i+"\"><select id=\"colrange_"+i+"_select\"><option value=\"xsd:double\">xsd:double</option><option value=\"xsd:integer\">xsd:integer</option><option value=\"xsd:string\">xsd:string</option></select></td>"
+	    	    		table+="<td align=center><button id=\"\" onClick=\"valueMappingDialog('maptypecol_"+i+"_table')\">Add Value Mapping</button><button id=\"\">Find Concept</button><table border=1 id=\"maptypecol_"+i+"_table\"></table></td>"
+	    	    		table+="<td align=center id=\"valuesparql_"+i+"\"><button id=\"colsparql_"+i+"_query\" onClick=\"sparqlDialog('')\">Set SPARQL Query</button><input type=\"text\" id=\"+colsparql_"+i+"_queryinp\"/></td>"
+	    	    		table+="<td align=center><select id=\"+colendpoint_"+i+"_select\"><option value=\"http://query.wikidata.org/sparql\">Wikidata</option><option value=\"https://dbpedia.org/sparql\">DBPedia</option></select></td>"
+	    	    		table+="<td align=center id=\"valueregex_"+i+"\"><input type=\"text\" id=\"colregex_"+i+"_input\"></td></tr>"
+	    	    	}
+	    	    	i++;
+	    	    }
+	    	    $('#datasettable').html(table)
+	    	    console.log(i)
+	    	    for(j=1;j<i;j++){
+	    	    	console.log('#triplestoredropdown_property_'+j)
+	    	    	if($('#triplestoredropdown_property_'+j).val().includes("http")){
+		    	    	var url=$('#triplestoredropdown_property_'+j).val()+$("#coluri_"+j+"_input").val()
+	    	    		$("#coluri_"+j+"_input").autocomplete({
+		    	    	      source: function( request, response ) {
+		    	    	        $.ajax( {
+		    	    	          url: url,
+		    	    	          dataType: "jsonp",
+		    	    	          data: {
+		    	    	            term: request.term
+		    	    	          },
+		    	    	          success: function( data ) {
+		    	    	        	console.log(data)
+		    	    	            response( data );
+		    	    	          }
+		    	    	        } );
+		    	    	      },
+		    	    	      minLength: 2,
+		    	    	      select: function( event, ui ) {
+		    	    	    	$("#coluri_"+j+"_input").val(ui.item.value)
+		    	    	      }
+		    	    	    } );
+	    	    	}else{
+	    	    		$("#coluri_"+j+"_input").autocomplete({source: Object.keys(window[$('#triplestoredropdown_property_'+j).val()][$('#proptypecol_'+j+'_select').val()]).sort()} );
+	    	    	}
+	    	    }
+	    	    toggleAnalysis()
+	       }
+	    });
+}
+
+function convert() {
+    var data = new FormData(); // das ist unser Daten-Objekt ...
+    data.append('file', document.getElementById('files').files[0]); // ... an die wir unsere Datei anhngen
+    $('#loading').show();
+    $.ajax({
+       url: 'rest/service/convert?namespace='+encodeURIComponent($('#namespace').val())+"&indid="+encodeURIComponent($('#indid').val())+"&classname="+encodeURIComponent($('#classname').val()), // Wohin soll die Datei geschickt werden?
+       data: data,          // Das ist unser Datenobjekt.
+       type: 'POST',         // HTTP-Methode, hier: POST
+       processData: false,
+       contentType: false,
+       // und wenn alles erfolgreich verlaufen ist, schreibe eine Meldung
+       // in das Response-Div
+       success: function(data) { 
+    	    $('#loading').hide();
+    	   saveTextAsFile(data,".ttl","result");
+       }
+    });
+ }
+ 
+function toggleTripleStore() {
+	  var x = document.getElementById("triplestoreimport");
+	  if (x.style.display === "none") {
+	    x.style.display = "block";
+	  } else {
+	    x.style.display = "none";
+	  }
+	}
+function toggleAnalysis() {
+	  var x = document.getElementById("metadata");
+	  if (x.style.display === "none") {
+	    x.style.display = "block";
+	  } else {
+	    x.style.display = "none";
+	  }
+	}
+
+function mappingProfileToXML(){
+	xmlresult="<?xml version=\"1.0\"?>\n<data>\n"
+	$('#datasettable > tbody  > tr').each(function(index, tr) { 
+		console.log(tr)
+		xmlresult+="<column name=\""+$('#datasetcol_'+index).html()+"\" " 
+		xmlresult+="prop=\""+$("#proptypecol_"+index+"_select").val()+"\" "
+		xmlresult+="propiri=\""+$("#coluri_"+index+"_input").val()+"\" "
+		xmlresult+="range=\""+$("#colrange_"+index+"_select").val()+"\" "
+		xmlresult+="query=\""+$("#colsparql_"+index+"_queryinp").val()+"\" "
+		xmlresult+="endpoint=\""+$("#colendpoint_"+index+"_select").val()+"\" "
+		xmlresult+="regex=\""+$("#colregex_"+index+"_input").val()+"\" "
+		xmlresult+=">\n"
+		if($("#maptypecol_"+index+"_table").children().length>0){
+			$("#maptypecol_"+index+"_table").each(function(index, mapping) {
+				xmlresult+="<valuemapping>"
+				xmlresult+="</valuemapping>\n"
+			});
+		}
+		xmlresult+="</column>\n"
+	});
+	console.log(xmlresult)
+	xmlresult+="</data>\n"
+	return xmlresult
+}
+
+function addValueMapping(from,to,tdtable) {
+	toadd=""
+	if($('#'+colid).children().length==0){
+		toadd="<tr><th align=\"center\">from</th><th align=\"center\">to</th></tr>"
+		toadd+="<tr><td align=\"center\">"
+		if($("#from").val().includes("http")){
+			toadd+="<a href=\""+$("#from").val()+"\">"+$("#from").val()+"</a></td></tr>"	
+		}else{
+			toadd+="<span>"+$("#from").val()+"</span>"
+		}
+		toadd+="</td><td align=\"center\">"
+		if($("#to").val().includes("http")){
+			toadd+="<a href=\""+$("#to").val()+"\">"+$("#to").val()+"</a></td></tr>"
+		}else{
+			toadd+="<span>"+$("#to").val()+"</span>"
+		}	
+		toadd+="</td></tr>"
+		$('#'+colid).html(toadd);
+	}else{
+		toadd+="<tr><td align=\"center\">"
+			if($("#from").val().includes("http")){
+				toadd+="<a href=\""+$("#from").val()+"\">"+$("#from").val()+"</a></td></tr>"	
+			}else{
+				toadd+="<span>"+$("#from").val()+"</span>"
+			}
+			toadd+="</td><td align=\"center\">"
+			if($("#to").val().includes("http")){
+				toadd+="<a href=\""+$("#to").val()+"\">"+$("#to").val()+"</a></td></tr>"
+			}else{
+				toadd+="<span>"+$("#to").val()+"</span>"
+			}	
+			toadd+="</td></tr>"
+		$('#'+colid+' tr:last').after(toadd);
+	}
+	mappingProfileToXML()
+    dialog.dialog( "close" );
+    return true;
+  }
+</script>
+</head>
+
+<body>
+<div id="logindialog" title="Login">
+  <p class="validateTips">All form fields are required.</p>
+ 
+  <form>
+    <fieldset>
+      <label for="username">Username:</label>
+      <input type="text" name="username" id="username" value="" class="text ui-widget-content ui-corner-all"><br/>
+      <label for="password">Password:</label>
+      <input type="text" name="password" id="password" value="" class="text ui-widget-content ui-corner-all"><br/>
+      <!-- Allow form submission with keyboard without duplicating the dialog button -->
+      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+    </fieldset>
+  </form>
+</div>
+	
+<div id="dialog-form" title="Create Value Mapping">
+  <p class="validateTips">All form fields are required.</p>
+ 
+  <form>
+    <fieldset>
+      <label for="from">From Value</label>
+      <input type="text" name="from" id="from" value="Berlin" class="text ui-widget-content ui-corner-all">
+      <label for="to">To Concept</label>
+      <input type="text" name="to" id="to" value="http://www.wikidata.org/entity/Q64" class="text ui-widget-content ui-corner-all">
+      <label for="otherpropiri">Other PropIRI</label>
+      <input type="text" name="otherpropiri" id="otherpropiri" value="http://myotheruri.de" class="text ui-widget-content ui-corner-all">  
+      <!-- Allow form submission with keyboard without duplicating the dialog button -->
+      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+    </fieldset>
+  </form>
+</div>
+<div id="sparqldialog" title="Create SPARQL Query">
+  <p class="validateTips">All form fields are required.</p>
+ 
+  <form>
+    <fieldset>
+      SPARQL Query:
+      <textarea id="sparqltextarea" rows=16 cols=45></textarea>
+      <button>Test Query</button>
+      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+      
+    </fieldset>
+  </form>
+</div>
+<div id="spinner">
+  <img src="ajax-loader.gif" alt="Loading" id="loading" style="display: none"/>
+</div>
+	<span id="loginspan"></span>
+<header>
+<div class="page-header" id="header">
+	<h1>Upload your file for content analysis:</h1>
+</div></header>
+<div class="container" role="main">
+<div class="row">
+  <div class="col-sm-12" id="queryresult" class="table-wrapper-scroll-y">
+	<p id="metadata" style="display:none">
+	<h4>Metadata</h4>
+	Creator: <input id="creator" type="text"/><br/>
+	Creation Time: <input id="creationtime" type="datetime"/><br/>
+	Target Namespace: <input type="url" name="namespace" id="namespace"><br/>
+ 	Individual Attribute: <input type="text" name="indid" id="indid"><br/>
+ 	Class to assign (URI): <input type="text" name="classname" id="classname"><br/>
+ 	<input type="checkbox" id="importTripleStore" onChange="toggleTripleStore()">Import to a triple store
+ 	<p id="triplestoreimport" style="display:none">
+ 	  I want to import the file into the following triple store:<br/>
+ 	  <table class="description">
+	   <tr><td>TripleStore:</td><td><input type="text" name="triplestore" id="triplestore" value=""/></td></tr>
+	   <tr><td>Graph:</td><td> <input type="text" name="triplestoregraph" id="triplestoregraph" value=""/></td></tr>
+	   <tr><td>Username:</td><td> <input type="text" name="triplestoreuser" id="triplestoreuser" value=""/></td></tr>
+ 	   <tr><td>Password: </td><td><input type="text" name="triplestorepasswd" id="triplestorepasswd" value=""/></td></tr>
+ 	   </table>
+ 	</p>
+	</p>
+
+
+<button onClick="saveMappingAsXML()">Save Mapping</button>
+
+ 	<table id="datasettable" class="description" width="100%" border="1">
+ 	
+ 	
+ 	</table>
+	   Import Schema: 
+	   <p>
+		Select a file : <input type="file" name="file" id="files" size="45" /><br/>
+		Or provide a WFS URL: <input type="text" name="serviceurl" id="serviceurl" size="45" /><br/>
+		Fileformat: 
+		<select id="fileformat">
+		<option value="xml">XML</option>
+		</select>
+	   </p>
+	   <button id="uploadButton" onclick="analyzeFile()">Upload It</button>
+</div></div></div>
+<script src="js/utils.js"></script>
+<script>
+dialog = $( "#dialog-form" ).dialog({
+    autoOpen: false,
+    height: 400,
+    width: 350,
+    modal: true,
+    buttons: {
+      "Create Value Mapping": addValueMapping,
+      Cancel: function() {
+        dialog.dialog( "close" );
+      }
+    },
+    close: function() {
+      form[ 0 ].reset();
+      //allFields.removeClass( "ui-state-error" );
+    }
+  });
+
+  form = dialog.find( "form" ).on( "submit", function( event ) {
+    event.preventDefault();
+    addValueMapping($("#from").val(),$("#to").val(),colid);
+  });
+  
+  sparqldialog = $( "#sparqldialog" ).dialog({
+	    autoOpen: false,
+	    height: 600,
+	    width: 500,
+	    modal: true,
+	    buttons: {
+	      "Create SPARQL Query": addValueMapping,
+	      Cancel: function() {
+	        dialog.dialog( "close" );
+	      }
+	    },
+	    close: function() {
+	      form[ 0 ].reset();
+	      //allFields.removeClass( "ui-state-error" );
+	    }
+	  });
+
+	  form = dialog.find( "form" ).on( "submit", function( event ) {
+	    event.preventDefault();
+	    addValueMapping($("#from").val(),$("#to").val(),colid);
+	  });
+	  var yasqe = YASQE.fromTextArea(document.getElementById("sparqltextarea"));
+</script> 
+<div id="footer">
+<a href="index.html">Back to Importer Selection</a>
+</div>
+</body>
+</html>
