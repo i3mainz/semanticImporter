@@ -484,9 +484,15 @@ function mappingSchemaReader(url,xml,tableheader,table,edit){
     }else{
        	header+="Individual ID: "+((typeof $(xml).attr("indidprefix") !== 'undefined')?columnhead+$(xml).attr("indidprefix"):"")+"%%GENERATED UUID%%<br/>"
     }
-    header+="Namespace: <a target=\"_blank\" href=\""+$(xml).find('file').attr("namespace")+"\">"+$(xml).find('file').attr("namespace")+"</a><br/>"
-    header+="Value Namespace: <a target=\"_blank\" href=\""+$(xml).find('file').attr("attnamespace")+"\">"+$(xml).find('file').attr("attnamespace")+"</a><br/>"
-    header+="EPSG: <a target=\"_blank\" href=\"http://www.opengis.net/def/crs/EPSG/0/"+$(xml).find('file').attr("epsg")+"\">EPSG:"+$(xml).find('file').attr("epsg")+"</a><br/>"
+    if(edit){
+    	header+="Namespace: <input type=\"url\" value=\""+$(xml).find('file').attr("namespace")+"\"/><br/>"
+    	header+="Value Namespace: <input type=\"url\" value=\""+$(xml).find('file').attr("attnamespace")+"\"/><br/>"
+    	header+="EPSG: <a target=\"_blank\" href=\"http://www.opengis.net/def/crs/EPSG/0/"+$(xml).find('file').attr("epsg")+"\">EPSG:<input type=\"number\" id=\"epsg\" value=\""+$(xml).find('file').attr("epsg")+"\"/><br/>"  
+    }else{
+   	 	header+="Namespace: <a target=\"_blank\" href=\""+$(xml).find('file').attr("namespace")+"\">"+$(xml).find('file').attr("namespace")+"</a><br/>"
+   		header+="Value Namespace: <a target=\"_blank\" href=\""+$(xml).find('file').attr("attnamespace")+"\">"+$(xml).find('file').attr("attnamespace")+"</a><br/>"
+    	header+="EPSG: <a target=\"_blank\" href=\"http://www.opengis.net/def/crs/EPSG/0/"+$(xml).find('file').attr("epsg")+"\">EPSG:"+$(xml).find('file').attr("epsg")+"</a><br/>" 
+    }
     output+="<br/><a href=\""+url+"\">Mapping Schema Download</a>"
     $('#'+table).html(output);    	
     $('#'+tableheader).html(header);
