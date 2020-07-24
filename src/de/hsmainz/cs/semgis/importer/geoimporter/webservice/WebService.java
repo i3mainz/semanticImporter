@@ -339,7 +339,7 @@ public class WebService {
     public Response getMappingSchemas() { 
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
-        return Response.ok(importerconf.getJSONObject.toString()).type(MediaType.APPLICATION_JSON).build();
+        return Response.ok(importerconf.getJSONObject("mappings").toString()).type(MediaType.APPLICATION_JSON).build();
 	}
 	
 	
