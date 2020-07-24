@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <data>
-<file class="https://www.wikidata.org/entity/Q3914" indid="Schulnr" 
+<file class="http://www.wikidata.org/entity/Q3914" indid="Schulnr" 
 namespace="http://ld.gdi-de.org/id/de.bund.bkg.poi/" 
 attnamespace="http://ld.gdi-de.org/id/de.bund.bkg.poi/"
 geoendpoint="http://linkedgeodata.org/sparql" 
@@ -15,8 +15,8 @@ geomatchingclass="http://linkedgeodata.org/ontology/School" nearestMatch="false"
 	</style>
 	
 	<classmapping class="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#GovernmentalService">
-		<proplabel lang="en" value="Governmental Service"/>
-		<proplabel lang="de" value="Staatlicher Dienst"/>
+		<clslabel lang="en" value="Governmental Service"/>
+		<clslabel lang="de" value="Staatlicher Dienst"/>
 	</classmapping>
 	
 	<addcolumn prop="obj" concept="http://inspire.ec.europa.eu/schemas/us/4.0#ServiceTypeValue" propiri="http://inspire.ec.europa.eu/schemas/us-govserv/4.0#serviceType" value="http://inspire.ec.europa.eu/codelist/ServiceTypeValue/education">

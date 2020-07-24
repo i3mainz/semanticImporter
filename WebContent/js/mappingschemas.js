@@ -196,6 +196,11 @@ if(i%2==0){
 	    	    		table+="<td align=center id=\"valueregex_"+i+"\"><input type=\"text\" id=\"colregex_"+i+"_input\"></td></tr>"
 
 */
+function removeRow(id){
+	$('#'+id).remove();
+}
+
+
 function processColumnsEdit(columnhead,xml,depth){
 	console.log("Depth "+depth);
 	console.log()
@@ -256,11 +261,13 @@ function processColumnsEdit(columnhead,xml,depth){
 	    output+="<option value=\"xerleben2\">XErleben2</option>"
 	    output+="<option value=\"xplanung5\">XPlanung5</option>"
 	    output+="</select>"
+	    j=0
         if($(xml).children("proplabel").length>0 || $(xml).children("clslabel").length>0){
-    		output+="<table width=\"100%\" border=1><tr><th>Label</th><th>lang</th></tr>"
+    		output+="<table width=\"100%\" border=1><tr><th>Label</th><th>lang</th><th>Options</th></tr>"
             	$(xml).children().each(function(){
             		if(this.tagName=="clslabel" || this.tagName=="proplabel"){
-            			output+="<tr><td>"+$(this).attr("value")+"</td><td>"+$(this).attr("lang")+"</td></tr>"
+            			output+="<tr id=\"proplabel_"+i+"_"+j+"\"><td>"+$(this).attr("value")+"</td><td>"+$(this).attr("lang")+"</td><td><button onclick=\"removeRow('proplabel_"+i+"_"+j+"')\">-</button></tr>"
+            			j++;
             		}
             	});
     		output+="</table>"
