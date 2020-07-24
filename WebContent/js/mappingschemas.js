@@ -1,23 +1,34 @@
-function getMappingSchemas(){
+function getMappingSchemas(identifier,tableheader,table){
 	  $.ajax({
        url: 'rest/service/getMappingSchemas',
        type: 'GET',         // HTTP-Methode, hier: POST
        processData: false,
        contentType: false,
        success: function(data) { 
-    	   return data;
+       	result=""
+       	for(mapping in data){
+			result+="<option value=\""+data[mapping]+"\">"+mapping+"</option>"
+		}
+		$("#"+identifier).html(result)
+		 var opt = $("#"+identifier+" option").sort(function (a,b) { return a.text.toUpperCase().localeCompare(b.text.toUpperCase()) });
+    	$("#"+identifier).html(opt);
+		getMappingSchema($("#"+identifier).val(),identifier,tableheader,table)
        }
     });
 }
 
-function getMappingSchema(schemaname){
+function mappingSchemaToTable(identifier,tableheader,table){
+	getMappingSchema($("#"+identifier).val(),identifier,tableheader,table)
+}
+
+function getMappingSchema(schemaname,identifier,tableheader,table){
 	  $.ajax({
-       url: 'rest/service/getMappingSchemas/'+schemaname,
+       url: 'rest/service/getMappingSchema/'+schemaname,
        type: 'GET',         // HTTP-Methode, hier: POST
        processData: false,
        contentType: false,
        success: function(data) { 
-    	   return data;
+       	   mappingSchemaReader('rest/service/getMappingSchema/'+schemaname,data,tableheader,table)
        }
     });
 }
@@ -161,26 +172,27 @@ function processColumns(columnhead,xml,depth){
     }
 }
 
-function mappingSchemaReader(url){
+
+
+function mappingSchemaReader(url,xml,tableheader,table){
 	output=""
     classes=""
-    $.get(url, {}, function (xml){
-       	output="<tr><th align=center>Column</th><th align=center>Type</th><th align=center>Property IRI</th><th align=center>Range</th><th align=center>Concept</th><th align=center>Query or Fixed Value</th><th align=center>Endpoint</th><th align=center>Regex</th></tr>"
-    	classes="<a target=\"_blank\" href=\""+$(xml).find('file').attr("class")+"\">"+$(xml).find('file').attr("class")+"</a>&nbsp;"
-       	$(xml).find('file').children().each(function(){
+    output="<tr><th align=center>Column</th><th align=center>Type</th><th align=center>Property IRI</th><th align=center>Range</th><th align=center>Concept</th><th align=center>Query or Fixed Value</th><th align=center>Endpoint</th><th align=center>Regex</th></tr>"
+    console.log(xml)
+    classes="<a target=\"_blank\" href=\""+$(xml).find('file').attr("class")+"\">"+$(xml).find('file').attr("class")+"</a>&nbsp;"
+    $(xml).find('file').children().each(function(){
             processColumns("",this,1)
-        });
-       	header="Classes: ["+classes+"]<br/>"
-        if((typeof $(xml).find('file').attr("indid") !== 'undefined')){
-        	header+="Individual ID: "+((typeof $(xml).attr("indidprefix") !== 'undefined')?columnhead+$(xml).attr("indidprefix"):"")+"%%"+$(xml).find('file').attr("indid")+"%%<br/>"
-        }else{
-        	header+="Individual ID: "+((typeof $(xml).attr("indidprefix") !== 'undefined')?columnhead+$(xml).attr("indidprefix"):"")+"%%GENERATED UUID%%<br/>"
-        }
-    	header+="Namespace: <a target=\"_blank\" href=\""+$(xml).find('file').attr("namespace")+"\">"+$(xml).find('file').attr("namespace")+"</a><br/>"
-    	header+="Value Namespace: <a target=\"_blank\" href=\""+$(xml).find('file').attr("attnamespace")+"\">"+$(xml).find('file').attr("attnamespace")+"</a><br/>"
-    	header+="EPSG: <a target=\"_blank\" href=\"http://www.opengis.net/def/crs/EPSG/0/"+$(xml).find('file').attr("epsg")+"\">EPSG:"+$(xml).find('file').attr("epsg")+"</a><br/>"
-    	output+="<br/><a href=\""+url+"\">Mapping Schema Download</a>"
-    	$('#datasettable').html(output);    	
-    	$('#tableheader').html(header);
     });
+    header="Classes: ["+classes+"]<br/>"
+    if((typeof $(xml).find('file').attr("indid") !== 'undefined')){
+       	header+="Individual ID: "+((typeof $(xml).attr("indidprefix") !== 'undefined')?columnhead+$(xml).attr("indidprefix"):"")+"%%"+$(xml).find('file').attr("indid")+"%%<br/>"
+    }else{
+       	header+="Individual ID: "+((typeof $(xml).attr("indidprefix") !== 'undefined')?columnhead+$(xml).attr("indidprefix"):"")+"%%GENERATED UUID%%<br/>"
+    }
+    header+="Namespace: <a target=\"_blank\" href=\""+$(xml).find('file').attr("namespace")+"\">"+$(xml).find('file').attr("namespace")+"</a><br/>"
+    header+="Value Namespace: <a target=\"_blank\" href=\""+$(xml).find('file').attr("attnamespace")+"\">"+$(xml).find('file').attr("attnamespace")+"</a><br/>"
+    header+="EPSG: <a target=\"_blank\" href=\"http://www.opengis.net/def/crs/EPSG/0/"+$(xml).find('file').attr("epsg")+"\">EPSG:"+$(xml).find('file').attr("epsg")+"</a><br/>"
+    output+="<br/><a href=\""+url+"\">Mapping Schema Download</a>"
+    $('#'+table).html(output);    	
+    $('#'+tableheader).html(header);
 }

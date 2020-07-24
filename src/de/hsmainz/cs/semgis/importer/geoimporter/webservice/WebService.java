@@ -366,11 +366,11 @@ public class WebService {
     public Response getMappingSchema(@PathParam("mappingschema") String mappingschema) { 
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
-        File folder=new File(importerconf.getString("mappingfolder/"+mappingschema+".xml"));
+        File folder=new File(importerconf.getString("mappingfolder")+"/"+mappingschema+".xml");
         if(!folder.exists()) {
         	throw new NotFoundException();
         }       
-        return Response.ok(readAllBytesJava7(importerconf.getString("mappingfolder/"+mappingschema+".xml"))).type(MediaType.APPLICATION_XML).build();
+        return Response.ok(readAllBytesJava7(importerconf.getString("mappingfolder")+"/"+mappingschema+".xml")).type(MediaType.APPLICATION_XML).build();
 	}
 	
 	@GET

@@ -415,12 +415,12 @@ function addValueMapping(from,to,tdtable) {
 	<span id="loginspan"></span>
 <header>
 <div class="page-header" id="header">
-	<h1>Upload your file for content analysis:</h1>
+	<h1 align="center">Edit or create mapping schemas</h1>
 </div></header>
-<div class="container" role="main">
+<div class="container-fluid" role="main">
 <div class="row">
   <div class="col-sm-12" id="queryresult" class="table-wrapper-scroll-y">
-  Mappingschema: <select id="mappingschema" onChange="mappingSchemaToTable()"></select><br/><br/>
+  Mappingschema: <select id="mappingschema" onChange="mappingSchemaToTable('mappingschema','tableheader','datasettable')"></select><br/><br/>
 	<span id="tableheader"></span><br/><button id="downloadSchema" onClick="downloadSchema()">Download Schema</button>
  	<table id="datasettable" class="description" width="100%" align="center" border="1">
  	</table>
@@ -445,13 +445,8 @@ function addValueMapping(from,to,tdtable) {
 </div></div></div>
 <script src="js/utils.js"></script>
 <script>
-var mappingschemas=getMappingSchemas()
-result=""
-for(mapping in mappingschemas){
-	result+="<option value=\""+mappingschemas[mapping]+"\">"+mapping+"</option>"
-}
-$("#mappingschema").html(result)
-mappingSchemaReader($("#mappingschema").val())
+var mappingschemas=getMappingSchemas("mappingschema","tableheader","datasettable")
+
 dialog = $( "#dialog-form" ).dialog({
     autoOpen: false,
     height: 400,
