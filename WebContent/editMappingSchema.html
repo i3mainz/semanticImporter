@@ -420,28 +420,18 @@ function addValueMapping(from,to,tdtable) {
 <div class="container-fluid" role="main">
 <div class="row">
   <div class="col-sm-12" id="queryresult" class="table-wrapper-scroll-y">
-  Mappingschema: <select id="mappingschema" onChange="mappingSchemaToTable('mappingschema','tableheader','datasettable')"></select><br/><br/>
-	<span id="tableheader"></span><br/><button id="downloadSchema" onClick="downloadSchema()">Download Schema</button>
+  Mappingschema: <select id="mappingschema" onChange="mappingSchemaToTable('mappingschema','tableheader','datasettable',false)"></select><br/><br/>
+	<span id="tableheader"></span><br/>
+	<button id="downloadSchema" onClick="downloadSchema()">Download Schema</button>
+	<button id="editSchema" onClick="mappingSchemaToTable('mappingschema','tableheader','datasettable',true)">Edit Schema</button>
+	<button id="editSchema" onClick="mappingSchemaToTable('mappingschema','tableheader','datasettable',false)">View Schema</button>
  	<table id="datasettable" class="description" width="100%" align="center" border="1">
  	</table>
 
 
-<button onClick="saveMappingAsXML()">Save Mapping</button>
+<button onClick="saveMappingAsXML()">Export Mapping as XML</button>
+<button onClick="saveMappingOnServer()">Save Mapping on server</button>
 
- 	<table id="datasettable" class="description" width="100%" border="1">
- 	
- 	
- 	</table>
-	   Import Schema: 
-	   <p>
-		Select a file : <input type="file" name="file" id="files" size="45" /><br/>
-		Or provide a WFS URL: <input type="text" name="serviceurl" id="serviceurl" size="45" /><br/>
-		Fileformat: 
-		<select id="fileformat">
-		<option value="xml">XML</option>
-		</select>
-	   </p>
-	   <button id="uploadButton" onclick="analyzeFile()">Upload It</button>
 </div></div></div>
 <script src="js/utils.js"></script>
 <script>
