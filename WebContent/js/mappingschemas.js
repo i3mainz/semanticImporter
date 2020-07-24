@@ -242,12 +242,20 @@ function processColumnsEdit(columnhead,xml,depth){
         }else{
         	output+="<td align=center id=\"proptypecol_"+i+"\"><select id=\"proptypecol_"+i+"_select\"><option value=\"data\">DatatypeProperty</option><option value=\"obj\">ObjectProperty</option><option value=\"annotation\">AnnotationProperty</option><option value=\"subclass\">SubClass</option><option value=\"class\" selected>Class</option></select></td>"
         }
-        output+="<td align=\"center\">"
+        output+="<td align=center id=\"coluri_"+i+"\">"
         if((typeof $(xml).attr("propiri") !== 'undefined')){
-        	output+="<a href=\""+$(xml).attr("propiri")+"\" target=\"_blank\" >"+((typeof $(xml).attr("propiri") !== 'undefined')?$(xml).attr("propiri").substring($(xml).attr("propiri").lastIndexOf('/')+1):"")+"</a>"	
+        	output+="<input type=\"url\" value=\""+$(xml).attr("propiri")+"\"/>"	
         }else if((typeof $(xml).attr("class") !== 'undefined')){
-        	output+="<a href=\""+$(xml).attr("class")+"\" target=\"_blank\" >"+((typeof $(xml).attr("class") !== 'undefined')?$(xml).attr("class").substring($(xml).attr("class").lastIndexOf('/')+1):"")+"</a>"
+        	output+="<input type=\"url\" value=\""+$(xml).attr("class")+"\"/>"
         }   
+	    //output+='<div class="ui-widget">'
+	    output+="<br/>TripleStore:<select id=\"triplestoredropdown_property_"+i+"\" onChange=\"setAutoComplete('triplestoredropdown_property_"+i+"','coluri_"+i+"_input','proptypecol_"+i+"_select')\">"
+	    output+="<option value=\"aaa7\">AAA7</option>"
+	    output+="<option value=\"inspire4\">INSPIRE4</option>"
+	    output+="<option value=\"https://www.wikidata.org/w/api.php?action=wbsearchentities&&format=json&language=en&uselang=en&type=property&search=\">Wikidata</option>"
+	    output+="<option value=\"xerleben2\">XErleben2</option>"
+	    output+="<option value=\"xplanung5\">XPlanung5</option>"
+	    output+="</select>"
         if($(xml).children("proplabel").length>0 || $(xml).children("clslabel").length>0){
     		output+="<table width=\"100%\" border=1><tr><th>Label</th><th>lang</th></tr>"
             	$(xml).children().each(function(){
@@ -479,16 +487,21 @@ function mappingSchemaReader(url,xml,tableheader,table,edit){
     	});
     }
     header="Classes: ["+classes+"]<br/>"
-    if((typeof $(xml).find('file').attr("indid") !== 'undefined')){
-       	header+="Individual ID: "+((typeof $(xml).attr("indidprefix") !== 'undefined')?columnhead+$(xml).attr("indidprefix"):"")+"%%"+$(xml).find('file').attr("indid")+"%%<br/>"
-    }else{
-       	header+="Individual ID: "+((typeof $(xml).attr("indidprefix") !== 'undefined')?columnhead+$(xml).attr("indidprefix"):"")+"%%GENERATED UUID%%<br/>"
-    }
     if(edit){
+        if((typeof $(xml).find('file').attr("indid") !== 'undefined')){
+       		header+="Individual ID: "+((typeof $(xml).attr("indidprefix") !== 'undefined')?columnhead+$(xml).attr("indidprefix"):"")+"%%"+$(xml).find('file').attr("indid")+"%%<br/>"
+    	}else{
+       		header+="Individual ID: "+((typeof $(xml).attr("indidprefix") !== 'undefined')?columnhead+$(xml).attr("indidprefix"):"")+"%%GENERATED UUID%%<br/>"
+    	}
     	header+="Namespace: <input type=\"url\" value=\""+$(xml).find('file').attr("namespace")+"\"/><br/>"
     	header+="Value Namespace: <input type=\"url\" value=\""+$(xml).find('file').attr("attnamespace")+"\"/><br/>"
     	header+="EPSG: <a target=\"_blank\" href=\"http://www.opengis.net/def/crs/EPSG/0/"+$(xml).find('file').attr("epsg")+"\">EPSG:<input type=\"number\" id=\"epsg\" value=\""+$(xml).find('file').attr("epsg")+"\"/><br/>"  
     }else{
+        if((typeof $(xml).find('file').attr("indid") !== 'undefined')){
+       		header+="Individual ID: "+((typeof $(xml).attr("indidprefix") !== 'undefined')?columnhead+$(xml).attr("indidprefix"):"")+"%%"+$(xml).find('file').attr("indid")+"%%<br/>"
+    	}else{
+       		header+="Individual ID: "+((typeof $(xml).attr("indidprefix") !== 'undefined')?columnhead+$(xml).attr("indidprefix"):"")+"%%GENERATED UUID%%<br/>"
+    	}
    	 	header+="Namespace: <a target=\"_blank\" href=\""+$(xml).find('file').attr("namespace")+"\">"+$(xml).find('file').attr("namespace")+"</a><br/>"
    		header+="Value Namespace: <a target=\"_blank\" href=\""+$(xml).find('file').attr("attnamespace")+"\">"+$(xml).find('file').attr("attnamespace")+"</a><br/>"
     	header+="EPSG: <a target=\"_blank\" href=\"http://www.opengis.net/def/crs/EPSG/0/"+$(xml).find('file').attr("epsg")+"\">EPSG:"+$(xml).find('file').attr("epsg")+"</a><br/>" 
