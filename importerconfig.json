@@ -32,7 +32,12 @@
 		"Unesco Heritage Hamburg":"hamburg_unesco",
 		"XPlanung BP_Plan ST":"xplanung_st_bp_plan",
 		"XPlanung FP_Plan ST":"xplanung_st_fp_plan"
+},
+"xsd2owl":{
+	"AAA6":"xsd2owl5.xsl",
+	"AAA7":"xsd2owl5.xsl",
+	"INSPIRE4":"xsd2owl5.xsl",
+	"XErleben2":"xsd2owl5.xsl",
+	"XPlanung5":"xsd2owl5.xsl"
 }
- 
- 
 }

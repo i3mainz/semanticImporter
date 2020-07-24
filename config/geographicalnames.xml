@@ -53,12 +53,12 @@ attnamespace="http://ld.gdi-de.org/id/de.bund.bkg.inspire.gn250/" epsg="4326" in
 	
 	<column name="beginLifes" propiri="http://inspire.ec.europa.eu/schemas/gn/4.0#beginLifespanVersion" prop="data" range="http://www.w3.org/2001/XMLSchema#string">
 		<proplabel lang="en" value="beginLifespanVersion"/>
-		<proplabel lang="de" value="beginLiferspanVersion"/>
+		<proplabel lang="de" value="beginLifespanVersion"/>
 	</column> 
 
 	<column name="endLifes" propiri="http://inspire.ec.europa.eu/schemas/gn/4.0#endLifespanVersion" prop="data" range="http://www.w3.org/2001/XMLSchema#string">
 		<proplabel lang="en" value="endLifespanVersion"/>
-		<proplabel lang="de" value="endLiferspanVersion"/>
+		<proplabel lang="de" value="endLifespanVersion"/>
 	</column> 
 
 	<!--<column name="AGS" prop="obj" propiri="http://www.wikidata.org/prop/direct/P131" 
