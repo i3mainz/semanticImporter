@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <data>
-<file class="http://www.wikidata.org/entity/Q322563" indid="Schulnr" 
+<file class="http://www.wikidata.org/entity/Q322563" indid="Schulnr" indidprefix="schule_beruf"
 namespace="http://ld.gdi-de.org/id/de.bund.bkg.poi/" 
 attnamespace="http://ld.gdi-de.org/id/de.bund.bkg.poi/"
 geoendpoint="http://linkedgeodata.org/sparql" 
