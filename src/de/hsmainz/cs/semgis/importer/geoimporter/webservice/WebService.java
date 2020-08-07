@@ -69,12 +69,21 @@ import de.hsmainz.cs.semgis.importer.geoimporter.user.UserManagementConnection;
 import de.hsmainz.cs.semgis.importer.geoimporter.user.UserType;
 import de.hsmainz.cs.semgis.importer.schemaconverter.XSD2OWL;
 import de.hsmainz.cs.semgis.importer.schemaconverter.XSD2OWL.XMLTypes;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 
+/**
+ * The Webservice for the GMLImporter.
+ */
 @Path("/service")
 public class WebService {
 
 	static JSONObject importerconf = null;
 	
+	/**
+	 * The Webservice for the GMLImporter.
+	 * @throws IOException on error
+	 */
 	public WebService() throws IOException {
 		if (importerconf == null) {
 			String text2 = new String(Files.readAllBytes(Paths.get("importerconfig.json")), StandardCharsets.UTF_8);
@@ -87,20 +96,24 @@ public class WebService {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces({"text/ttl"})
 	@Path("/convertMS")
-    public Response importWithMappingSchema(@FormDataParam("file") InputStream uploadedInputStream,
-			@FormDataParam("file") FormDataContentDisposition fileDetail,
-			@FormDataParam("file") InputStream mappingprofileInputStream,
-			@FormDataParam("file") FormDataContentDisposition mappingprofileDetail,
-			@QueryParam("format") String format,
-			@DefaultValue("") @QueryParam("namespace") String namespace,
-			@DefaultValue("") @QueryParam("provider") String provider,
-			@DefaultValue("") @QueryParam("license") String license,
+	@Operation(
+            summary = "Converts a file to RDF using an already existing and accessible mapping schema",
+            description = "Converts a file to RDF using an already existing and accessible mapping schema")
+    public Response importWithMappingSchema(
+    		@Parameter(description="The file to be imported") @FormDataParam("file") InputStream uploadedInputStream,
+    		@Parameter(description="The file metadata") @FormDataParam("file") FormDataContentDisposition fileDetail,
+			@Parameter(description="The mappingschema used for import") @FormDataParam("file2") InputStream mappingprofileInputStream,
+			@Parameter(description="The mappingschema file metadata") @FormDataParam("file2") FormDataContentDisposition mappingprofileDetail,
+			@Parameter(description="The data format of the file which is imported") @QueryParam("format") String format,
+			@Parameter(description="The data namespace to use for conversion") @DefaultValue("") @QueryParam("namespace") String namespace,
+			@Parameter(description="The provider of the dataset") @DefaultValue("") @QueryParam("provider") String provider,
+			@Parameter(description="The license under which to be converted file was published") @DefaultValue("") @QueryParam("license") String license,
 			@DefaultValue("") @QueryParam("origin") String origin,
-			@DefaultValue("") @QueryParam("authtoken") String authtoken,
-			@DefaultValue("") @QueryParam("triplestore") String triplestore,
-			@DefaultValue("") @QueryParam("triplestoregraph") String triplestoregraph,
-			@DefaultValue("") @QueryParam("triplestoreuser") String triplestoreuser,
-			@DefaultValue("") @QueryParam("triplestorepasswd") String triplestorepasswd) { 
+			@Parameter(description="The authtoken needed for authorization") @DefaultValue("") @QueryParam("authtoken") String authtoken,
+			@Parameter(description="The triplestore to which to import the converted dataset") @DefaultValue("") @QueryParam("triplestore") String triplestore,
+			@Parameter(description="The graph of the triplestore to which the import should occur") @DefaultValue("") @QueryParam("triplestoregraph") String triplestoregraph,
+			@Parameter(description="The triplestore user for authentication") @DefaultValue("") @QueryParam("triplestoreuser") String triplestoreuser,
+			@Parameter(description="The triplestore password for authentication") @DefaultValue("") @QueryParam("triplestorepasswd") String triplestorepasswd) { 
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
         try {
@@ -128,11 +141,15 @@ public class WebService {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces({"text/ttl"})
 	@Path("/analyzeFile")
-    public Response analyzeFile(@FormDataParam("file") InputStream uploadedInputStream,
-			@FormDataParam("file") FormDataContentDisposition fileDetail,
-			@FormDataParam("fileformat") String fileFormat,
-			@FormDataParam("serviceurl") String serviceurl,
-			@DefaultValue("") @QueryParam("authtoken") String authtoken) { 
+	@Operation(
+            summary = "Analyzes a file structure in order to create a mapping schema",
+            description = "Analyzes a file structure in order to create a mapping schema")
+    public Response analyzeFile(
+    		@Parameter(description="The file to be analyzed") @FormDataParam("file") InputStream uploadedInputStream,
+    		@Parameter(description="The file metadata") @FormDataParam("file") FormDataContentDisposition fileDetail,
+    		@Parameter(description="The dataformat of the file upload") @FormDataParam("fileformat") String fileFormat,
+    		@Parameter(description="The serviceurl if data is being loaded from a WFS feature type") @FormDataParam("serviceurl") String serviceurl,
+			@Parameter(description="The authtoken used for authorization") @DefaultValue("") @QueryParam("authtoken") String authtoken) { 
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
         System.out.println(fileFormat);
@@ -190,18 +207,22 @@ public class WebService {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces({"text/ttl"})
 	@Path("/convertGML")
-    public Response importKnownFormat(@FormDataParam("file") InputStream uploadedInputStream,
-			@FormDataParam("file") FormDataContentDisposition fileDetail,
-			@DefaultValue("gml") @QueryParam("format") String format, 
-			@DefaultValue("") @QueryParam("namespace") String namespace,
-			@DefaultValue("") @QueryParam("provider") String provider,
-			@DefaultValue("") @QueryParam("license") String license,
-			@DefaultValue("") @QueryParam("origin") String origin,
-			@DefaultValue("") @QueryParam("authtoken") String authtoken,
-			@DefaultValue("") @QueryParam("triplestore") String triplestore,
-			@DefaultValue("") @QueryParam("triplestoregraph") String triplestoregraph,
-			@DefaultValue("") @QueryParam("triplestoreuser") String triplestoreuser,
-			@DefaultValue("") @QueryParam("triplestorepasswd") String triplestorepasswd) { 
+	@Operation(
+            summary = "Converts a GML document to RDF",
+            description = "Converts a GML document to RDF given a few parameters and constraints")
+    public Response importKnownFormat(
+    		@Parameter(description="The GML file to be converted") @FormDataParam("file") InputStream uploadedInputStream,
+    		@Parameter(description="The GML file metadata") @FormDataParam("file") FormDataContentDisposition fileDetail,
+    		@Parameter(description="The dataformat of the file upload") @DefaultValue("gml") @QueryParam("format") String format, 
+			@Parameter(description="The data namespace used for conversion") @DefaultValue("") @QueryParam("namespace") String namespace,
+			@Parameter(description="The provider of the GML dataset") @DefaultValue("") @QueryParam("provider") String provider,
+			@Parameter(description="The license under which the GML file was published") @DefaultValue("") @QueryParam("license") String license,
+			@Parameter(description="The origin of the GML file") @DefaultValue("") @QueryParam("origin") String origin,
+			@Parameter(description="The authtoken needed for authorization") @DefaultValue("") @QueryParam("authtoken") String authtoken,
+			@Parameter(description="The triplestore to which to import the converted dataset") @DefaultValue("") @QueryParam("triplestore") String triplestore,
+			@Parameter(description="The graph of the triplestore to which the import should occur") @DefaultValue("") @QueryParam("triplestoregraph") String triplestoregraph,
+			@Parameter(description="The triplestore user for authentication") @DefaultValue("") @QueryParam("triplestoreuser") String triplestoreuser,
+			@Parameter(description="The triplestore password for authentication") @DefaultValue("") @QueryParam("triplestorepasswd") String triplestorepasswd) { 
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
         try {
@@ -230,17 +251,21 @@ public class WebService {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces({"text/ttl"})
 	@Path("/convertGeoJSON")
-    public Response convertGeoJSON(@FormDataParam("file") InputStream uploadedInputStream,
-			@FormDataParam("file") FormDataContentDisposition fileDetail,
+	@Operation(
+            summary = "Converts a GeoJSON document to RDF",
+            description = "Converts a GeoJSON document to RDF given a few parameters and constraints")
+    public Response convertGeoJSON(
+    		@Parameter(description="The GeoJSON file to be converted") @FormDataParam("file") InputStream uploadedInputStream,
+    		@Parameter(description="Metadata of the GeoJSON file") @FormDataParam("file") FormDataContentDisposition fileDetail,
 			@QueryParam("format") String format, 
-			@QueryParam("namespace") String namespace, 
-			@QueryParam("classname") String classname, 
-			@QueryParam("indid") String indid,
-			@DefaultValue("") @QueryParam("authtoken") String authtoken,
-			@DefaultValue("") @QueryParam("triplestore") String triplestore,
-			@DefaultValue("") @QueryParam("triplestoregraph") String triplestoregraph,
-			@DefaultValue("") @QueryParam("triplestoreuser") String triplestoreuser,
-			@DefaultValue("") @QueryParam("triplestorepasswd") String triplestorepasswd) { 
+    		@Parameter(description="The data namespace used for conversion") @QueryParam("namespace") String namespace, 
+    		@Parameter(description="The classname of the contents of the GeoJSON file") @QueryParam("classname") String classname, 
+    		@Parameter(description="The column including the individual id of the dataset") @QueryParam("indid") String indid,
+    		@Parameter(description="The authtoken needed for authorization") @DefaultValue("") @QueryParam("authtoken") String authtoken,
+    		@Parameter(description="The triplestore to which to import the converted dataset") @DefaultValue("") @QueryParam("triplestore") String triplestore,
+    		@Parameter(description="The graph of the triplestore to which the import should occur") @DefaultValue("") @QueryParam("triplestoregraph") String triplestoregraph,
+    		@Parameter(description="The triplestore user for authentication") @DefaultValue("") @QueryParam("triplestoreuser") String triplestoreuser,
+    		@Parameter(description="The triplestore password for authentication") @DefaultValue("") @QueryParam("triplestorepasswd") String triplestorepasswd) { 
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
         try {
@@ -310,9 +335,13 @@ public class WebService {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces({"text/ttl"})
 	@Path("/saveMappingSchema")
-    public Response saveMappingSchema(@FormDataParam("data") String fileAsString,
-			@FormDataParam("filename") FormDataContentDisposition fileName,
-			@DefaultValue("") @QueryParam("authtoken") String authtoken) { 
+	@Operation(
+            summary = "Saves a created mapping schema on the server",
+            description = "Saves a created mapping schema on the server")
+    public Response saveMappingSchema(
+    		@Parameter(description="The mappingschema to be saved") @FormDataParam("data") String fileAsString,
+    		@Parameter(description="The name of the mappingschema to be saved") @FormDataParam("filename") FormDataContentDisposition fileName,
+    		@Parameter(description="An authtoken needed for authorization") @DefaultValue("") @QueryParam("authtoken") String authtoken) { 
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
         System.out.println("File Format: "+fileName);
@@ -336,6 +365,9 @@ public class WebService {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/getMappingSchemas")
+	@Operation(
+            summary = "Gets a list of all mapping schemas accessible to the server",
+            description = "Gets a list of all mapping schemas accessible to the server")
     public Response getMappingSchemas() { 
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
@@ -363,7 +395,11 @@ public class WebService {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/getMappingSchema/{mappingschema}")
-    public Response getMappingSchema(@PathParam("mappingschema") String mappingschema) { 
+	@Operation(
+            summary = "Gets a representation of a given mapping schema from the server",
+            description = "Gets a representation of a given mapping schema from the server")
+    public Response getMappingSchema(
+    		@Parameter(description="The name of the mapping schema to be retrieved") @PathParam("mappingschema") String mappingschema) { 
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
         File folder=new File(importerconf.getString("mappingfolder")+"/"+mappingschema+".xml");
@@ -377,6 +413,9 @@ public class WebService {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/getXSLTemplates")
+	@Operation(
+            summary = "Gets XSL templates available on the server",
+            description = "Gets XSL templates available on the server")
     public Response getXSLTemplates() { 
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
@@ -394,6 +433,9 @@ public class WebService {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/login")
+	@Operation(
+            summary = "Login function for user login",
+            description = "Login function for user login, returns an authtoken if successful")
     public Response login(@FormDataParam("username") String username,@FormDataParam("password") String password) { 
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
@@ -404,10 +446,27 @@ public class WebService {
         return Response.ok("").type(MediaType.TEXT_PLAIN).build();
 	}
 	
+	/**
+	 * Imports a file using a mapping schema. 
+	 * @param uploadedInputStream The input stream in which the file upload is stored
+	 * @param fileDetail Details about the uploaded file
+	 * @param xsl The name of the XSL stylesheet used for transformation
+	 * @param formatname
+	 * @param language
+	 * @param namespace
+	 * @param triplestore
+	 * @param triplestoregraph
+	 * @param triplestoreuser
+	 * @param triplestorepasswd
+	 * @return
+	 */
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces({"text/ttl"})
 	@Path("/convertSchemaToOWL")
+	@Operation(
+            summary = "Converts an XSD file to OWL",
+            description = "Converts an XSD file to OWL")
     public Response importWithMappingSchema(@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail,
 			@QueryParam("xsl") String xsl,

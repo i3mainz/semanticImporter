@@ -36,20 +36,36 @@ import org.xml.sax.SAXException;
 import de.hsmainz.cs.semgis.importer.geoimporter.importer.GMLImporter;
 import de.hsmainz.cs.semgis.importer.schemaconverter.XSD2OWL;
 import de.hsmainz.cs.semgis.importer.schemaconverter.XSD2OWL.XMLTypes;
+import io.swagger.v3.oas.annotations.Parameter;
 
 @Path("/service")
 public class WebService {
 
+	public WebService() {
+		
+	}
+	
+	/**
+	 * Converts an XSD schema to OWL.
+	 * @param uploadedInputStream The XSD schema which is uploaded
+	 * @param fileDetail File metadata of the file being uploaded
+	 * @param xsl
+	 * @param formatname
+	 * @param language
+	 * @param namespace
+	 * @return
+	 */
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces({"text/ttl"})
 	@Path("/convertSchemaToOWL")
-    public Response importWithMappingSchema(@FormDataParam("file") InputStream uploadedInputStream,
-			@FormDataParam("file") FormDataContentDisposition fileDetail,
-			@QueryParam("xsl") String xsl,
+    public Response importWithMappingSchema(
+    		@Parameter(description="The file to be converted") @FormDataParam("file") InputStream uploadedInputStream,
+    		@Parameter(description="The metainformation of the file") @FormDataParam("file") FormDataContentDisposition fileDetail,
+    		@Parameter(description="The XSL stylesheet used for conversion") @QueryParam("xsl") String xsl,
 			@QueryParam("formatname") String formatname,
-			@DefaultValue("en") @QueryParam("language") String language,
-			@DefaultValue("") @QueryParam("namespace") String namespace) { 
+			@Parameter(description="The language used in the dataset") @DefaultValue("en") @QueryParam("language") String language,
+			@Parameter(description="The namespace to used in the conversion process") @DefaultValue("") @QueryParam("namespace") String namespace) { 
 		final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir); 
         
@@ -70,6 +86,10 @@ public class WebService {
 		return Response.ok("").type("text/ttl").build();
 	}
 	
+	/**
+	 * Retrieves available XSL templates from the server.
+	 * @return The given XSL templates as a JSON document
+	 */
 	@GET
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)

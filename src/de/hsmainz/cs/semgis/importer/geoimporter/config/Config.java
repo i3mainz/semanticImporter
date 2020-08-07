@@ -9,12 +9,16 @@ import de.hsmainz.cs.semgis.importer.geoimporter.Style;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.Stack;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-
+/**
+ * Class depicting the mapping configuration.
+ *
+ */
 public class Config extends DefaultHandler2 {
 	
 	public Map<String,List<DataColumnConfig>> resultmap=new TreeMap<>();
@@ -187,11 +191,15 @@ public class Config extends DefaultHandler2 {
 			  break;
 		case "proplabel":
 			  if(currentconfig!=null && currentconfig.propertyuri!=null) {
+				  try {
 				  String key=currentconfig.propertyuri.keySet().iterator().next();
 				  if(currentconfig.propertyuri.get(key)==null) {
 					  currentconfig.propertyuri.put(key,new TreeMap<>());
 				  }
 				  currentconfig.propertyuri.get(key).put(attributes.getValue("lang"),attributes.getValue("value"));
+				  }catch(NoSuchElementException e) {
+					  e.printStackTrace();
+				  }
 			  }
 			  break;
 		case "rootclass":

@@ -2,12 +2,11 @@ package de.hsmainz.cs.semgis.importer.geoimporter.config;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
-import de.hsmainz.cs.semgis.util.Tuple;
-
+/**
+ * Stores the current importerTool configuration.
+ */
 public class DataColumnConfig {
 
 	@Override

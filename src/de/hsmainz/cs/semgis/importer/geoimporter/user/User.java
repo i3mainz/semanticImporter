@@ -2,10 +2,14 @@ package de.hsmainz.cs.semgis.importer.geoimporter.user;
 
 import java.util.UUID;
 
+/**
+ * Class representing a user description.
+ */
 public class User {
 
+	/** The user name as String. */
 	private String name;
-	
+	/** The password hash as String. */
 	private String passwordHash;
 	
 	private UserType userlevel;
