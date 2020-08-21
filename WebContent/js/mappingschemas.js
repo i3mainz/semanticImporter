@@ -314,7 +314,7 @@ function processColumnsEdit(columnhead,xml,depth,index){
         }
         output+="<td align=\"center\" id=\"valuesparql_"+index+"\">"       	
         if((typeof $(xml).attr("query") !== 'undefined')){
-        	output+=$(xml).attr("query")
+        	output+="<input type=\"text\" value=\""+$(xml).attr("query")+"\"/>"
         }else if((typeof $(xml).attr("value") !== 'undefined')){
         	if($(xml).attr("value").includes("http")){
         		if($(xml).attr("value").includes("#")){
@@ -338,7 +338,7 @@ function processColumnsEdit(columnhead,xml,depth,index){
 			output+="<td align=center id=\"valueregex_"+index+"\">^("+$(xml).attr("splitcharacter")+")$</td>"
 		}
         else if($(xml).attr("regex")){
-			output+="<td align=center id=\"valueregex_"+index+"\"><input type=\"text\" value=\""+$(xml).attr("regex")+"\"/></td>"
+			output+="<td align=center id=\"valueregex_"+index+"\"><input id=\"valueregex_"+index+"_val\" type=\"text\" value=\""+$(xml).attr("regex")+"\"/></td>"
 		}else{
 			output+="<td align=center id=\"valueregex_"+index+"\"></td>"
 		}
