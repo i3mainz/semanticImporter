@@ -488,16 +488,16 @@ function mappingSchemaReader(url,xml,tableheader,table,edit){
     console.log(xml)
     classes="<a target=\"_blank\" href=\""+$(xml).find('file').attr("class")+"\">"+$(xml).find('file').attr("class")+"</a>&nbsp;"
     if(edit){
-		i=0
+		var ind=0
     	$(xml).find('file').children().each(function(){
-            processColumnsEdit("",this,1,i)
-			i+=1
+            processColumnsEdit("",this,1,ind)
+			ind+=1
     	});
     }else{
-		i=0
+		var ind=0
         $(xml).find('file').children().each(function(){
-            processColumns("",this,1,i)
-			i+=1
+            processColumns("",this,1,ind)
+			ind+=1
     	});
     }
     header="Classes: ["+classes+"]<br/>"
