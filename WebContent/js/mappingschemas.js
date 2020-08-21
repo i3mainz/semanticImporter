@@ -36,24 +36,25 @@ function getMappingSchema(schemaname,identifier,tableheader,table,edit){
 var output=""
 var classes=""
 
-function processColumns(columnhead,xml,depth){
+function processColumns(columnhead,xml,depth,index){
 	console.log("Depth "+depth);
 	console.log()
+	i=1
 	if(xml.tagName=="column" || xml.tagName=="addcolumn" || xml.tagName=="classmapping" || xml.tagName=="rootclass"){
         output+="<tr>"
         if((typeof $(xml).attr("name") !== 'undefined')){
-        	output+="<td align=\"center\" style=\"color:red\">"+columnhead+$(xml).attr("name")+"</td>"
+        	output+="<td align=\"center\" style=\"color:red\" id=\"datasetcol_"+index+"\">"+columnhead+$(xml).attr("name")+"</td>"
         }else if(xml.tagName=="addcolumn"){
-        	output+="<td align=\"center\" style=\"color:green\">Additional column</td>"
+        	output+="<td align=\"center\" style=\"color:green\" id=\"datasetcol_"+index+"\">Additional column</td>"
         }else if(xml.tagName=="classmapping"){
-        	output+="<td align=\"center\" style=\"color:green\">Additional class</td>"
+        	output+="<td align=\"center\" style=\"color:green\" id=\"datasetcol_"+index+"\">Additional class</td>"
         }else if(xml.tagName=="rootclass"){
-        	output+="<td align=\"center\" style=\"color:green\">Root class</td>"
+        	output+="<td align=\"center\" style=\"color:green\" id=\"datasetcol_"+index+"\">Root class</td>"
         }
         if((typeof $(xml).attr("prop") !== 'undefined')){
-        	output+="<td align=\"center\">"+$(xml).attr("prop")+"</td>"
+        	output+="<td align=\"center\" id=\"proptypecol_"+index+"\">"+$(xml).attr("prop")+"</td>"
         }else{
-        	output+="<td align=\"center\">class</td>"
+        	output+="<td align=\"center\" id=\"proptypecol_"+index+"\">class</td>"
         }
         output+="<td align=\"center\">"
         if((typeof $(xml).attr("propiri") !== 'undefined')){
@@ -71,7 +72,7 @@ function processColumns(columnhead,xml,depth){
     		output+="</table>"
     	}    
         output+="</td>"
-        output+="<td align=\"center\"><a target=\"_blank\" href=\""+$(xml).attr("range")+"\">"+((typeof $(xml).attr("range") !== 'undefined')?$(xml).attr("range").substring($(xml).attr("range").lastIndexOf('#')+1):"")+"</a></td>"
+        output+="<td align=\"center\" id=\"coluri_"+index+"\"><a target=\"_blank\" href=\""+$(xml).attr("range")+"\">"+((typeof $(xml).attr("range") !== 'undefined')?$(xml).attr("range").substring($(xml).attr("range").lastIndexOf('#')+1):"")+"</a></td>"
 		if($(xml).children("valuemapping").length>0 && ($(xml).attr("prop")=="subclass" || $(xml).attr("prop")=="obj")){
         	output+="<td align=center><table width=\"100%\" border=1><tr><th>from</th><th>to</th></tr>"
         	$(xml).children().each(function(){
@@ -124,7 +125,7 @@ function processColumns(columnhead,xml,depth){
         }else{
         	output+="<td align=\"center\"><a href=\""+$(xml).attr("concept")+"\" target=\"_blank\" >"+((typeof $(xml).attr("concept") !== 'undefined')?$(xml).attr("concept").substring($(xml).attr("concept").lastIndexOf('/')+1):"")+"</a></td>"
         }
-        output+="<td align=\"center\">"       	
+        output+="<td align=\"center\" id=\"valuesparql_"+i+"\">"       	
         if((typeof $(xml).attr("query") !== 'undefined')){
         	output+=$(xml).attr("query")
         }else if((typeof $(xml).attr("value") !== 'undefined')){
@@ -145,14 +146,14 @@ function processColumns(columnhead,xml,depth){
 
         }
         output+="</td>"
-        output+="<td align=\"center\">"+((typeof $(xml).attr("endpoint") !== 'undefined')?"<a href=\""+$(xml).attr("endpoint")+"\">"+$(xml).attr("endpoint")+"</a>":"")+"</td>"
+        output+="<td align=\"center\" id=\"valueendpoint_"+i+"\">"+((typeof $(xml).attr("endpoint") !== 'undefined')?"<a href=\""+$(xml).attr("endpoint")+"\">"+$(xml).attr("endpoint")+"</a>":"")+"</td>"
         if($(xml).attr("splitcharacter") && $(xml).attr("splitposition")){
-			output+="<td align=center>^("+$(xml).attr("splitcharacter")+")$</td>"
+			output+="<td align=center id=\"valueregex_"+index+"\">^("+$(xml).attr("splitcharacter")+")$</td>"
 		}
         else if($(xml).attr("regex")){
-			output+="<td align=center>"+$(xml).attr("regex")+"</td>"
+			output+="<td align=center id=\"valueregex_"+index+"\">"+$(xml).attr("regex")+"</td>"
 		}else{
-			output+="<td align=center></td>"
+			output+="<td align=center id=\"valueregex_"+index+"\"></td>"
 		}
 		output+="</tr>";
     }else if(xml.tagName=="columncollection"){
@@ -162,7 +163,7 @@ function processColumns(columnhead,xml,depth){
         output+="<td align=\"center\"><a href=\""+$(xml).attr("propiri")+"\" target=\"_blank\" >"+((typeof $(xml).attr("propiri") !== 'undefined')?$(xml).attr("propiri").substring($(xml).attr("propiri").lastIndexOf('/')+1):"")+"</a></td>"
         output+="<td align=center></td>"
         output+="<td align=\"center\"><a href=\""+$(xml).attr("class")+"\" target=\"_blank\" >"+((typeof $(xml).attr("concept") !== 'undefined')?$(xml).attr("concept").substring($(xml).attr("concept").lastIndexOf('/')+1):"")+"</a></td>"
-        output+="<tdalign=center></td><td align=center></td></tr>"        
+        output+="<td align=center></td><td align=center></td></tr>"        
     	columnhead+=$(xml).attr("name")+"<span style=\"color:black\">.</span>"
         $(xml).children().each(function(){
                processColumns(columnhead,this,depth+1)
@@ -201,23 +202,22 @@ function removeRow(id){
 }
 
 
-function processColumnsEdit(columnhead,xml,depth){
+function processColumnsEdit(columnhead,xml,depth,index){
 	console.log("Depth "+depth);
 	console.log()
-	i=1;
 	if(xml.tagName=="column" || xml.tagName=="addcolumn" || xml.tagName=="classmapping" || xml.tagName=="rootclass"){
         output+="<tr>"
         if((typeof $(xml).attr("name") !== 'undefined')){
-        	output+="<td align=\"center\" style=\"color:red\">"+columnhead+$(xml).attr("name")+"</td>"
+        	output+="<td align=\"center\" style=\"color:red\" id=\"datasetcol_"+index+"\">"+columnhead+$(xml).attr("name")+"</td>"
         }else if(xml.tagName=="addcolumn"){
-        	output+="<td align=\"center\" style=\"color:green\">Additional column</td>"
+        	output+="<td align=\"center\" style=\"color:green\" id=\"datasetcol_"+index+"\">Additional column</td>"
         }else if(xml.tagName=="classmapping"){
-        	output+="<td align=\"center\" style=\"color:green\">Additional class</td>"
+        	output+="<td align=\"center\" style=\"color:green\" id=\"datasetcol_"+index+"\">Additional class</td>"
         }else if(xml.tagName=="rootclass"){
-        	output+="<td align=\"center\" style=\"color:green\">Root class</td>"
+        	output+="<td align=\"center\" style=\"color:green\" id=\"datasetcol_"+index+"\">Root class</td>"
         }
         if((typeof $(xml).attr("prop") !== 'undefined')){
-        	output+="<td align=\"center\"><select id=\"proptypecol_"+i+"_select\">"
+        	output+="<td align=\"center\" id=\"proptypecol_"+index+"\"><select id=\"proptypecol_"+index+"_select\">"
         	if($(xml).attr("prop")=="data"){
         		output+="<option value=\"data\" selected>DatatypeProperty</option>"
         	}else{
@@ -326,7 +326,7 @@ function processColumnsEdit(columnhead,xml,depth){
         }else{
         	output+="<td align=\"center\"><a href=\""+$(xml).attr("concept")+"\" target=\"_blank\" >"+((typeof $(xml).attr("concept") !== 'undefined')?$(xml).attr("concept").substring($(xml).attr("concept").lastIndexOf('/')+1):"")+"</a></td>"
         }
-        output+="<td align=\"center\">"       	
+        output+="<td align=\"center\" id=\"valuesparql_"+index+"\">"       	
         if((typeof $(xml).attr("query") !== 'undefined')){
         	output+=$(xml).attr("query")
         }else if((typeof $(xml).attr("value") !== 'undefined')){
@@ -347,12 +347,12 @@ function processColumnsEdit(columnhead,xml,depth){
 
         }
         output+="</td>"
-        output+="<td align=\"center\">"+((typeof $(xml).attr("endpoint") !== 'undefined')?"<a href=\""+$(xml).attr("endpoint")+"\">"+$(xml).attr("endpoint")+"</a>":"")+"</td>"
+        output+="<td align=\"center\" id=\"valueregex_"+index+"\">"+((typeof $(xml).attr("endpoint") !== 'undefined')?"<a href=\""+$(xml).attr("endpoint")+"\">"+$(xml).attr("endpoint")+"</a>":"")+"</td>"
         if($(xml).attr("splitcharacter") && $(xml).attr("splitposition")){
-			output+="<td align=center>^("+$(xml).attr("splitcharacter")+")$</td>"
+			output+="<td align=center id=\"valueregex_"+index+"\">^("+$(xml).attr("splitcharacter")+")$</td>"
 		}
         else if($(xml).attr("regex")){
-			output+="<td align=center>"+$(xml).attr("regex")+"</td>"
+			output+="<td align=center id=\"valueregex_"+index+"\">"+$(xml).attr("regex")+"</td>"
 		}else{
 			output+="<td align=center></td>"
 		}
@@ -485,12 +485,16 @@ function mappingSchemaReader(url,xml,tableheader,table,edit){
     console.log(xml)
     classes="<a target=\"_blank\" href=\""+$(xml).find('file').attr("class")+"\">"+$(xml).find('file').attr("class")+"</a>&nbsp;"
     if(edit){
+		i=0
     	$(xml).find('file').children().each(function(){
-            processColumnsEdit("",this,1)
+            processColumnsEdit("",this,1,i)
+			i+=1
     	});
     }else{
+		i=0
         $(xml).find('file').children().each(function(){
-            processColumns("",this,1)
+            processColumns("",this,1,i)
+			i+=1
     	});
     }
     header="Classes: ["+classes+"]<br/>"
