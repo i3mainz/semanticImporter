@@ -176,34 +176,9 @@ function processColumns(columnhead,xml,depth,index){
     }
 }
 
-/*
-if(i%2==0){
-	    	    	        table+="<tr class=\"even\">"
-	    	    	    }else{
-	    	    	        table+="<tr class=\"odd\">"
-	    	    	    }
-	    	    		table+="<td align=center id=\"datasetcol_"+i+"\" style=\"color:red\">"+json["properties"][i]+"</td>"
-	    	    		table+="<td align=center id=\"proptypecol_"+i+"\"><select id=\"proptypecol_"+i+"_select\"><option value=\"data\">DatatypeProperty</option><option value=\"obj\">ObjectProperty</option><option value=\"annotation\">AnnotationProperty</option><option value=\"subclass\">SubClass</option></select></td>"
-	    	    		table+="<td align=center id=\"coluri_"+i+"\">"
-	    	    		table+='<div class="ui-widget"><input id="coluri_'+i+'_input" name='+i+'></div>'//"<input type=\"text\" id=\"coluri_"+i+"_input\" name="+i+">
-	    	    		table+="<br/>TripleStore:<select id=\"triplestoredropdown_property_"+i+"\" onChange=\"setAutoComplete('triplestoredropdown_property_"+i+"','coluri_"+i+"_input','proptypecol_"+i+"_select')\">"
-	        	    	table+="<option value=\"aaa7\">AAA7</option>"
-	    	    		table+="<option value=\"inspire4\">INSPIRE4</option>"
-	    	    		table+="<option value=\"https://www.wikidata.org/w/api.php?action=wbsearchentities&&format=json&language=en&uselang=en&type=property&search=\">Wikidata</option>"
-	        	    	table+="<option value=\"xerleben2\">XErleben2</option>"
-	    	    		table+="<option value=\"xplanung5\">XPlanung5</option>"
-	    	    		table+="</select></td>"
-	    	    		table+="<td align=center id=\"colrange_"+i+"\"><select id=\"colrange_"+i+"_select\"><option value=\"xsd:double\">xsd:double</option><option value=\"xsd:integer\">xsd:integer</option><option value=\"xsd:string\">xsd:string</option></select></td>"
-	    	    		table+="<td align=center><button id=\"\" onClick=\"valueMappingDialog('maptypecol_"+i+"_table')\">Add Value Mapping</button><button id=\"\">Find Concept</button><table border=1 id=\"maptypecol_"+i+"_table\"></table></td>"
-	    	    		table+="<td align=center id=\"valuesparql_"+i+"\"><button id=\"colsparql_"+i+"_query\" onClick=\"sparqlDialog('')\">Set SPARQL Query</button><input type=\"text\" id=\"+colsparql_"+i+"_queryinp\"/></td>"
-	    	    		table+="<td align=center><select id=\"+colendpoint_"+i+"_select\"><option value=\"http://query.wikidata.org/sparql\">Wikidata</option><option value=\"https://dbpedia.org/sparql\">DBPedia</option></select></td>"
-	    	    		table+="<td align=center id=\"valueregex_"+i+"\"><input type=\"text\" id=\"colregex_"+i+"_input\"></td></tr>"
-
-*/
 function removeRow(id){
 	$('#'+id).remove();
 }
-
 
 function processColumnsEdit(columnhead,xml,depth,index){
 	console.log("Depth "+depth);
@@ -276,7 +251,11 @@ function processColumnsEdit(columnhead,xml,depth,index){
     		output+="</table>"
     	}    
         output+="</td>"
-        output+="<td align=\"center\" id=\"colrange_"+index+"\"><input type=\"url\" id=\"colrange_\""+index+"\"/ value=\""+$(xml).attr("range")+"\"></td>"
+		if (typeof $(xml).attr("range") !== 'undefined'){
+			output+="<td align=\"center\" id=\"colrange_"+index+"\"><input type=\"url\" id=\"colrange_\""+index+"\"/ value=\""+$(xml).attr("range")+"\"></td>"
+		}else{
+			output+="<td align=\"center\" id=\"colrange_"+index+"\"><input type=\"url\" id=\"colrange_\""+index+"\"/ value=\"\"></td>"
+		}
 		if($(xml).children("valuemapping").length>0 && ($(xml).attr("prop")=="subclass" || $(xml).attr("prop")=="obj")){
         	output+="<td align=center><table width=\"100%\" border=1><tr><th>from</th><th>to</th></tr>"
         	$(xml).children().each(function(){
@@ -327,7 +306,11 @@ function processColumnsEdit(columnhead,xml,depth,index){
         	});
         	output+="</table></td>"
         }else{
-        	output+="<td align=\"center\" id=\"colrange_"+index+"\"><a href=\""+$(xml).attr("concept")+"\" target=\"_blank\" >"+((typeof $(xml).attr("concept") !== 'undefined')?$(xml).attr("concept").substring($(xml).attr("concept").lastIndexOf('/')+1):"")+"</a></td>"
+			if($(xml).attr("concept")){
+				output+="<td align=\"center\" id=\"colrange_"+index+"\"><input id=\"conconcept_"+index+"_val\" type=\"url\" value=\""+$(xml).attr("concept")+"\"/></td>"			
+			}else{
+				output+="<td align=\"center\" id=\"colrange_"+index+"\"><input id=\"conconcept_"+index+"_val\" type=\"url\" value=\"\"/></td>"
+			}
         }
         output+="<td align=\"center\" id=\"valuesparql_"+index+"\">"       	
         if((typeof $(xml).attr("query") !== 'undefined')){
@@ -355,7 +338,7 @@ function processColumnsEdit(columnhead,xml,depth,index){
 			output+="<td align=center id=\"valueregex_"+index+"\">^("+$(xml).attr("splitcharacter")+")$</td>"
 		}
         else if($(xml).attr("regex")){
-			output+="<td align=center id=\"valueregex_"+index+"\">"+$(xml).attr("regex")+"</td>"
+			output+="<td align=center id=\"valueregex_"+index+"\"><input type=\"text\" value=\""+$(xml).attr("regex")+"\"/></td>"
 		}else{
 			output+="<td align=center id=\"valueregex_"+index+"\"></td>"
 		}
