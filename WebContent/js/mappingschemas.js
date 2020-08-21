@@ -125,7 +125,7 @@ function processColumns(columnhead,xml,depth,index){
         }else{
         	output+="<td align=\"center\"><a href=\""+$(xml).attr("concept")+"\" target=\"_blank\" >"+((typeof $(xml).attr("concept") !== 'undefined')?$(xml).attr("concept").substring($(xml).attr("concept").lastIndexOf('/')+1):"")+"</a></td>"
         }
-        output+="<td align=\"center\" id=\"valuesparql_"+i+"\">"       	
+        output+="<td align=\"center\" id=\"valuesparql_"+index+"\">"       	
         if((typeof $(xml).attr("query") !== 'undefined')){
         	output+=$(xml).attr("query")
         }else if((typeof $(xml).attr("value") !== 'undefined')){
@@ -146,7 +146,7 @@ function processColumns(columnhead,xml,depth,index){
 
         }
         output+="</td>"
-        output+="<td align=\"center\" id=\"valueendpoint_"+i+"\">"+((typeof $(xml).attr("endpoint") !== 'undefined')?"<a href=\""+$(xml).attr("endpoint")+"\">"+$(xml).attr("endpoint")+"</a>":"")+"</td>"
+        output+="<td align=\"center\" id=\"valueendpoint_"+index+"\">"+((typeof $(xml).attr("endpoint") !== 'undefined')?"<a href=\""+$(xml).attr("endpoint")+"\">"+$(xml).attr("endpoint")+"</a>":"")+"</td>"
         if($(xml).attr("splitcharacter") && $(xml).attr("splitposition")){
 			output+="<td align=center id=\"valueregex_"+index+"\">^("+$(xml).attr("splitcharacter")+")$</td>"
 		}
@@ -245,9 +245,9 @@ function processColumnsEdit(columnhead,xml,depth,index){
         	}
         	output+="</select></td>"
         }else{
-        	output+="<td align=center id=\"proptypecol_"+i+"\"><select id=\"proptypecol_"+i+"_select\"><option value=\"data\">DatatypeProperty</option><option value=\"obj\">ObjectProperty</option><option value=\"annotation\">AnnotationProperty</option><option value=\"subclass\">SubClass</option><option value=\"class\" selected>Class</option></select></td>"
+        	output+="<td align=center id=\"proptypecol_"+index+"\"><select id=\"proptypecol_"+index+"_select\"><option value=\"data\">DatatypeProperty</option><option value=\"obj\">ObjectProperty</option><option value=\"annotation\">AnnotationProperty</option><option value=\"subclass\">SubClass</option><option value=\"class\" selected>Class</option></select></td>"
         }
-        output+="<td align=center id=\"coluri_"+i+"\">"
+        output+="<td align=center id=\"coluri_"+index+"\">"
         if((typeof $(xml).attr("propiri") !== 'undefined')){
         	output+="<input type=\"url\" value=\""+$(xml).attr("propiri")+"\"/>"	
         }else if((typeof $(xml).attr("class") !== 'undefined')){
@@ -354,7 +354,7 @@ function processColumnsEdit(columnhead,xml,depth,index){
         else if($(xml).attr("regex")){
 			output+="<td align=center id=\"valueregex_"+index+"\">"+$(xml).attr("regex")+"</td>"
 		}else{
-			output+="<td align=center></td>"
+			output+="<td align=center id=\"valueregex_"+index+"\"></td>"
 		}
 		output+="</tr>";
     }else if(xml.tagName=="columncollection"){
