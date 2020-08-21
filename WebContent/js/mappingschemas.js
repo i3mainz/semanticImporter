@@ -56,7 +56,7 @@ function processColumns(columnhead,xml,depth,index){
         }else{
         	output+="<td align=\"center\" id=\"proptypecol_"+index+"\">class</td>"
         }
-        output+="<td align=\"center\">"
+        output+="<td align=\"center\" id=\"coluri_"+index+"\">"
         if((typeof $(xml).attr("propiri") !== 'undefined')){
         	output+="<a href=\""+$(xml).attr("propiri")+"\" target=\"_blank\" >"+((typeof $(xml).attr("propiri") !== 'undefined')?$(xml).attr("propiri").substring($(xml).attr("propiri").lastIndexOf('/')+1):"")+"</a>"	
         }else if((typeof $(xml).attr("class") !== 'undefined')){
@@ -72,7 +72,7 @@ function processColumns(columnhead,xml,depth,index){
     		output+="</table>"
     	}    
         output+="</td>"
-        output+="<td align=\"center\" id=\"coluri_"+index+"\"><a target=\"_blank\" href=\""+$(xml).attr("range")+"\">"+((typeof $(xml).attr("range") !== 'undefined')?$(xml).attr("range").substring($(xml).attr("range").lastIndexOf('#')+1):"")+"</a></td>"
+        output+="<td align=\"center\"  id=\"colrange_"+index+"\"><a target=\"_blank\" href=\""+$(xml).attr("range")+"\">"+((typeof $(xml).attr("range") !== 'undefined')?$(xml).attr("range").substring($(xml).attr("range").lastIndexOf('#')+1):"")+"</a></td>"
 		if($(xml).children("valuemapping").length>0 && ($(xml).attr("prop")=="subclass" || $(xml).attr("prop")=="obj")){
         	output+="<td align=center><table width=\"100%\" border=1><tr><th>from</th><th>to</th></tr>"
         	$(xml).children().each(function(){
@@ -278,7 +278,7 @@ function processColumnsEdit(columnhead,xml,depth,index){
         	output+="<td align=center><table width=\"100%\" border=1><tr><th>from</th><th>to</th></tr>"
         	$(xml).children().each(function(){
         		if(this.tagName=="valuemapping"){
-        			output+="<tr><td align=center>"+$(this).attr("from")+"</td><td>"
+        			output+="<tr><td align=center id=\"coluri_"+index+"\">"+$(this).attr("from")+"</td><td>"
         			if((typeof $(this).attr("propiri") !== 'undefined')){
         				output+="<a href=\""+$(this).attr("propiri")+"\" target=\"_blank\">"+$(this).attr("propiri").substring($(this).attr("propiri").lastIndexOf('#')+1)
         				+"</a>:"
@@ -324,7 +324,7 @@ function processColumnsEdit(columnhead,xml,depth,index){
         	});
         	output+="</table></td>"
         }else{
-        	output+="<td align=\"center\"><a href=\""+$(xml).attr("concept")+"\" target=\"_blank\" >"+((typeof $(xml).attr("concept") !== 'undefined')?$(xml).attr("concept").substring($(xml).attr("concept").lastIndexOf('/')+1):"")+"</a></td>"
+        	output+="<td align=\"center\" id=\"colrange_"+index+"\"><a href=\""+$(xml).attr("concept")+"\" target=\"_blank\" >"+((typeof $(xml).attr("concept") !== 'undefined')?$(xml).attr("concept").substring($(xml).attr("concept").lastIndexOf('/')+1):"")+"</a></td>"
         }
         output+="<td align=\"center\" id=\"valuesparql_"+index+"\">"       	
         if((typeof $(xml).attr("query") !== 'undefined')){
