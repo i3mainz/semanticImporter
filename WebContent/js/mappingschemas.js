@@ -17,7 +17,10 @@ function getMappingSchemas(identifier,tableheader,table){
     });
 }
 
+var editMode=false
+
 function mappingSchemaToTable(identifier,tableheader,table,edit){
+	editMode=edit
 	getMappingSchema($("#"+identifier).val(),identifier,tableheader,table,edit)
 }
 

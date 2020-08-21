@@ -298,26 +298,51 @@ function toggleAnalysis() {
 	  }
 	}
 
+
+
+
 function mappingProfileToXML(){
 	xmlresult="<?xml version=\"1.0\"?>\n<data>\n"
-	$('#datasettable > tbody  > tr').each(function(index, tr) { 
-		console.log(tr)
-		xmlresult+="<column name=\""+$('#datasetcol_'+index).html()+"\" " 
-		xmlresult+="prop=\""+$("#proptypecol_"+index+"_select").val()+"\" "
-		xmlresult+="propiri=\""+$("#coluri_"+index+"_input").val()+"\" "
-		xmlresult+="range=\""+$("#colrange_"+index+"_select").val()+"\" "
-		xmlresult+="query=\""+$("#colsparql_"+index+"_queryinp").val()+"\" "
-		xmlresult+="endpoint=\""+$("#colendpoint_"+index+"_select").val()+"\" "
-		xmlresult+="regex=\""+$("#colregex_"+index+"_input").val()+"\" "
-		xmlresult+=">\n"
-		if($("#maptypecol_"+index+"_table").children().length>0){
-			$("#maptypecol_"+index+"_table").each(function(index, mapping) {
-				xmlresult+="<valuemapping>"
-				xmlresult+="</valuemapping>\n"
-			});
-		}
-		xmlresult+="</column>\n"
-	});
+	if(editMode){
+		$('#datasettable > tbody  > tr').each(function(index, tr) { 
+			console.log(tr)
+			xmlresult+="<column name=\""+$('#datasetcol_'+index).html()+"\" " 
+			xmlresult+="prop=\""+$("#proptypecol_"+index+"_select").val()+"\" "
+			xmlresult+="propiri=\""+$("#coluri_"+index+"_input").val()+"\" "
+			xmlresult+="range=\""+$("#colrange_"+index+"_select").val()+"\" "
+			xmlresult+="query=\""+$("#colsparql_"+index+"_queryinp").val()+"\" "
+			xmlresult+="endpoint=\""+$("#colendpoint_"+index+"_select").val()+"\" "
+			xmlresult+="regex=\""+$("#colregex_"+index+"_input").val()+"\" "
+			xmlresult+=">\n"
+			if($("#maptypecol_"+index+"_table").children().length>0){
+				$("#maptypecol_"+index+"_table").each(function(index, mapping) {
+					xmlresult+="<valuemapping>"
+					xmlresult+="</valuemapping>\n"
+				});
+			}
+			xmlresult+="</column>\n"
+		});
+	}
+	else{
+		$('#datasettable > tbody  > tr').each(function(index, tr) { 
+			console.log(tr)
+			xmlresult+="<column name=\""+$('#datasetcol_'+index).html()+"\" " 
+			xmlresult+="prop=\""+$("#proptypecol_"+index).val()+"\" "
+			xmlresult+="propiri=\""+$("#coluri_"+index).val()+"\" "
+			xmlresult+="range=\""+$("#colrange_"+index).val()+"\" "
+			xmlresult+="query=\""+$("#colsparql_").val()+"\" "
+			xmlresult+="endpoint=\""+$("#colendpoint_"+index).val()+"\" "
+			xmlresult+="regex=\""+$("#colregex_"+index).val()+"\" "
+			xmlresult+=">\n"
+			if($("#maptypecol_"+index+"_table").children().length>0){
+				$("#maptypecol_"+index+"_table").each(function(index, mapping) {
+					xmlresult+="<valuemapping>"
+					xmlresult+="</valuemapping>\n"
+				});
+			}
+			xmlresult+="</column>\n"
+		});
+	}
 	console.log(xmlresult)
 	xmlresult+="</data>\n"
 	return xmlresult
@@ -424,11 +449,9 @@ function addValueMapping(from,to,tdtable) {
 	<span id="tableheader"></span><br/>
 	<button id="downloadSchema" onClick="downloadSchema()">Download Schema</button>
 	<button id="editSchema" onClick="mappingSchemaToTable('mappingschema','tableheader','datasettable',true)">Edit Schema</button>
-	<button id="editSchema" onClick="mappingSchemaToTable('mappingschema','tableheader','datasettable',false)">View Schema</button>
+	<button id="viewSchema" onClick="mappingSchemaToTable('mappingschema','tableheader','datasettable',false)">View Schema</button>
  	<table id="datasettable" class="description" width="100%" align="center" border="1">
  	</table>
-
-
 <button onClick="saveMappingAsXML()">Export Mapping as XML</button>
 <button onClick="saveMappingOnServer()">Save Mapping on server</button>
 
