@@ -273,7 +273,7 @@ function processColumnsEdit(columnhead,xml,depth,index){
     		output+="</table>"
     	}    
         output+="</td>"
-        output+="<td align=\"center\"><a target=\"_blank\" href=\""+$(xml).attr("range")+"\">"+((typeof $(xml).attr("range") !== 'undefined')?$(xml).attr("range").substring($(xml).attr("range").lastIndexOf('#')+1):"")+"</a></td>"
+        output+="<td align=\"center\" id=\"colrange_"+index+"\"><a target=\"_blank\" href=\""+$(xml).attr("range")+"\">"+((typeof $(xml).attr("range") !== 'undefined')?$(xml).attr("range").substring($(xml).attr("range").lastIndexOf('#')+1):"")+"</a></td>"
 		if($(xml).children("valuemapping").length>0 && ($(xml).attr("prop")=="subclass" || $(xml).attr("prop")=="obj")){
         	output+="<td align=center><table width=\"100%\" border=1><tr><th>from</th><th>to</th></tr>"
         	$(xml).children().each(function(){
@@ -359,12 +359,12 @@ function processColumnsEdit(columnhead,xml,depth,index){
 		output+="</tr>";
     }else if(xml.tagName=="columncollection"){
     	console.log("Columncollection!!!")
-    	output+="<tr><td align=\"center\" style=\"color:red\">"+((typeof $(xml).attr("name") !== 'undefined')?columnhead+$(xml).attr("name"):"Additional column")+"</td>"
-    	output+="<td align=\"center\">obj</td>"
-        output+="<td align=\"center\"><a href=\""+$(xml).attr("propiri")+"\" target=\"_blank\" >"+((typeof $(xml).attr("propiri") !== 'undefined')?$(xml).attr("propiri").substring($(xml).attr("propiri").lastIndexOf('/')+1):"")+"</a></td>"
+    	output+="<tr><td align=\"center\" id=\"datasetcol_"+index+"\" style=\"color:red\">"+((typeof $(xml).attr("name") !== 'undefined')?columnhead+$(xml).attr("name"):"Additional column")+"</td>"
+    	output+="<td align=\"center\" id=\"proptypecol_"+index+"\">obj</td>"
+        output+="<td align=\"center\" id=\"coluri_"+index+"\"><a href=\""+$(xml).attr("propiri")+"\" target=\"_blank\" >"+((typeof $(xml).attr("propiri") !== 'undefined')?$(xml).attr("propiri").substring($(xml).attr("propiri").lastIndexOf('/')+1):"")+"</a></td>"
         output+="<td align=center></td>"
         output+="<td align=\"center\"><a href=\""+$(xml).attr("class")+"\" target=\"_blank\" >"+((typeof $(xml).attr("concept") !== 'undefined')?$(xml).attr("concept").substring($(xml).attr("concept").lastIndexOf('/')+1):"")+"</a></td>"
-        output+="<tdalign=center></td><td align=center></td></tr>"        
+        output+="<td align=center></td><td align=center></td></tr>"        
     	columnhead+=$(xml).attr("name")+"<span style=\"color:black\">.</span>"
         $(xml).children().each(function(){
                processColumnsEdit(columnhead,this,depth+1)
