@@ -244,7 +244,7 @@ function processColumnsEdit(columnhead,xml,depth,index){
     		output+="<table width=\"100%\" border=1><tr><th>Label</th><th>lang</th><th>Options</th></tr>"
             	$(xml).children().each(function(){
             		if(this.tagName=="clslabel" || this.tagName=="proplabel"){
-            			output+="<tr id=\"proplabel_"+i+"_"+j+"\"><td>"+$(this).attr("value")+"</td><td>"+$(this).attr("lang")+"</td><td><button onclick=\"removeRow('proplabel_"+i+"_"+j+"')\">-</button></tr>"
+            			output+="<tr id=\"proplabel_"+index+"_"+j+"\"><td>"+$(this).attr("value")+"</td><td>"+$(this).attr("lang")+"</td><td><button onclick=\"removeRow('proplabel_"+i+"_"+j+"')\">-</button></tr>"
             			j++;
             		}
             	});
@@ -307,9 +307,9 @@ function processColumnsEdit(columnhead,xml,depth,index){
         	output+="</table></td>"
         }else{
 			if($(xml).attr("concept")){
-				output+="<td align=\"center\" id=\"colrange_"+index+"\"><input id=\"conconcept_"+index+"_val\" type=\"url\" value=\""+$(xml).attr("concept")+"\"/></td>"			
+				output+="<td align=\"center\" id=\"colconcept_"+index+"\"><input id=\"colconcept_"+index+"_val\" type=\"url\" value=\""+$(xml).attr("concept")+"\"/></td>"			
 			}else{
-				output+="<td align=\"center\" id=\"colrange_"+index+"\"><input id=\"conconcept_"+index+"_val\" type=\"url\" value=\"\"/></td>"
+				output+="<td align=\"center\" id=\"colconcept_"+index+"\"><input id=\"colconcept_"+index+"_val\" type=\"url\" value=\"\"/></td>"
 			}
         }
         output+="<td align=\"center\" id=\"valuesparql_"+index+"\">"       	
@@ -333,7 +333,11 @@ function processColumnsEdit(columnhead,xml,depth,index){
 
         }
         output+="</td>"
-        output+="<td align=\"center\" id=\"valueregex_"+index+"\">"+((typeof $(xml).attr("endpoint") !== 'undefined')?"<a href=\""+$(xml).attr("endpoint")+"\">"+$(xml).attr("endpoint")+"</a>":"")+"</td>"
+		if((typeof $(xml).attr("endpoint") !== 'undefined')){
+			output+="<td align=\"center\" id=\"valueregex_"+index+"\"><input id=\"valueregex_"+index+"_val\" type=\"url\" value=\""+$(xml).attr("endpoint")+"\"/></td>"		
+		}else{
+			output+="<td align=\"center\" id=\"valueregex_"+index+"\"><input id=\"valueregex_"+index+"_val\" type=\"url\" value=\"\"/></td>"
+		}
         if($(xml).attr("splitcharacter") && $(xml).attr("splitposition")){
 			output+="<td align=center id=\"valueregex_"+index+"\">^("+$(xml).attr("splitcharacter")+")$</td>"
 		}
