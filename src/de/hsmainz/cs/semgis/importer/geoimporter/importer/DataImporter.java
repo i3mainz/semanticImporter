@@ -56,7 +56,9 @@ import de.hsmainz.cs.semgis.importer.geoimporter.connector.TripleStoreConnector;
 import de.hsmainz.cs.semgis.importer.geoimporter.connector.TripleStoreConnector.GeographicalResult;
 import de.hsmainz.cs.semgis.util.Tuple;
 
-
+/**
+ * Implements the conversion of an import geodata to TTL.
+ */
 public class DataImporter {
 	public static TripleStoreConnector dbConnector = new TripleStoreConnector("prefix.txt");
 
@@ -133,6 +135,11 @@ public class DataImporter {
 		startTime=new Date(System.currentTimeMillis());
 	}
 
+	/**
+	 * Converts a String to camel case.
+	 * @param s The String to convert
+	 * @return the modified String
+	 */
 	public static String toCamelCase(String s) {
 		return Character.toUpperCase(s.charAt(0)) + s.substring(1);
 	}
@@ -694,6 +701,7 @@ public class DataImporter {
 			pro.addDomain(rootClass);
 			if (xc.queryString != null) {
 				Tuple<String,String> res = dbConnector.executeSPARQLQuery(xc.queryString, xc.endpoint, dataRow);
+				System.out.println("Res: "+res);
 				if(xc.ignoreUnresolved && res==null) {
 					return;
 				}

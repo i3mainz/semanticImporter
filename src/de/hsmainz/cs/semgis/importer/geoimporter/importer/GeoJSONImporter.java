@@ -15,10 +15,7 @@ import org.json.JSONObject;
 import de.hsmainz.cs.semgis.importer.geoimporter.parser.GeoJSONParser;
 
 
-public class GeoJSONImporter {
-
-	public static Map<String, List<String>> formatToOntology;
-
+public class GeoJSONImporter extends FormatImporter {
 
 	public static OntModel enrichClasses(OntModel model, OntModel model2, Boolean enrich) {
 		OntModel result = ModelFactory.createOntologyModel();

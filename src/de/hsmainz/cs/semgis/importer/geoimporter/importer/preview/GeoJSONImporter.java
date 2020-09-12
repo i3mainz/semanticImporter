@@ -14,6 +14,11 @@ import org.geotoolkit.data.query.QueryBuilder;
 import org.geotoolkit.data.session.Session;
 import org.xml.sax.SAXException;
 
+/**
+ * GeoJSONImporter to convert GML
+ * @author timo.homburg
+ *
+ */
 public class GeoJSONImporter extends XMLImporter {
 
 	public GeoJSONImporter() {

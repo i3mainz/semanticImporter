@@ -5,8 +5,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.List;
-import java.util.Map;
 
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -15,19 +13,10 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
-import de.hsmainz.cs.semgis.importer.geoimporter.parser.ConfigParser;
 import de.hsmainz.cs.semgis.importer.geoimporter.parser.KnownSchemaParser;
 
 
-public class GMLImporter {
-
-	public static Map<String, List<String>> formatToOntology;
-
-	public static void readConfig() throws IOException {
-		ConfigParser parser = new ConfigParser("config2.csv");
-		formatToOntology = parser.maps;
-
-	}
+public class GMLImporter extends FormatImporter {
 
 	public static OntModel enrichClasses(OntModel model, OntModel model2, Boolean enrich) {
 		OntModel result = ModelFactory.createOntologyModel();
